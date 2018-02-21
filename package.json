@@ -47,6 +47,9 @@
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
     "react-loaders": "^3.0.1",
+    "react-motion": "^0.5.2",
+    "react-move": "^2.7.0",
+    "react-transition-group": "^2.2.1",
     "sass-loader": "^6.0.6"
   },
   "devDependencies": {

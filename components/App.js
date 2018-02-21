@@ -6,12 +6,12 @@ import Footer from './layout/Footer'
 
 // import globalStyles from '../../styles/index.scss'
 
-export default ({ children, title }) => (
+export default ({ children, title, footerShown }) => (
   <div>
     <Head title={title} />
-    <Header />
+    {/* <Header /> */}
     { children }
-    <Footer />
+    { footerShown && <Footer /> }
     <style jsx global>{``}</style>
     {/* <style dangerouslySetInnerHTML={{ __html: globalStyles }} /> */}
   </div>

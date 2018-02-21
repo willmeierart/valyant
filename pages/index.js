@@ -1,36 +1,32 @@
-// import { graphql, compose } from 'react-apollo'
-// import Loader from 'react-loaders'
-// import withData from '../lib/withData'
-// import { allFadeColors, allPaintings } from '../lib/queries'
-// import { formatColors } from '../lib/_utils'
+import React, { Component } from 'react'
 import App from '../components/App'
-import { AzLogo01 } from '../components/assets/ZeroLogos'
+import { binder } from '../lib/_utils'
+// import { AzLogo01 } from '../components/assets/ZeroLogos'
 
-// include boilerplate for global loader dependent on graphql req's:
-export default () => (
-  <App title='Home'>
-    <div>
-      {/* {allThings1.loading || allThings2.loading ? (
-        <div className='loader-wrapper'>
-          <Loader type='line-spin-fade-loader' active />
-        </div>
-      ) : ( */}
-      <AzLogo01 />
-      {/* )} */}
-    </div>
-    <style jsx>{`
-        {/* .loader-wrapper {
-          width:100%; height:100%;
-          display: flex; justify-content: center; align-items:center;
-        } */}
-    `}</style>
-  </App>
-)
+import ScrollController from '../components/scroll/ScrollController'
 
-// example of GraphQL with multiple queries composed:
-// export default withData(
-//   compose(
-//     graphql(allThings1, { name: 'allThings1' }),
-//     graphql(allThings2, { name: 'allThings2' })
-//   )(HomePage)
-// )
+export default class Home extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      showFooter: false
+    }
+    binder(this, ['showFooter'])
+  }
+  
+  showFooter (bool) { this.setState({ showFooter: bool }) }
+
+  render () {
+    return (
+      <App footer={this.state.showFooter} title='Home'>
+        <main>
+          <ScrollController footerShown={this.state.showFooter} showFooter={this.showFooter} />
+          {/* <AzLogo01 /> */}
+        </main>
+        <style jsx>{`
+
+        `}</style>
+      </App>
+    )
+  }
+}
