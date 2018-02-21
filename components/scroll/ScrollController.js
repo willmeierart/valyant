@@ -21,6 +21,8 @@ class ScrollController extends Component {
     setTimeout(() => { this.setState({ canScroll: true }) }, 1000)
   }
 
+  // shouldComponentUpdate () { return false }
+
   checkIfMobile () { this.setState({ isMobile: window !== undefined && window.orientation !== undefined }) }
 
   changeView (e) {
@@ -85,9 +87,10 @@ class ScrollController extends Component {
   }
 
   render () {
+    console.log('scroll rerender')
     return (
       <div className='scroll-controller' onWheel={this.handleScroll} onTouchMove={this.handleScroll} onTouchStart={this.handleTouchStart}>
-        <View index={viewState.indexOf(this.state.currentView)} view={this.state.currentView}>{ this.props.children }</View>
+        <View index={viewState.indexOf(this.state.currentView)} view={this.state.currentView} />
         <style jsx>{`
           .scroll-controller {
             width: 100vw;

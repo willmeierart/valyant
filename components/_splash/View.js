@@ -19,6 +19,7 @@ export default class View extends Component {
 
   render () {
     const { imageUrl, copyStyles, headerCopy, bodyCopy, isFirstView, index } = this.props.view
+    console.log('view rerender');
     // const { inProp } = this.state
     // const inProp = setTimeout(() => { return true }, 50)
     // const defaultStyle = {

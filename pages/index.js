@@ -14,14 +14,18 @@ export default class Home extends Component {
     binder(this, ['showFooter'])
   }
   
-  showFooter (bool) { this.setState({ showFooter: bool }) }
+  showFooter (bool) {
+    console.log('show footer')
+    this.setState({ showFooter: bool })
+  }
 
   render () {
     return (
-      <App footer={this.state.showFooter} title='Home'>
+      <App footerShown={this.state.showFooter} title='Home'>
         <main>
           <ScrollController footerShown={this.state.showFooter} showFooter={this.showFooter} />
           {/* <AzLogo01 /> */}
+          { this.props.children }
         </main>
         <style jsx>{`
 
