@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-// import { TransitionMotion, spring, presets } from 'react-motion'
 import { Transition } from 'react-transition-group'
-// import PropTypes from 'prop-types'
-// import { CSSTransition } from 'react-transition-group'
 
 class TextBlock extends Component {
   constructor (props) {
@@ -11,28 +8,14 @@ class TextBlock extends Component {
       heightVal: '500px'
     }
   }
-
   componentDidMount () {
     if (typeof window !== 'undefined') {
       this.setState({ heightVal: `${Math.floor(Math.abs(window.screenY) / 2)}px` })
     }
   }
-
   render () {
-    // const { inProp } = this.state
-    // console.log(inProp);
-    // const defaultStyle = {
-    //   transition: 'transform 800ms ease-in-out',
-    //   transform: `translateX(-100)`
-    // }
-    // const transitionStyles = {
-    //   entering: { transform: `translateX(-100)` },
-    //   // entering: { transform: `translateX(${el === 'txt' ? 100 : -100})` },
-    //   entered: { transform: `translateX(0)` }
-    // }
     const { heightVal } = this.state
-    console.log(heightVal);
-    const duration = 200
+    const { duration } = this.props
     const defaultStyle = {
       opacity: 0,
       transform: `translate3d(0,${heightVal},0)`

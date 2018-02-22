@@ -32,8 +32,7 @@ export default class CustomDocument extends Document {
         </body>
         <style jsx global>{`
           html, body {
-            overflow: hidden;
-            {/* margin: 0!important; */}
+            {/* overflow: hidden; */}
             margin: 2vw;
             box-sizing: border-box;
           }

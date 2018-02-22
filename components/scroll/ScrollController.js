@@ -99,7 +99,7 @@ class ScrollController extends Component {
           .scroll-controller {
             width: 96vw;
             height: calc(100vh - 4vw);
-            overflow: hidden;
+            {/* overflow: hidden; */}
             box-sizing: border-box;
             position: relative;
           }

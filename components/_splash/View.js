@@ -1,11 +1,8 @@
-// import Animate from 'react-move/Animate'
-// import NodeGroup from 'react-move/NodeGroup'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { doAnimation } from '../../lib/redux/actions'
-import { Transition } from 'react-transition-group'
 // import TransitionSled from './TransitionSled'
-import raf from 'raf'
+// import raf from 'raf'
 import ImageBG from './ImageBG'
 import Logo from './Logo'
 import TextBlock from './TextBlock'
@@ -14,67 +11,53 @@ import { binder } from '../../lib/_utils'
 class View extends Component {
   constructor (props) {
     super(props)
-    binder(this, ['useRAFRedux'])
+    binder(this, ['doAnimationCheck'])
   }
-  componentDidMount () {
-    // this.useRAFRedux()
-    if (!this.props.animateIn) {
-      this.props.onDoAnimation(true)
-    }
+  componentDidMount () { this.doAnimationCheck() }
+  componentDidUpdate () { this.doAnimationCheck() }
+
+  doAnimationCheck () { 
+    // raf(() => this.props.onDoAnimation(true))
+    if (!this.props.animateIn) { this.props.onDoAnimation(true) }
   }
-  componentDidUpdate () {
-    // this.useRAFRedux()
-    if (!this.props.animateIn) {
-      this.props.onDoAnimation(true)
-    }
-  }
-  useRAFRedux () { 
-    raf(() => this.props.onDoAnimation(true))
-  }
+
   render () {
     const { currentView, animateIn } = this.props
     return (
       <div className='view'>
         <div className='inner-view'>
+
           <div className='logo-wrapper'>
-            <Logo isFirstView={currentView.isFirstView}/>
+            <Logo isFirstView={currentView.isFirstView} />
           </div>
 
-          <ImageBG animateIn={animateIn} view={currentView} />
-
-
+          <ImageBG animateIn={animateIn} image={currentView.imageUrl} duration={200} />
           <div className='fallback-img' />
 
           <div className='txt-wrapper'>
-            <TextBlock animateIn={animateIn} body={currentView.bodyCopy} header={currentView.headerCopy} />
+            <TextBlock animateIn={animateIn} body={currentView.bodyCopy} header={currentView.headerCopy} duration={200} />
           </div>
+
+          { !currentView.isFirstView && <div className='side-tag' /> }
+
         </div>
         <style jsx>{`
           .view {
             width: 96%;
             height: 96%;
-            overflow: hidden;
+            {/* overflow: hidden; */}
             position: absolute;
           }
           .inner-view {
             width: 100%;
             height: 100%;
             position: relative;
-            {/* top: -21px!important; */}
           }
           .logo-wrapper {
             position:absolute;
             z-index: 10;
             top: 2%;
             width: 100%;
-          }
-          .img-wrapper {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform: translate3d(0,0,0);
-            {/* opacity: 0; */}
-
           }
           .fallback-img {
             background-image: url('${this.props.fallbackImage}');
@@ -89,6 +72,15 @@ class View extends Component {
             z-index: 10;
             width: 100%;
             height: 100%;
+          }
+          .side-tag {
+            position: absolute;
+            left: -1vw;
+            top: 35vh;
+            height: 30vh;
+            width: 5vw;
+            z-index: 30;
+            background-color: #4597BB;            
           }
         `}</style>
       </div>
