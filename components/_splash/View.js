@@ -19,7 +19,7 @@ export default class View extends Component {
 
   render () {
     const { imageUrl, copyStyles, headerCopy, bodyCopy, isFirstView, index } = this.props.view
-    console.log('view rerender');
+    console.log('view rerender')
     // const { inProp } = this.state
     // const inProp = setTimeout(() => { return true }, 50)
     // const defaultStyle = {
@@ -109,8 +109,8 @@ export default class View extends Component {
         </div>
         <style jsx>{`
           .view {
-            width: 100%;
-            height: 100%;
+            width: 96%;
+            height: 96%;
             overflow: hidden;
             position: absolute;
           }

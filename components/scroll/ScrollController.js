@@ -2,52 +2,47 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
+import { setCurrentView, showFooter, canScroll, checkIfMobile } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 
 class ScrollController extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isMobile: false,
-      touchStartY: null,
-      canScroll: false
-    }
+    this.state = { touchStartY: null }
     binder(this, ['checkIfMobile', 'changeView', 'handleTouchStart', 'handleScroll'])
   }
 
   componentDidMount () {
-    console.log('mounted');
     this.checkIfMobile()
-    setTimeout(() => { this.setState({ canScroll: true }) }, 1000)
+    setTimeout(() => { this.props.onCanScroll(true) }, 1000)
   }
 
-  // shouldComponentUpdate () { return false }
-
-  checkIfMobile () { this.setState({ isMobile: window !== undefined && window.orientation !== undefined }) }
+  checkIfMobile () {
+    if (this.props.isMobile === null) {
+      this.props.onCheckIfMobile()
+    }
+  }
 
   changeView (e) {
-    const { isMobile, touchStartY } = this.state
-    const { footerShown, showFooter, setCurrentView, currentView } = this.props
+    const { touchStartY } = this.state
+    const { footerShown, onShowFooter, onSetCurrentView, currentView, isMobile } = this.props
     const currentIndex = viewState.indexOf(currentView)
     if (isMobile && touchStartY !== null) {
       const { clientY } = e.touches[0]
-      // if (currentView)
       if (clientY > touchStartY) {
         if (!currentView.isLastView) {
-          // this.setState({ currentView: viewState[currentIndex + 1] })
-          setCurrentView(viewState[currentIndex + 1])
+          onSetCurrentView(viewState[currentIndex + 1])
         } else {
           if (!footerShown) {
-            showFooter(true)
+            onShowFooter(true)
           }
         }
       } else if (clientY < touchStartY) {
         if (!currentView.isFirstView) {
           if (currentView.isLastView && footerShown) {
-            showFooter(false)
+            onShowFooter(false)
           } else {
-            // this.setState({ currentView: viewState[currentIndex - 1] })
-            setCurrentView(viewState[currentIndex - 1])
+            onSetCurrentView(viewState[currentIndex - 1])
 
           }
         }
@@ -55,29 +50,27 @@ class ScrollController extends Component {
     } else {
       if (e.deltaY > 0) {
         if (!currentView.isLastView) {
-          // this.setState({ currentView: viewState[currentIndex + 1] })
-          setCurrentView(viewState[currentIndex + 1])
+          onSetCurrentView(viewState[currentIndex + 1])
         } else {
           if (!footerShown) {
-            showFooter(true)
+            onShowFooter(true)
           }
         }
       } else if (e.deltaY < 0) {
         if (!currentView.isFirstView) {
           if (currentView.isLastView && footerShown) {
-            showFooter(false)
+            onShowFooter(false)
           } else {
-            // this.setState({ currentView: viewState[currentIndex - 1] })
-            setCurrentView(viewState[currentIndex - 1])
+            onSetCurrentView(viewState[currentIndex - 1])
           }
         }
       }
     }
-    this.setState({ canScroll: false })
+    this.props.onCanScroll(false)
   }
 
   handleTouchStart (e) {
-    const { isMobile } = this.state
+    const { isMobile } = this.props
     if (isMobile) {
       this.setState({ touchStartY: e.touches[0].clientY })
     }
@@ -85,23 +78,25 @@ class ScrollController extends Component {
 
   handleScroll (e) {
     e.preventDefault()
-    if (this.state.canScroll){
+    if (this.props.canScroll) {
       this.changeView(e)
-      setTimeout(() => { this.setState({ canScroll: true }) }, 1000)
+      setTimeout(() => { this.props.onCanScroll(true) }, 1000)
     }
   }
 
   render () {
-    console.log(this.props.children)
+    console.log('scrollcontroller rerender')
     return (
       <div className='scroll-controller' onWheel={this.handleScroll} onTouchMove={this.handleScroll} onTouchStart={this.handleTouchStart}>
-        <View index={viewState.indexOf(this.props.currentView)} view={this.props.currentView}>{ this.props.children }</View>
-        {/* { this.props.children } */}
+        {/* <View index={viewState.indexOf(this.props.currentView)} view={this.props.currentView}>{ this.props.children }</View> */}
+        { this.props.children }
         <style jsx>{`
           .scroll-controller {
-            width: 100vw;
-            height: 100vh;
+            width: 96vw;
+            height: calc(100vh - 4vw);
             overflow: hidden;
+            box-sizing: border-box;
+            position: relative;
           }
         `}</style>
       </div>
@@ -110,14 +105,20 @@ class ScrollController extends Component {
 }
 
 function mapStateToProps (state) {
+  const { isMobile, canScroll, currentView } = state.splash
   return {
-    isMobile: state.splash.isMobile
+    isMobile,
+    canScroll,
+    currentView
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    // getNewOriginPos: (transRoute, transDir, widthHeight) => dispatch(getNewOriginPos(transRoute, transDir, widthHeight))
+    onCheckIfMobile: () => dispatch(checkIfMobile()),
+    onSetCurrentView: view => dispatch(setCurrentView(view)),
+    onShowFooter: bool => dispatch(showFooter(bool)),
+    onCanScroll: bool => dispatch(canScroll(bool))
   }
 }
 
