@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
-import { setCurrentView, showFooter, canScroll, checkIfMobile } from '../../lib/redux/actions'
+import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 
 class ScrollController extends Component {
@@ -43,7 +43,6 @@ class ScrollController extends Component {
             onShowFooter(false)
           } else {
             onSetCurrentView(viewState[currentIndex - 1])
-
           }
         }
       }
@@ -67,6 +66,7 @@ class ScrollController extends Component {
       }
     }
     this.props.onCanScroll(false)
+    this.props.onDoAnimation(false)
   }
 
   handleTouchStart (e) {
@@ -88,7 +88,7 @@ class ScrollController extends Component {
     console.log('scrollcontroller rerender')
     return (
       <div className='scroll-controller' onWheel={this.handleScroll} onTouchMove={this.handleScroll} onTouchStart={this.handleTouchStart}>
-        {/* <View index={viewState.indexOf(this.props.currentView)} view={this.props.currentView}>{ this.props.children }</View> */}
+        <View />
         { this.props.children }
         <style jsx>{`
           .scroll-controller {
@@ -105,11 +105,12 @@ class ScrollController extends Component {
 }
 
 function mapStateToProps (state) {
-  const { isMobile, canScroll, currentView } = state.splash
+  const { isMobile, canScroll, currentView, footerShown } = state.splash
   return {
     isMobile,
     canScroll,
-    currentView
+    currentView,
+    footerShown
   }
 }
 
@@ -118,7 +119,8 @@ function mapDispatchToProps (dispatch) {
     onCheckIfMobile: () => dispatch(checkIfMobile()),
     onSetCurrentView: view => dispatch(setCurrentView(view)),
     onShowFooter: bool => dispatch(showFooter(bool)),
-    onCanScroll: bool => dispatch(canScroll(bool))
+    onCanScroll: bool => dispatch(canScroll(bool)),
+    onDoAnimation: bool => dispatch(doAnimation(bool))
   }
 }
 

@@ -1,110 +1,66 @@
 // import Animate from 'react-move/Animate'
 // import NodeGroup from 'react-move/NodeGroup'
 import React, { Component } from 'react'
-// import { Transition } from 'react-transition-group'
+import { connect } from 'react-redux'
+import { doAnimation } from '../../lib/redux/actions'
+import { Transition } from 'react-transition-group'
 import TransitionSled from './TransitionSled'
+import raf from 'raf'
 import ImageBG from './ImageBG'
-import TextBlock from './TextBlock'
 import Logo from './Logo'
+import TextBlock from './TextBlock'
+import { binder } from '../../lib/_utils'
 
-export default class View extends Component {
+class View extends Component {
   constructor (props) {
     super(props)
-    // this.state = {
-    //   inProp: false
-    // }
+    this.state = { inProp: false }
+    binder(this, ['useRAFRedux'])
   }
 
-  componentDidMount () { setTimeout(() => { this.setState({ inProp: true }) }, 100) }
+  componentDidMount () {
+    this.useRAFRedux()
+  }
+
+  componentDidUpdate () {
+    this.useRAFRedux()
+  }
+
+  useRAFRedux () { raf(() => raf(() => setTimeout(() => { this.props.onDoAnimation(true) }))) }
 
   render () {
-    const { imageUrl, copyStyles, headerCopy, bodyCopy, isFirstView, index } = this.props.view
+    // const { imageUrl, copyStyles, headerCopy, bodyCopy, isFirstView, index } = this.props.view
     console.log('view rerender')
     // const { inProp } = this.state
     // const inProp = setTimeout(() => { return true }, 50)
-    // const defaultStyle = {
-    //   transition: 'transform 800ms ease-in-out',
-    //   transform: `translateX(-100)`
-    // }
-    // const transitionStyles = {
-    //   entering: { transform: `translateX(-100)` },
-    //   // entering: { transform: `translateX(${el === 'txt' ? 100 : -100})` },
-    //   entered: { transform: `translateX(0)` }
-    // }
+    const defaultStyle = {
+      transition: 'transform 800ms ease-in-out',
+      transform: `translateX(-100)`
+    }
+    const transitionStyles = {
+      entering: { transform: `translateX(-100)` },
+      // entering: { transform: `translateX(${el === 'txt' ? 100 : -100})` },
+      entered: { transform: `translateX(0)` }
+    }
     // console.log(inProp);
     // console.log(bodyCopy);
     return (
       <div className='view'>
         <div className='inner-view'>
           <div className='logo-wrapper'>
-            <Logo key={`logo${!isFirstView}`} isFirstView={isFirstView} />
+            <Logo />
           </div>
-          {/* <TransitionSled k={index}>
-            <div className='img-wrapper'>
-              <ImageBG key={index} isFirstView={isFirstView} url={imageUrl} />
-            </div>
-          </TransitionSled> */}
-           <div className='img-wrapper'>
-              <ImageBG key={index} isFirstView={isFirstView} url={imageUrl} />
-            </div>
-          {/* <Transition mountOnEnter in={inProp} timeout={100}>
+          <Transition in={this.props.animateIn} timeout={200}>
             { state => (
               <div className='img-wrapper' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-                <ImageBG isFirstView={isFirstView} url={imageUrl} />
+                { state }
+                <ImageBG />
               </div>
             )}
-          </Transition> */}
-          {/* {[{ ...view, x: 50, dest: 0 }].map(v => (
-            <Animate
-              key={`img${index}`}
-              start={{
-                x: v.x
-              }}
-              update={{
-                x: [v.x],
-                timing: {
-                  duration: 500
-                  // easing: 'cubic-bezier(1.000, 0.000, 0.000, 1.000)'
-                }
-              }}>
-              {({ x }) => {
-                console.log(v, x)
-                return (
-                  <div className='img-wrapper' style={{ transform: `translate3d(${x}%, 0, 0)` }}>
-                    <ImageBG isFirstView={isFirstView} url={imageUrl} />
-                  </div>
-                )
-              }}
-            </Animate>
-          ))} */}
-          {/* <NodeGroup
-            data={view}
-            keyAccessor={d => d.index}
-            start={(data, index) => ({
-              x: 50
-            })}
-            enter={(data, index) => ({
-              x: [50]
-            })}
-            update={{
-              x: [v.x],
-              timing: {
-                duration: 500
-                // easing: 'cubic-bezier(1.000, 0.000, 0.000, 1.000)'
-              }
-            }}>
-            {({ x }) => {
-              console.log(v, x)
-              return (
-                <div className='img-wrapper' style={{ transform: `translate3d(${x}px, 0, 0)` }}>
-                  <ImageBG isFirstView={isFirstView} url={imageUrl} />
-                </div>
-              )
-            }}
-          </NodeGroup> */}
+          </Transition>
 
           <div className='txt-wrapper'>
-            <TextBlock key={`txt${index}`} isFirstView={isFirstView} styles={copyStyles} header={headerCopy} body={bodyCopy} />
+            <TextBlock />
           </div>
         </div>
         <style jsx>{`
@@ -142,3 +98,17 @@ export default class View extends Component {
     )
   }
 }
+function mapStateToProps (state) {
+  const { animateIn } = state.splash
+  return {
+    animateIn
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    onDoAnimation: bool => dispatch(doAnimation(bool)) 
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(View)
