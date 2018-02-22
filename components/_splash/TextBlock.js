@@ -3,24 +3,23 @@ import { TransitionMotion, spring, presets } from 'react-motion'
 // import PropTypes from 'prop-types'
 // import { CSSTransition } from 'react-transition-group'
 
-
 class TextBlock extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      inProp: false
-    }
+    // this.state = {
+    //   inProp: false
+    // }
   }
 
-  componentDidMount () {
-    setTimeout(() => {
-      this.setState({ inProp: true })
-    }, 100)
-  }
+  // componentDidMount () {
+  //   setTimeout(() => {
+  //     this.setState({ inProp: true })
+  //   }, 100)
+  // }
 
   render () {
-    const { inProp } = this.state
-    console.log(inProp);
+    // const { inProp } = this.state
+    // console.log(inProp);
     // const defaultStyle = {
     //   transition: 'transform 800ms ease-in-out',
     //   transform: `translateX(-100)`

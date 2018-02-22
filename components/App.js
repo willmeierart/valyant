@@ -13,7 +13,6 @@ import viewState from '../lib/data/viewState'
 class App extends Component {
   render () {
     const { title, footerShown, children } = this.props
-    console.log('app rerender')
     return (
       <div>
         <Head title={title} />
@@ -29,14 +28,11 @@ class App extends Component {
 
 function mapStateToProps (state) {
   const { footerShown } = state.splash
-  return {
-    footerShown
-  }
+  return { footerShown }
 }
 
 function mapDispatchToProps (dispatch) {
-  return {
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

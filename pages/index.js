@@ -8,7 +8,6 @@ import Logo from '../components/_splash/Logo'
 
 export default class Home extends Component {
   render () {
-    console.log('index rerender')
     return (
       <AppProvider>
         <App title='Home'>

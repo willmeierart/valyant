@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
-import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation } from '../../lib/redux/actions'
+import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackImage } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 
 class ScrollController extends Component {
@@ -25,12 +25,16 @@ class ScrollController extends Component {
 
   changeView (e) {
     const { touchStartY } = this.state
-    const { footerShown, onShowFooter, onSetCurrentView, currentView, isMobile } = this.props
+    const { footerShown, onShowFooter, onSetCurrentView, currentView, isMobile, animateIn } = this.props
     const currentIndex = viewState.indexOf(currentView)
+
+    this.props.onSetFallbackImage(currentView.imageUrl)
+
     if (isMobile && touchStartY !== null) {
       const { clientY } = e.touches[0]
       if (clientY > touchStartY) {
         if (!currentView.isLastView) {
+          this.props.onDoAnimation(false)
           onSetCurrentView(viewState[currentIndex + 1])
         } else {
           if (!footerShown) {
@@ -42,6 +46,7 @@ class ScrollController extends Component {
           if (currentView.isLastView && footerShown) {
             onShowFooter(false)
           } else {
+            this.props.onDoAnimation(false)
             onSetCurrentView(viewState[currentIndex - 1])
           }
         }
@@ -49,6 +54,7 @@ class ScrollController extends Component {
     } else {
       if (e.deltaY > 0) {
         if (!currentView.isLastView) {
+          this.props.onDoAnimation(false)
           onSetCurrentView(viewState[currentIndex + 1])
         } else {
           if (!footerShown) {
@@ -60,13 +66,13 @@ class ScrollController extends Component {
           if (currentView.isLastView && footerShown) {
             onShowFooter(false)
           } else {
+            this.props.onDoAnimation(false)
             onSetCurrentView(viewState[currentIndex - 1])
           }
         }
       }
     }
     this.props.onCanScroll(false)
-    this.props.onDoAnimation(false)
   }
 
   handleTouchStart (e) {
@@ -85,7 +91,6 @@ class ScrollController extends Component {
   }
 
   render () {
-    console.log('scrollcontroller rerender')
     return (
       <div className='scroll-controller' onWheel={this.handleScroll} onTouchMove={this.handleScroll} onTouchStart={this.handleTouchStart}>
         <View />
@@ -105,12 +110,13 @@ class ScrollController extends Component {
 }
 
 function mapStateToProps (state) {
-  const { isMobile, canScroll, currentView, footerShown } = state.splash
+  const { isMobile, canScroll, currentView, footerShown, animateIn } = state.splash
   return {
     isMobile,
     canScroll,
     currentView,
-    footerShown
+    footerShown,
+    animateIn
   }
 }
 
@@ -120,7 +126,8 @@ function mapDispatchToProps (dispatch) {
     onSetCurrentView: view => dispatch(setCurrentView(view)),
     onShowFooter: bool => dispatch(showFooter(bool)),
     onCanScroll: bool => dispatch(canScroll(bool)),
-    onDoAnimation: bool => dispatch(doAnimation(bool))
+    onDoAnimation: bool => dispatch(doAnimation(bool)),
+    onSetFallbackImage: img => dispatch(setFallbackImage(img))
   }
 }
 
