@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
 import { binder } from '../../lib/_utils'
@@ -8,7 +9,6 @@ class ScrollController extends Component {
     super(props)
     this.state = {
       isMobile: false,
-      currentView: viewState[0],
       touchStartY: null,
       canScroll: false
     }
@@ -26,15 +26,16 @@ class ScrollController extends Component {
   checkIfMobile () { this.setState({ isMobile: window !== undefined && window.orientation !== undefined }) }
 
   changeView (e) {
-    const { isMobile, touchStartY, currentView } = this.state
-    const { footerShown, showFooter } = this.props
+    const { isMobile, touchStartY } = this.state
+    const { footerShown, showFooter, setCurrentView, currentView } = this.props
     const currentIndex = viewState.indexOf(currentView)
     if (isMobile && touchStartY !== null) {
       const { clientY } = e.touches[0]
       // if (currentView)
       if (clientY > touchStartY) {
         if (!currentView.isLastView) {
-          this.setState({ currentView: viewState[currentIndex + 1] })
+          // this.setState({ currentView: viewState[currentIndex + 1] })
+          setCurrentView(viewState[currentIndex + 1])
         } else {
           if (!footerShown) {
             showFooter(true)
@@ -45,14 +46,17 @@ class ScrollController extends Component {
           if (currentView.isLastView && footerShown) {
             showFooter(false)
           } else {
-            this.setState({ currentView: viewState[currentIndex - 1] })
+            // this.setState({ currentView: viewState[currentIndex - 1] })
+            setCurrentView(viewState[currentIndex - 1])
+
           }
         }
       }
     } else {
       if (e.deltaY > 0) {
         if (!currentView.isLastView) {
-          this.setState({ currentView: viewState[currentIndex + 1] })
+          // this.setState({ currentView: viewState[currentIndex + 1] })
+          setCurrentView(viewState[currentIndex + 1])
         } else {
           if (!footerShown) {
             showFooter(true)
@@ -63,7 +67,8 @@ class ScrollController extends Component {
           if (currentView.isLastView && footerShown) {
             showFooter(false)
           } else {
-            this.setState({ currentView: viewState[currentIndex - 1] })
+            // this.setState({ currentView: viewState[currentIndex - 1] })
+            setCurrentView(viewState[currentIndex - 1])
           }
         }
       }
@@ -87,10 +92,11 @@ class ScrollController extends Component {
   }
 
   render () {
-    console.log('scroll rerender')
+    console.log(this.props.children)
     return (
       <div className='scroll-controller' onWheel={this.handleScroll} onTouchMove={this.handleScroll} onTouchStart={this.handleTouchStart}>
-        <View index={viewState.indexOf(this.state.currentView)} view={this.state.currentView} />
+        <View index={viewState.indexOf(this.props.currentView)} view={this.props.currentView}>{ this.props.children }</View>
+        {/* { this.props.children } */}
         <style jsx>{`
           .scroll-controller {
             width: 100vw;
@@ -103,4 +109,18 @@ class ScrollController extends Component {
   }
 }
 
-export default ScrollController
+function mapStateToProps (state) {
+  return {
+    isMobile: state.splash.isMobile
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    // getNewOriginPos: (transRoute, transDir, widthHeight) => dispatch(getNewOriginPos(transRoute, transDir, widthHeight))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollController)
+
+// export default ScrollController
