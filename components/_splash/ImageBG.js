@@ -9,12 +9,11 @@ class ImageBG extends Component {
   }
 
   render () {
-    const duration = 1000
+    const duration = 200
     const defaultStyle = {
       opacity: 0
     }
     const transitionStyles = {
-      
       entering: { opacity: 0 },
       // entering: { transform: `translateX(${el === 'txt' ? 100 : -100})` },
       entered: { opacity: 1, transition: `opacity ${duration}ms ease-in` }
@@ -23,7 +22,6 @@ class ImageBG extends Component {
       <Transition exit={false} in={this.props.animateIn} timeout={duration}>
         { state => (
           <div className='img-wrapper' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-            { state }
             <div className='inner-wrapper' />
             <style jsx>{`
               .inner-wrapper {

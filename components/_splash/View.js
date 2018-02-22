@@ -29,44 +29,16 @@ class View extends Component {
     }
   }
   useRAFRedux () { 
-    raf(() => this.props.onDoAnimation(true)) 
+    raf(() => this.props.onDoAnimation(true))
   }
   render () {
-    // const { imageUrl, copyStyles, headerCopy, bodyCopy, isFirstView, index } = this.props.view
-    console.log(this.props.animateIn)
-
-    // console.log(fall);
-
-    // const duration = 1000
-
-    // const defaultStyle = {
-    //   transition: `opacity ${duration}ms ease-in`,
-    //   opacity: 0
-    // }
-    // const transitionStyles = {
-    //   entering: { opacity: 0 },
-    //   // entering: { transform: `translateX(${el === 'txt' ? 100 : -100})` },
-    //   entered: { opacity: 1 }
-    // }
-    // console.log(inProp);
-    // console.log(bodyCopy);
-
     const { currentView, animateIn } = this.props
     return (
       <div className='view'>
         <div className='inner-view'>
           <div className='logo-wrapper'>
-            <Logo />
+            <Logo isFirstView={currentView.isFirstView}/>
           </div>
-
-
-          {/* <Transition in={this.props.animateIn} timeout={duration}>
-            { state => (
-              <div className='img-wrapper' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-                <ImageBG view={this.props.currentView} />
-              </div>
-            )}
-          </Transition> */}
 
           <ImageBG animateIn={animateIn} view={currentView} />
 
@@ -74,7 +46,7 @@ class View extends Component {
           <div className='fallback-img' />
 
           <div className='txt-wrapper'>
-            <TextBlock />
+            <TextBlock animateIn={animateIn} body={currentView.bodyCopy} header={currentView.headerCopy} />
           </div>
         </div>
         <style jsx>{`
@@ -93,6 +65,7 @@ class View extends Component {
           .logo-wrapper {
             position:absolute;
             z-index: 10;
+            top: 2%;
             width: 100%;
           }
           .img-wrapper {
@@ -111,7 +84,8 @@ class View extends Component {
 
           }
           .txt-wrapper {
-            display: absolute;
+            position: absolute;
+            top: 0;
             z-index: 10;
             width: 100%;
             height: 100%;
