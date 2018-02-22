@@ -1,0 +1,21 @@
+import Animate from 'react-move/Animate'
+import ImageBG from './ImageBG'
+import TextBlock from './TextBlock'
+import Logo from './Logo'
+
+const View = ({ view: { imageUrl, copyStyles, headerCopy, bodyCopy, isFirstView, index }}) =>  (
+  <div className='view'>
+    <Logo key={`logo${!isFirstView}`} isFirstView={isFirstView} />
+    <ImageBG key={`img${index}`} isFirstView={isFirstView} url={imageUrl} />
+    <TextBlock key={`txt${index}`} isFirstView={isFirstView} styles={copyStyles} header={headerCopy} body={bodyCopy} />
+    <style jsx>{`
+      .view {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+    `}</style>
+  </div>
+)
+
+export default View
