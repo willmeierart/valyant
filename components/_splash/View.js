@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { doAnimation } from '../../lib/redux/actions'
 // import TransitionSled from './TransitionSled'
-import raf from 'raf'
+// import raf from 'raf'
 import ImageBG from './ImageBG'
 import Logo from './Logo'
 import TextBlock from './TextBlock'
-import TextBlockOut from './TextBlockOut'
 import SideTag from '../layout/SideTag'
 import Footer from '../layout/Footer'
+import { LineDot } from '../assets/SVGassets'
 import { binder } from '../../lib/_utils'
 
 class View extends Component {
@@ -23,7 +23,6 @@ class View extends Component {
     console.log(this.props.animateIn);
     if (this.props.animateIn === false) {
       // raf(() => this.props.onDoAnimation(true))
-      
       this.props.onDoAnimation(true)
     }
   }
@@ -44,27 +43,35 @@ class View extends Component {
           <div className='fallback-img' />
 
           <div className='txt-wrapper'>
-            <TextBlock dir={transDir} animateIn={animateIn} body={bodyCopy} header={headerCopy} duration={200} />
-            <TextBlockOut dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} duration={100} />
+            <TextBlock dir={transDir} animateIn={animateIn} body={bodyCopy} header={headerCopy} duration={200} isFirstView={isFirstView} />
+            <TextBlock fallback dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} duration={200} isFirstView={isFirstView} />
+            {/* <TextBlockOut dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} duration={100} isFirstView={isFirstView} /> */}
           </div>
-
           <SideTag show={!isFirstView} duration={200} />
-
           <Footer show={footerShown} duration={200} />
-
         </div>
+        { isFirstView &&
+          <div className='firstview-footer'>
+            <div className='tag v-font medium'>GET TO KNOW US.</div>
+            <div className='line-dot'>
+              <LineDot />
+            </div>
+          </div>
+        }
         <style jsx>{`
           .view {
             width: 96%;
             height: 96%;
             padding: 2%;
-            overflow: hidden;
+            {/* overflow: hidden; */}
             position: absolute;
           }
           .inner-view {
             width: 100%;
             height: 100%;
             position: relative;
+            {/* display: flex;
+            justify-content: center; */}
           }
           .logo-wrapper {
             position:absolute;
@@ -77,9 +84,9 @@ class View extends Component {
             {/* top: 0; left: 0; */}
             background-image: url('${fallbackView.imageUrl}');
             background-size: cover;
+            background-position: center;
             width: 100%;
             height: 100%;
-
           }
           .txt-wrapper {
             position: absolute;
@@ -96,6 +103,23 @@ class View extends Component {
             width: 5vw;
             z-index: 30;
             background-color: #4597BB;            
+          }
+          .line-dot {
+            z-index: 1001;
+          }
+          .firstview-footer {
+            position: fixed;
+            {/* bottom: -6.25vw; */}
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .firstview-footer .tag {
+            margin-bottom: 1.75em;
+            color: #1F5877;
           }
         `}</style>
       </div>

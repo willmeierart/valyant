@@ -106,9 +106,8 @@ class ScrollController extends Component {
         { this.props.children }
         <style jsx>{`
           .scroll-controller {
-            width: 96vw;
-            height: calc(100vh - 4vw);
-            {/* overflow: hidden; */}
+            width: 100%;
+            height: calc(100vh - 2vw);
             box-sizing: border-box;
             position: relative;
           }

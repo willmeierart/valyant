@@ -24,7 +24,7 @@ export default class CustomDocument extends Document {
         onTouchStart={(e) => { this.preventScrollNav(e) }}
         onTouchMove={(e) => { this.preventScrollNav(e) }}>
         <Head />
-        <body onTouchStart={(e) => { this.preventScrollNav(e) }}
+        <body className='v-font base' onTouchStart={(e) => { this.preventScrollNav(e) }}
           onTouchMove={(e) => { this.preventScrollNav(e) }}
           onWheel={(e) => { this.preventScrollNav(e) }}>
           <Main />
@@ -32,8 +32,10 @@ export default class CustomDocument extends Document {
         </body>
         <style jsx global>{`
           body {
-            overflow: hidden!important;
-            margin: 2vw;
+            {/* overflow: hidden!important; */}
+            {/* margin: 2vw; */}
+            width: 100vw;
+            height: 100vh;
             box-sizing: border-box;
           }
         `}</style>

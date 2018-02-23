@@ -7,7 +7,8 @@ class ImageBG extends Component {
     const defaultStyle = {
       opacity: 0,
       backgroundImage: `url('${image}')`,
-      backgroundSize: 'cover'
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
       // background: color
     }
     const transitionStyles = {
@@ -22,6 +23,7 @@ class ImageBG extends Component {
             <style jsx>{`
               .inner-wrapper {
                 background-size: cover;
+                background-position: center;
                 width: 100%;
                 height: 100%;
               }

@@ -1,5 +1,6 @@
 // literally HTML head - all SEO stuff, etc.
 import Head from 'next/head'
+import globalStyles from '../styles/index.scss'
 
 const initialProps = {
   title: 'Agency Zero',
@@ -13,6 +14,7 @@ export default (props = initialProps) => {
     <meta key='charset' charset='utf-8' />
     <meta key='viewport' name='viewport' content={`inital-scale=${initialScale || initialProps.initialScale}, width=device-width, shrink-to-fit=no`} />
     <meta key='meta-title' name='title' content='Agency Zero' />
+    <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
     <link rel='shortcut icon' href='/favicon.ico' />
     {/* <script async src='https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-X' /> */}
   </Head>

@@ -15,12 +15,12 @@ CONTENTS:************************************
 ***************** ~IMPORTS~ *****************
 ********************************************/
 @import '~normalize.css';
-@import '~loaders.css/src/animations/line-spin-fade-loader.scss';
-@import url(./_base/_animations.scss);
-@import url(./_base/_base.scss);
-@import url(./_base/_colors.scss);
-@import url(./_base/_easings.scss);
-@import url(./_base/_fonts.scss);
+// @import '~loaders.css/src/animations/line-spin-fade-loader.scss';
+// @import url(./_base/_animations.scss);
+// @import url(./_base/_base.scss);
+// @import url(./_base/_colors.scss);
+// @import url(./_base/_easings.scss);
+@import url(./fonts/_fonts.scss);
 
 /********************************************
 **************** ~VARIABLES~ ****************
@@ -35,19 +35,25 @@ CONTENTS:************************************
 ***************** ~LOADERS~ *****************
 ********************************************/
 
-.loader-wrapper {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.v-font {
+  font-family: 'ConduitITCStd', Helvetica;
+  .extra-bold {
+    font-weight: 800;
+  }
+  .black {
+    font-weight: 900;
+  }
+  .light {
+    font-weight: 300;
+  }
+  .medium {
+    font-weight: 500;
+  }
+  .base {
+    font-weight: normal;
+  }
 }
 
-.loader-hidden { display: none; }
-
-.loader-active { display: block; }
-
-.loader-active .loader-inner div { background-color: #970d11; }
 
 
 /********************************************

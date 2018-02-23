@@ -1,11 +1,13 @@
 import React from 'react'
+import { LogoFull, LogoMono } from '../assets/SVGassets'
 
 export default ({ isFirstView }) => {
+  const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
   return (
     <div className='logo'>
       { isFirstView
-        ? <div className='full-name'> Valyant </div>
-        : <div className='v'> V </div>
+        ? <div className='full-name'> <LogoFull /> </div>
+        : <div className='v'> <LogoMono /> </div>
       }
       <style jsx>{`
         .logo {
