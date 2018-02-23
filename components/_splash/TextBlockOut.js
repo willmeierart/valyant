@@ -6,7 +6,7 @@ class TextBlock extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      heightVal: '500px'
+      heightVal: '100px'
     }
   }
   componentDidMount () {
@@ -18,19 +18,18 @@ class TextBlock extends Component {
     const { heightVal } = this.state
     const { duration, dir, body, header, animateIn } = this.props
     const defaultStyle = {
-      opacity: 0,
-      transform: `translate3d(0,${dir === '>>' ? heightVal : '-' + heightVal},0)`
+      opacity: 1,
+      transform: `translate3d(0,0,0)`
     }
     const transitionStyles = {
       entering: {
-        opacity: 0,
-        transform: `translate3d(0,${dir === '>>' ? heightVal : '-' + heightVal},0)`
-      },
-      // entering: { transform: `translateX(${el === 'txt' ? 100 : -100})` },
-      entered: {
         opacity: 1,
-        transform: 'translate3d(0,0,0)',
-        transition: `opacity ${duration}ms ease-in, transform ${duration}ms ease-out`
+        transform: `translate3d(0,0,0)`
+      },
+      entered: {
+        opacity: 0,
+        transform: `translate3d(0,${dir === '>>' ? '-' + heightVal : heightVal},0)`,
+        transition: `opacity ${duration}ms ease-in, transform ${duration}ms ease-in`
       }
     }
     return (
@@ -49,7 +48,6 @@ class TextBlock extends Component {
                 justify-content: center;
                 color: white;
                 z-index: 10;
-                position: absolute;
               } 
               .text-block h3, .text-block h1 {
                 z-index: 10;

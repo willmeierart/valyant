@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { doAnimation } from '../../lib/redux/actions'
 // import TransitionSled from './TransitionSled'
-// import raf from 'raf'
+import raf from 'raf'
 import ImageBG from './ImageBG'
 import Logo from './Logo'
 import TextBlock from './TextBlock'
+import TextBlockOut from './TextBlockOut'
 import SideTag from '../layout/SideTag'
 import Footer from '../layout/Footer'
 import { binder } from '../../lib/_utils'
@@ -18,31 +19,36 @@ class View extends Component {
   componentDidMount () { this.doAnimationCheck() }
   componentDidUpdate () { this.doAnimationCheck() }
 
-  doAnimationCheck () { 
-    // raf(() => this.props.onDoAnimation(true))
-    if (!this.props.animateIn) { this.props.onDoAnimation(true) }
+  doAnimationCheck () {
+    console.log(this.props.animateIn);
+    if (this.props.animateIn === false) {
+      // raf(() => this.props.onDoAnimation(true))
+      
+      this.props.onDoAnimation(true)
+    }
   }
 
   render () {
-    const { currentView, animateIn, footerShown, fallbackImage } = this.props
-    console.log(currentView.imageUrl)
+    const { currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, color }, fallbackView, animateIn, footerShown, transDir } = this.props
+    console.log(imageUrl)
     
     return (
       <div className='view'>
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo isFirstView={currentView.isFirstView} />
+            <Logo isFirstView={isFirstView} />
           </div>
 
-          <ImageBG animateIn={animateIn} image={currentView.imageUrl} duration={200} />
+          <ImageBG color={color} animateIn={animateIn} image={imageUrl} duration={200} />
           <div className='fallback-img' />
 
           <div className='txt-wrapper'>
-            <TextBlock animateIn={animateIn} body={currentView.bodyCopy} header={currentView.headerCopy} duration={200} />
+            <TextBlock dir={transDir} animateIn={animateIn} body={bodyCopy} header={headerCopy} duration={200} />
+            <TextBlockOut dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} duration={100} />
           </div>
 
-          <SideTag show={!currentView.isFirstView} duration={200} />
+          <SideTag show={!isFirstView} duration={200} />
 
           <Footer show={footerShown} duration={200} />
 
@@ -67,7 +73,9 @@ class View extends Component {
             width: 100%;
           }
           .fallback-img {
-            background-image: url('${fallbackImage}');
+            {/* position: absolute; */}
+            {/* top: 0; left: 0; */}
+            background-image: url('${fallbackView.imageUrl}');
             background-size: cover;
             width: 100%;
             height: 100%;
@@ -95,12 +103,13 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackImage, footerShown } = state.splash
+  const { animateIn, currentView, fallbackView, footerShown, transDir } = state.splash
   return {
     animateIn,
     currentView,
-    fallbackImage,
-    footerShown
+    fallbackView,
+    footerShown,
+    transDir
   }
 }
 
