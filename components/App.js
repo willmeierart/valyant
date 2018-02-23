@@ -1,19 +1,13 @@
-import { connect } from 'react-redux'
 import Head from './Head'
-import Footer from './layout/Footer'
 import ScrollController from '../components/scroll/ScrollController'
 
-const App = props => (
+const App = ({ title }) => (
   <div>
-    <Head title={props.title} />
+    <Head title={title} />
     <main>
       <ScrollController />
-      {/* <AzLogo01 /> */}
     </main>
-    { props.footerShown && <Footer /> }
   </div>
 )
 
-function mapStateToProps (state) { return { footerShown: state.splash.footerShown } }
-
-export default connect(mapStateToProps, null)(App)
+export default App

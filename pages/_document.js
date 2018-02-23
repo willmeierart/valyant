@@ -31,8 +31,8 @@ export default class CustomDocument extends Document {
           <NextScript />
         </body>
         <style jsx global>{`
-          html, body {
-            {/* overflow: hidden; */}
+          body {
+            overflow: hidden!important;
             margin: 2vw;
             box-sizing: border-box;
           }

@@ -25,7 +25,7 @@ class ScrollController extends Component {
 
   changeView (e) {
     const { touchStartY } = this.state
-    const { footerShown, onShowFooter, onSetCurrentView, currentView, isMobile, animateIn } = this.props
+    const { footerShown, onShowFooter, onSetCurrentView, currentView, isMobile } = this.props
     const currentIndex = viewState.indexOf(currentView)
 
     this.props.onSetFallbackImage(currentView.imageUrl)

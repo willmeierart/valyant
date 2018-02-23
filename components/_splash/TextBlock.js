@@ -30,10 +30,15 @@ class TextBlock extends Component {
         opacity: 1,
         transform: 'translate3d(0,0,0)',
         transition: `opacity ${duration}ms ease-in, transform ${2 * duration}ms ease-out`
+      },
+      exiting: {
+        opacity: 0,
+        transform: `translate3d(0,-${heightVal},0)`,
+        transition: `opacity ${duration}ms ease-in, transform ${2 * duration}ms ease-out`
       }
     }
     return (
-      <Transition exit={false} in={this.props.animateIn} timeout={duration}>
+      <Transition in={this.props.animateIn} timeout={duration}>
         { state => (
           <div ref={ref => { this.textBlock = ref }} className='text-block' style={{ ...defaultStyle, ...transitionStyles[state] }}>
             <h1>{ this.props.header }</h1>

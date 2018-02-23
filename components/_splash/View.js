@@ -6,6 +6,8 @@ import { doAnimation } from '../../lib/redux/actions'
 import ImageBG from './ImageBG'
 import Logo from './Logo'
 import TextBlock from './TextBlock'
+import SideTag from '../layout/SideTag'
+import Footer from '../layout/Footer'
 import { binder } from '../../lib/_utils'
 
 class View extends Component {
@@ -22,7 +24,9 @@ class View extends Component {
   }
 
   render () {
-    const { currentView, animateIn } = this.props
+    const { currentView, animateIn, footerShown, fallbackImage } = this.props
+    console.log(currentView.imageUrl)
+    
     return (
       <div className='view'>
         <div className='inner-view'>
@@ -38,14 +42,17 @@ class View extends Component {
             <TextBlock animateIn={animateIn} body={currentView.bodyCopy} header={currentView.headerCopy} duration={200} />
           </div>
 
-          { !currentView.isFirstView && <div className='side-tag' /> }
+          <SideTag show={!currentView.isFirstView} duration={200} />
+
+          <Footer show={footerShown} duration={200} />
 
         </div>
         <style jsx>{`
           .view {
             width: 96%;
             height: 96%;
-            {/* overflow: hidden; */}
+            padding: 2%;
+            overflow: hidden;
             position: absolute;
           }
           .inner-view {
@@ -60,7 +67,7 @@ class View extends Component {
             width: 100%;
           }
           .fallback-img {
-            background-image: url('${this.props.fallbackImage}');
+            background-image: url('${fallbackImage}');
             background-size: cover;
             width: 100%;
             height: 100%;
@@ -88,11 +95,12 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackImage } = state.splash
+  const { animateIn, currentView, fallbackImage, footerShown } = state.splash
   return {
     animateIn,
     currentView,
-    fallbackImage
+    fallbackImage,
+    footerShown
   }
 }
 
