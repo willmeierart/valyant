@@ -1,21 +1,39 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import debounce from 'lodash.debounce'
+import delay from 'lodash.delay'
+import throttle from 'lodash.throttle'
+import once from 'lodash.once'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
 import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackView, setTransDir } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 
+
 class ScrollController extends Component {
   constructor (props) {
     super(props)
-    this.state = { touchStartY: null, scrollVal: null }
+    this.state = { touchStartY: null, viewImg: '', scrollTimer: null, footer: false }
     binder(this, ['checkIfMobile', 'changeView', 'handleTouchStart', 'handleScroll'])
   }
 
   componentDidMount () {
     this.checkIfMobile()
-    setTimeout(() => { this.props.onCanScroll(true) }, 1000)
+    setTimeout(() => { this.props.onCanScroll(true) }, 900)
   }
+
+  // componentWillReceiveProps (nextProps) {
+  //   this.props.onCanScroll(false)
+  //   if (nextProps.currentView.imageUrl !== this.state.viewImg || nextProps.footerShown !== this.state.footer) {
+  //     console.log('component will receive props')
+  //     setTimeout(() => { this.props.onCanScroll(true) }, 1000)
+  //     this.setState({
+  //       viewImg: nextProps.currentView.imageUrl,
+  //       footer: nextProps.footerShown
+  //     })
+  //   }
+  // }
+
 
   checkIfMobile () {
     if (this.props.isMobile === null) {
@@ -24,22 +42,23 @@ class ScrollController extends Component {
   }
 
   changeView (e) {
-    const { touchStartY, scrollVal } = this.state
+    const { touchStartY } = this.state
     const { footerShown, onShowFooter, onSetCurrentView, onDoAnimation, onSetTransDir, currentView, isMobile } = this.props
     const currentIndex = viewState.indexOf(currentView)
 
-    this.props.onSetFallbackView(currentView)
+    // this.props.onCanScroll(false)    
 
+    this.props.onSetFallbackView(currentView)
+    // this.props.onCanScroll(false)
+    
     if (isMobile && touchStartY !== null) {
       const { clientY } = e.touches[0]
-      if (scrollVal === null) {
-        this.setState({ scrollVal: clientY })
-      }
       if (clientY > touchStartY) {
         onSetTransDir('>>')
         if (!currentView.isLastView) {
           onDoAnimation(false)
           onSetCurrentView(viewState[currentIndex + 1])
+          // this.props.onCanScroll(false) 
         } else {
           if (!footerShown) {
             onShowFooter(true)
@@ -53,6 +72,7 @@ class ScrollController extends Component {
           } else {
             onDoAnimation(false)
             onSetCurrentView(viewState[currentIndex - 1])
+            // this.props.onCanScroll(false)            
           }
         }
       }
@@ -62,6 +82,7 @@ class ScrollController extends Component {
         if (!currentView.isLastView) {
           onDoAnimation(false)
           onSetCurrentView(viewState[currentIndex + 1])
+          // this.props.onCanScroll(false)          
         } else {
           if (!footerShown) {
             onShowFooter(true)
@@ -70,12 +91,12 @@ class ScrollController extends Component {
       } else if (e.deltaY < 0) {
         onSetTransDir('<<')
         if (!currentView.isFirstView) {
-          onDoAnimation(false)          
+          onDoAnimation(false)
           if (currentView.isLastView && footerShown) {
             onShowFooter(false)
           } else {
-            console.log('not mobile not last view back')
             onSetCurrentView(viewState[currentIndex - 1])
+            // this.props.onCanScroll(false)
           }
         }
       }
@@ -94,13 +115,21 @@ class ScrollController extends Component {
     e.preventDefault()
     if (this.props.canScroll) {
       this.changeView(e)
-      setTimeout(() => { this.props.onCanScroll(true) }, 1000)
+      console.log('firing')
+      
+      // this.props.onCanScroll(true)
+      setTimeout(() => {
+        this.props.onCanScroll(false)
+      }, 900)
     }
   }
 
   render () {
     return (
-      <div className='scroll-controller' onWheel={this.handleScroll} onTouchMove={this.handleScroll} onTouchStart={this.handleTouchStart}>
+      <div className='scroll-controller'
+        onWheel={once(this.handleScroll)}
+        onTouchMove={once(this.handleScroll)} 
+        onTouchStart={this.handleTouchStart}>
         <View />
         { this.props.children }
         <style jsx>{`
@@ -109,6 +138,7 @@ class ScrollController extends Component {
             height: 100vh;
             box-sizing: border-box;
             position: relative;
+            overflow: hidden;
           }
         `}</style>
       </div>

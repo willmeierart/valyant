@@ -14,11 +14,17 @@ class View extends Component {
     super(props)
     binder(this, ['doAnimationCheck'])
   }
-  componentDidMount () { this.doAnimationCheck() }
-  componentDidUpdate () { this.doAnimationCheck() }
+  componentDidMount () {
+    this.doAnimationCheck()
+  }
+  // componentWillReceiveProps (nextProps) {
+  //   if (nextProps.animateIn === false) {
+  //     this.doAnimationCheck()
+  //   }
+  // }
 
   doAnimationCheck () {
-    console.log(this.props.animateIn);
+    console.log('fire doanimationcheck')
     if (this.props.animateIn === false) {
       this.props.onDoAnimation(true)
     }

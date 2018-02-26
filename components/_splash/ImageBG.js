@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Transition } from 'react-transition-group'
 
 class ImageBG extends Component {
+  componentDidMount () {
+    console.log('component did mount imagbg');
+  }
   render () {
     const { animateIn, duration, color, image, fallback } = this.props
     const defaultStyle = {
