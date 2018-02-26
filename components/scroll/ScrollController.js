@@ -8,7 +8,7 @@ import { binder } from '../../lib/_utils'
 class ScrollController extends Component {
   constructor (props) {
     super(props)
-    this.state = { touchStartY: null }
+    this.state = { touchStartY: null, scrollVal: null }
     binder(this, ['checkIfMobile', 'changeView', 'handleTouchStart', 'handleScroll'])
   }
 
@@ -24,15 +24,17 @@ class ScrollController extends Component {
   }
 
   changeView (e) {
-    const { touchStartY } = this.state
+    const { touchStartY, scrollVal } = this.state
     const { footerShown, onShowFooter, onSetCurrentView, onDoAnimation, onSetTransDir, currentView, isMobile } = this.props
     const currentIndex = viewState.indexOf(currentView)
 
     this.props.onSetFallbackView(currentView)
 
     if (isMobile && touchStartY !== null) {
-      console.log('ismobile');
       const { clientY } = e.touches[0]
+      if (scrollVal === null) {
+        this.setState({ scrollVal: clientY })
+      }
       if (clientY > touchStartY) {
         onSetTransDir('>>')
         if (!currentView.isLastView) {
@@ -58,9 +60,7 @@ class ScrollController extends Component {
       if (e.deltaY > 0) {
         onSetTransDir('>>')
         if (!currentView.isLastView) {
-          console.log('not mobile not last view forward')
-          console.log(viewState[currentIndex + 1])
-          onDoAnimation(false)          
+          onDoAnimation(false)
           onSetCurrentView(viewState[currentIndex + 1])
         } else {
           if (!footerShown) {
@@ -70,12 +70,11 @@ class ScrollController extends Component {
       } else if (e.deltaY < 0) {
         onSetTransDir('<<')
         if (!currentView.isFirstView) {
+          onDoAnimation(false)          
           if (currentView.isLastView && footerShown) {
             onShowFooter(false)
           } else {
             console.log('not mobile not last view back')
-            
-            onDoAnimation(false)
             onSetCurrentView(viewState[currentIndex - 1])
           }
         }
@@ -107,7 +106,7 @@ class ScrollController extends Component {
         <style jsx>{`
           .scroll-controller {
             width: 100%;
-            height: calc(100vh - 2vw);
+            height: 100vh;
             box-sizing: border-box;
             position: relative;
           }

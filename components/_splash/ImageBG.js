@@ -3,7 +3,7 @@ import { Transition } from 'react-transition-group'
 
 class ImageBG extends Component {
   render () {
-    const { animateIn, duration, color, image } = this.props
+    const { animateIn, duration, color, image, fallback } = this.props
     const defaultStyle = {
       opacity: 0,
       backgroundImage: `url('${image}')`,
@@ -26,6 +26,7 @@ class ImageBG extends Component {
                 background-position: center;
                 width: 100%;
                 height: 100%;
+                z-index: 6;
               }
               h1 {
                 position: absolute;
@@ -37,6 +38,7 @@ class ImageBG extends Component {
                 position: absolute;
                 width: 100%;
                 height: 100%;
+                z-index: 2;
                 {/* opacity:0;  */}
               }
             `}</style>
