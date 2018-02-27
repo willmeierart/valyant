@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { doAnimation } from '../../lib/redux/actions'
+import { doAnimation, canScroll } from '../../lib/redux/actions'
 import ImageBG from './ImageBG'
 import Logo from './Logo'
 import TextBlock from './TextBlock'
@@ -18,7 +18,9 @@ class View extends Component {
   componentDidUpdate () { this.doAnimationCheck() }
 
   doAnimationCheck () {
-    console.log(this.props.animateIn);
+    // let scrollTimer = setTimeout(() => {
+    //   this.props.onCanScroll(true)
+    // }, 1000)
     if (this.props.animateIn === false) {
       this.props.onDoAnimation(true)
     }
@@ -106,7 +108,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    onDoAnimation: bool => dispatch(doAnimation(bool)) 
+    onDoAnimation: bool => dispatch(doAnimation(bool)),
+    onCanScroll: bool => dispatch(canScroll(bool))
   }
 }
 

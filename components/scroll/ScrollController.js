@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import once from 'lodash.once'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
 import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackView, setTransDir } from '../../lib/redux/actions'
@@ -14,13 +15,10 @@ class ScrollController extends Component {
 
   componentDidMount () {
     this.checkIfMobile()
-    setTimeout(() => { this.props.onCanScroll(true) }, 1000)
   }
 
   checkIfMobile () {
-    if (this.props.isMobile === null) {
-      this.props.onCheckIfMobile()
-    }
+    if (this.props.isMobile === null) { this.props.onCheckIfMobile() }
   }
 
   changeView (e) {
@@ -74,7 +72,6 @@ class ScrollController extends Component {
           if (currentView.isLastView && footerShown) {
             onShowFooter(false)
           } else {
-            console.log('not mobile not last view back')
             onSetCurrentView(viewState[currentIndex - 1])
           }
         }
@@ -85,22 +82,22 @@ class ScrollController extends Component {
 
   handleTouchStart (e) {
     const { isMobile } = this.props
-    if (isMobile) {
-      this.setState({ touchStartY: e.touches[0].clientY })
-    }
+    if (isMobile) { this.setState({ touchStartY: e.touches[0].clientY }) }
   }
 
   handleScroll (e) {
     e.preventDefault()
+    console.log(e.deltaY);
+    console.log('handleScroll')
     if (this.props.canScroll) {
       this.changeView(e)
-      setTimeout(() => { this.props.onCanScroll(true) }, 1000)
+      this.props.onCanScroll(false)
     }
   }
 
   render () {
     return (
-      <div className='scroll-controller' onWheel={this.handleScroll} onTouchMove={this.handleScroll} onTouchStart={this.handleTouchStart}>
+      <div className='scroll-controller' onWheel={once(this.handleScroll)} onTouchMove={once(this.handleScroll)} onTouchStart={this.handleTouchStart}>
         <View />
         { this.props.children }
         <style jsx>{`
@@ -109,6 +106,7 @@ class ScrollController extends Component {
             height: 100vh;
             box-sizing: border-box;
             position: relative;
+            overflow: hidden;
           }
         `}</style>
       </div>
@@ -141,4 +139,3 @@ function mapDispatchToProps (dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollController)
 
-// export default ScrollController
