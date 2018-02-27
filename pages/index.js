@@ -3,7 +3,7 @@ import App from '../components/App'
 
 const Home = () => (
   <AppProvider>
-    <App title="Home" />
+    <App title='Home' />
   </AppProvider>
 )
 

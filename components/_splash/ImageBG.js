@@ -1,28 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Transition } from 'react-transition-group'
-import { doAnimation, canScroll } from '../../lib/redux/actions'
+import { doAnimation, canScroll, showFooter } from '../../lib/redux/actions'
 
 class ImageBG extends Component {
   componentWillUpdate (nextProps) {
     if (this.props.image !== nextProps.image) {
+      // this.props.footerShown && this.props.howFooter(false)
       if (this.scrollTimer) {
         clearTimeout(this.scrollTimer)
         this.scrollTimer = null
-        console.log(this.scrollTimer)
       }
-      console.log('image update')
       this.props.onCanScroll(false)
       this.scrollTimer = setTimeout(() => {
-        console.log('within scrolltimer')
-        console.log(this.scrollTimer)   
         this.props.onCanScroll(true)
         clearTimeout(this.scrollTimer)
-      }, 1000)
+      }, 1600)
     }
   }
   render () {
-    const { animateIn, duration, color, image, fallback } = this.props
+    const { animateIn, duration, image } = this.props
     const defaultStyle = {
       opacity: 0,
       backgroundImage: `url('${image}')`,
@@ -70,15 +67,17 @@ class ImageBG extends Component {
 
 function mapStateToProps (state) {
   // const { animateIn, currentView, fallbackView, footerShown, transDir } = state.splash
-  return {}
+  return {
+    footerShown: state.splash.footerShown
+  }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     onDoAnimation: bool => dispatch(doAnimation(bool)),
-    onCanScroll: bool => dispatch(canScroll(bool))
+    onCanScroll: bool => dispatch(canScroll(bool)),
+    onShowFooter: bool => dispatch(showFooter(bool))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageBG)
-

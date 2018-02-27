@@ -3,7 +3,7 @@ import { Transition } from 'react-transition-group'
 import { DividerPink, DividerWhite } from '../assets/SVGassets'
 import { binder } from '../../lib/_utils'
 
-class TextBlock extends Component {
+class FirstViewText extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -16,11 +16,14 @@ class TextBlock extends Component {
     }
   }
   render () {
+    // console.log(this.props.animateIn);
     const { heightVal } = this.state
-    const { duration, dir, body, header, animateIn, isFirstView, fallback } = this.props
-    const regVal = dir === '>>' ? heightVal : '-' + heightVal
+    const { duration, dir, body, header, animateIn, isFirstView, fallback, header2 } = this.props
+    const regVal = '100px'
+    // const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     // const firstViewStyles={}
+    // console.log(animateIn, );
     const defaultStyle = {
       position: 'absolute',
       zIndex: 10,
@@ -28,34 +31,37 @@ class TextBlock extends Component {
       flexDirection: 'column',
       display: 'flex',
       flexGrow: 1,
-      opacity: fallback ? 1 : 0,
-      transform: `translate3d(0,${fallback ? 0 : regVal},0)`,
-      color: 'white',
-      width: isFirstView && !fallback ? '100vw' : '50vw',
-      textAlign: isFirstView && !fallback ? 'center' : 'left',
-      alignItems: isFirstView && !fallback ? 'center' : 'left',
-      left: isFirstView && !fallback ? 0 : '5vw',
-      justifyContent: isFirstView && !fallback ? 'center' : 'flex-start'
+      opacity: 0,
+      color: '#1F5877',
+      width: '100vw',
+      textAlign: 'center',
+      alignItems: 'center',
+      left: 0,
+      justifyContent: 'center',
+      transition: `opacity ${duration}ms ease-in, transform ${duration}ms ease-in`
     }
     const transitionStyles = {
       entering: {
-        opacity: fallback ? 1 : 0,
-        transform: `translate3d(0,${fallback ? 0 : regVal},0)`
+        opacity: 0,
+        transform: `translate3d(0,-${regVal},0)`,
       },
-      // entering: { transform: `translateX(${el === 'txt' ? 100 : -100})` },
       entered: {
-        opacity: fallback ? 0 : 1,
-        transform: `translate3d(0,${fallback ? fallbackVal : 0},0)`,
-        transition: `opacity ${duration}ms ease-in, transform ${duration}ms cubic-bezier(0.075, 0.82, 0.165, 1)`
+        opacity: 1,
+        transform: `translate3d(0,0,0)`,
+      },
+      exiting: {
+        opacity: 0,
+        transform: `translate3d(0,${regVal},0)`
       }
     }
     return (
-      <Transition in={animateIn} timeout={duration}>
+      <Transition appear in={animateIn} timeout={duration}>
         { state => (
           <div className='text-block v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>
             <h1 className='v-font'>{ header }</h1>
+            <h1><div className='v-font light header-2'>{ header2 }</div></h1>
             <div className='divider'>
-              <DividerWhite />
+              <DividerPink />
             </div>
             <h3 className='v-font light'>{ body }</h3>
             <style jsx>{`
@@ -64,7 +70,7 @@ class TextBlock extends Component {
                 font-size: 4em;
                 {/* flex-wrap: nowrap;
                 white-space:nowrap; */}
-                width: ${isFirstView ? '100%' : '50%'};
+                width: 100%;
                 margin:0;
                 {/* line-height: 0;  */}
               }
@@ -87,8 +93,8 @@ class TextBlock extends Component {
                 width: 75%;
                 font-size: 1.25em;
                 line-height: 1.25em;
-                font-weight: ${isFirstView && !fallback ? 500 : 'normal'};
-                letter-spacing: ${isFirstView && !fallback ? '.05em' : 0}
+                font-weight: ${!fallback ? 500 : 'normal'};
+                letter-spacing: ${!fallback ? '.05em' : 0}
               }
             `}</style>
           </div>
@@ -98,4 +104,4 @@ class TextBlock extends Component {
   }
 }
 
-export default TextBlock
+export default FirstViewText

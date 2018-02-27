@@ -3,19 +3,21 @@ import Head from 'next/head'
 import globalStyles from '../styles/index.scss'
 
 const initialProps = {
-  title: 'Agency Zero',
+  title: 'Valyant AI',
   initialScale: '1.0'
 }
 
 export default (props = initialProps) => {
   const { title, initialScale } = props
   return <Head>
-    <title key='title'>{title}</title>
-    <meta key='charset' charset='utf-8' />
+    <title key='title'>{`Valyant AI - ${title}`}</title>
+    <meta key='charset' charSet='utf-8' />
     <meta key='viewport' name='viewport' content={`inital-scale=${initialScale || initialProps.initialScale}, width=device-width, shrink-to-fit=no`} />
-    <meta key='meta-title' name='title' content='Agency Zero' />
+    <meta key='meta-title' name='title' content='Valyant AI' />
     <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
-    <link rel='shortcut icon' href='/favicon.ico' />
+    <link rel='icon' type='image/png' sizes='32x32' href='/static/favicon-32x32.png' />
+    <link rel='icon' type='image/png' sizes='96x96' href='/static/favicon-96x96.png' />
+    <link rel='icon' type='image/png' sizes='16x16' href='/static/favicon-16x16.png' />
     {/* <script async src='https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-X' /> */}
   </Head>
 }

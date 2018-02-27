@@ -68,7 +68,7 @@ class ScrollController extends Component {
       } else if (e.deltaY < 0) {
         onSetTransDir('<<')
         if (!currentView.isFirstView) {
-          onDoAnimation(false)          
+          onDoAnimation(false)
           if (currentView.isLastView && footerShown) {
             onShowFooter(false)
           } else {
@@ -85,13 +85,12 @@ class ScrollController extends Component {
     if (isMobile) { this.setState({ touchStartY: e.touches[0].clientY }) }
   }
 
-  handleScroll (e) {
-    e.preventDefault()
-    console.log(e.deltaY);
-    console.log('handleScroll')
+  handleScroll (event) {
+    event.preventDefault()
+    const e = { ...event }
     if (this.props.canScroll) {
       this.changeView(e)
-      this.props.onCanScroll(false)
+      this.props.onCanScroll(true)
     }
   }
 
@@ -138,4 +137,3 @@ function mapDispatchToProps (dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollController)
-

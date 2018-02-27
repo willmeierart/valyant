@@ -4,23 +4,34 @@ import { doAnimation, canScroll } from '../../lib/redux/actions'
 import ImageBG from './ImageBG'
 import Logo from './Logo'
 import TextBlock from './TextBlock'
+import FirstViewText from './FirstViewText'
 import SideTag from '../layout/SideTag'
 import Footer from '../layout/Footer'
 import ScrollLure from './ScrollLure'
 import { binder } from '../../lib/_utils'
+import viewState from '../../lib/data/viewState'
 
 class View extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      firstViewRender: true
+    }
     binder(this, ['doAnimationCheck'])
   }
   componentDidMount () { this.doAnimationCheck() }
-  componentDidUpdate () { this.doAnimationCheck() }
+  componentDidUpdate () {
+    // console.log(this.props.isFirstView);
+    this.doAnimationCheck()
+    if (!this.props.currentView.isFirstView) {
+      setTimeout(() => { this.setState({ firstViewRender: false }) }, 100)
+    } else {
+      setTimeout(() => { this.setState({ firstViewRender: true }) }, 100)
+      // this.setState({ firstViewRender: true })
+    }
+  }
 
   doAnimationCheck () {
-    // let scrollTimer = setTimeout(() => {
-    //   this.props.onCanScroll(true)
-    // }, 1000)
     if (this.props.animateIn === false) {
       this.props.onDoAnimation(true)
     }
@@ -28,22 +39,48 @@ class View extends Component {
 
   render () {
     const { currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, color }, fallbackView, animateIn, footerShown, transDir } = this.props
-    
     return (
       <div className='view'>
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo isFirstView={isFirstView} />
+            <Logo isFirstView={isFirstView} duration={200} />
           </div>
 
           <ImageBG color={color} animateIn={animateIn} image={imageUrl} duration={200} />
-          <div className='fallback-img' style={{ zIndex: 6 }}/>
+          <div className='fallback-img' style={{ zIndex: 6 }} />
 
-          <div className='txt-wrapper'>
-            <TextBlock dir={transDir} animateIn={animateIn} body={bodyCopy} header={headerCopy} duration={200} isFirstView={isFirstView} />
-            <TextBlock fallback dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} duration={200} isFirstView={isFirstView} />
-          </div>
+          { this.state.firstViewRender
+            ? <div className='txt-wrapper'>
+              <FirstViewText 
+                dir={transDir} 
+                animateIn={animateIn} 
+                body={viewState[0].bodyCopy} 
+                header={viewState[0].headerCopy} 
+                header2={viewState[0].subheaderCopy} 
+                duration={200} 
+                isFirstView={isFirstView} />
+              {/* <FirstViewText fallback dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} header2={fallbackView.subHeaderCopy} duration={200} /> */}
+            </div>
+            : <div className='txt-wrapper'>
+              <TextBlock 
+                dir={transDir} 
+                animateIn={animateIn}
+                body={bodyCopy}
+                header={headerCopy}
+                duration={200}
+                isFirstView={isFirstView} />
+              <TextBlock
+                fallback
+                dir={transDir}
+                animateIn={animateIn}
+                body={fallbackView.bodyCopy}
+                header={fallbackView.headerCopy}
+                duration={200}
+                isFirstView={isFirstView} />
+            </div>
+          }
+          
           <SideTag show={!isFirstView} duration={200} />
           <Footer show={footerShown} duration={200} />
         </div>

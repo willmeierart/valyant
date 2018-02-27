@@ -1,32 +1,94 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Transition } from 'react-transition-group'
 import { LogoFull, LogoMono } from '../assets/SVGassets'
 
-export default ({ isFirstView }) => {
-  const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
-  return (
-    <div className='logo'>
-      { isFirstView
-        ? <div className='full-name'> <LogoFull /> </div>
-        : <div className='v'> <LogoMono /> </div>
+export default class Logo extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      logoIn: false
+    }
+  }
+  componentDidMount () {
+    setTimeout(() => { this.setState({ logoIn: true }) }, 200)
+  }
+  componentWillReceiveProps (nextProps) {
+    if (nextProps != this.props) {
+      // console.log(nextProps, this.props);
+      if (nextProps.isFirstView === undefined) {
+        // this.setState({ logoIn: false })
+        setTimeout(() => { this.setState({ logoIn: false }) }, 200)  
+        // console.log('not first view');
+      } else {
+        setTimeout(() => { this.setState({ logoIn: true }) }, 200)
+        // console.log('first view')      
       }
-      <style jsx>{`
-        .logo {
-          display: flex;
-          justify-content: center;
-          color: white;
+    }
+  }
+  delayExit () {
+    setTimeout(() => {}, this.props.duration)
+  }
+  render () {
+    const { isFirstView, duration } = this.props
+
+    const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
+
+    const defaultStyle = {
+      transform: 'translate3d(0,0,0)',
+      transition: `transform ${duration}ms ease-in`
+    }
+    const transitionStyles = {
+      entering: { transform: 'translate3d(0,0,0)' },
+      entered: { transform: 'translate3d(0,calc(20vh),0)' },
+      exiting: { transform: 'translate3d(0,0,0)' }
+    }
+    const terms = !this.state.logoIn ? isFirstView : this.state.logoIn
+    return (
+      <div className='logo'>
+        { terms
+          ? <Transition onExit={this.delayExit} onExiting={this.delayExit} in={this.state.logoIn} timeout={0}>
+            {state => (
+              <div className='full-name' style={{ ...defaultStyle, ...transitionStyles[state] }}>
+                <LogoFull />
+              </div>
+            )}
+          </Transition>
+          : <div className='v'> <LogoMono /> </div>
         }
-        .logo div {
-          font-family: sans-serif;
-          font-size: 5em;
-        }
-        .v {
-          border: 5px solid white;
-          border-radius: 500px;
-          width: 1em;
-          height: 1em;
-          text-align: center;
-        }
-      `}</style>
-    </div>
-  )
+        <style jsx>{`
+          .logo {
+            display: flex;
+            justify-content: center;
+            color: white;
+          }
+          .full-name {
+            {/* margin-top: 20vh; */}
+          }
+          .logo div {
+            font-family: sans-serif;
+            font-size: 5em;
+          }
+        `}</style>
+      </div>
+    )
+  }
 }
+
+  // return (
+  //   <Transition in={isFirstView} timeout={duration}>
+  //     {state => (
+  //       <div className='side-tag' style={{ ...defaultStyle, ...transitionStyles[state] }}>
+  //         <style jsx>{`
+  //           .side-tag {
+  //             position: absolute;
+  //             left: -1vw;
+  //             top: 35vh;
+  //             height: 30vh;
+  //             width: 5vw;
+  //             z-index: 30;
+  //             background-color: #4597BB;            
+  //           }
+  //         `}</style>
+  //       </div>
+  //     )}
+  //   </Transition>

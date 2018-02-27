@@ -7,7 +7,7 @@ class ScrollLure extends Component {
     super(props)
     this.state = { show: false }
   }
-  componentDidMount () { setTimeout(() => { this.setState({ show: true }) }, 1000) }
+  componentDidMount () { setTimeout(() => { this.setState({ show: true }) }, 500) }
   render () {
     const { duration } = this.props
     const defaultStyle = {
