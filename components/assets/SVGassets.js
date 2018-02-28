@@ -11,8 +11,8 @@ export const LogoMono = () => (
   </svg>
 )
 
-export const LogoFull = () => (
-  <svg width="339px" height="108px" viewBox="0 0 339 108" version="1.1">
+export const LogoFull = ({w = 339, h = 108}) => (
+  <svg width={`${w}px`} height={`${h}px`} viewhox={`0 0 w h`} version="1.1">
       <title>Logo/full-logo</title>
       <defs></defs>
       <g id="Landing-Page---01" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(-551.000000, -125.000000)">

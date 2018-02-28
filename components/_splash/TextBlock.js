@@ -12,10 +12,11 @@ class TextBlock extends Component {
   }
   componentDidMount () {
     if (typeof window !== 'undefined') {
-      this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2)}px` })
+      this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2.5)}px` })
     }
   }
   render () {
+    const width = typeof window !== 'undefined' ? window.innerWidth : 900    
     const { heightVal } = this.state
     const { duration, dir, body, header, animateIn, isFirstView, fallback } = this.props
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
@@ -31,7 +32,7 @@ class TextBlock extends Component {
       opacity: fallback ? 1 : 0,
       transform: `translate3d(0,${fallback ? 0 : regVal},0)`,
       color: 'white',
-      width: isFirstView && !fallback ? '100vw' : '50vw',
+      width: isFirstView && !fallback ? '100vw' : width < 500 ? '90vw' : '50vw',
       textAlign: isFirstView && !fallback ? 'center' : 'left',
       alignItems: isFirstView && !fallback ? 'center' : 'left',
       left: isFirstView && !fallback ? 0 : '5vw',
@@ -59,12 +60,14 @@ class TextBlock extends Component {
             </div>
             <h3 className='v-font light'>{ body }</h3>
             <style jsx>{`
+              .text-block {
+                width: ${isFirstView || width < 500 ? '100%' : '50%'};
+              }
               .text-block h1 {
                 text-transform: uppercase;
-                font-size: 4em;
+                font-size: ${width < 500 ? '3em' : '4em'};
                 {/* flex-wrap: nowrap;
                 white-space:nowrap; */}
-                width: ${isFirstView ? '100%' : '50%'};
                 margin:0;
                 {/* line-height: 0;  */}
               }
@@ -84,7 +87,7 @@ class TextBlock extends Component {
                 height: 17px;
               }
               .text-block h3 {
-                width: 75%;
+                width: ${width > 500 ? '75%' : '100%'};
                 font-size: 1.25em;
                 line-height: 1.25em;
                 font-weight: ${isFirstView && !fallback ? 500 : 'normal'};

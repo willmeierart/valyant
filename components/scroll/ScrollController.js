@@ -3,22 +3,21 @@ import { connect } from 'react-redux'
 import once from 'lodash.once'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
-import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackView, setTransDir } from '../../lib/redux/actions'
+import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackView, setTransDir, getVPDims } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 
 class ScrollController extends Component {
   constructor (props) {
     super(props)
     this.state = { touchStartY: null, scrollVal: null }
-    binder(this, ['checkIfMobile', 'changeView', 'handleTouchStart', 'handleScroll'])
+    binder(this, ['getBaseData', 'changeView', 'handleTouchStart', 'handleScroll'])
   }
 
-  componentDidMount () {
-    this.checkIfMobile()
-  }
+  componentDidMount () { this.getBaseData() }
 
-  checkIfMobile () {
+  getBaseData () {
     if (this.props.isMobile === null) { this.props.onCheckIfMobile() }
+    if (this.props.dims.width === null) { this.props.onGetVPDims() }
   }
 
   changeView (e) {
@@ -33,7 +32,7 @@ class ScrollController extends Component {
       if (scrollVal === null) {
         this.setState({ scrollVal: clientY })
       }
-      if (clientY > touchStartY) {
+      if (clientY < touchStartY) {
         onSetTransDir('>>')
         if (!currentView.isLastView) {
           onDoAnimation(false)
@@ -43,7 +42,7 @@ class ScrollController extends Component {
             onShowFooter(true)
           }
         }
-      } else if (clientY < touchStartY) {
+      } else if (clientY > touchStartY) {
         onSetTransDir('<<')
         if (!currentView.isFirstView) {
           if (currentView.isLastView && footerShown) {
@@ -114,13 +113,14 @@ class ScrollController extends Component {
 }
 
 function mapStateToProps (state) {
-  const { isMobile, canScroll, currentView, footerShown, animateIn } = state.splash
+  const { isMobile, canScroll, currentView, footerShown, animateIn, dims } = state.splash
   return {
     isMobile,
     canScroll,
     currentView,
     footerShown,
-    animateIn
+    animateIn,
+    dims
   }
 }
 
@@ -132,7 +132,8 @@ function mapDispatchToProps (dispatch) {
     onCanScroll: bool => dispatch(canScroll(bool)),
     onDoAnimation: bool => dispatch(doAnimation(bool)),
     onSetFallbackView: view => dispatch(setFallbackView(view)),
-    onSetTransDir: dir => dispatch(setTransDir(dir))
+    onSetTransDir: dir => dispatch(setTransDir(dir)),
+    onGetVPDims: () => dispatch(getVPDims())
   }
 }
 

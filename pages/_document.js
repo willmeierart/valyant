@@ -22,17 +22,25 @@ export default class CustomDocument extends Document {
       <html lang='en-US'
         onWheel={(e) => { this.preventScrollNav(e) }}
         onTouchStart={(e) => { this.preventScrollNav(e) }}
-        onTouchMove={(e) => { this.preventScrollNav(e) }}>
+        onTouchMove={(e) => { this.preventScrollNav(e) }}
+        style={{ overflow: 'hidden' }}>
         <Head />
         <body className='v-font base' onTouchStart={(e) => { this.preventScrollNav(e) }}
           onTouchMove={(e) => { this.preventScrollNav(e) }}
-          onWheel={(e) => { this.preventScrollNav(e) }}>
+          onWheel={(e) => { this.preventScrollNav(e) }}
+          style={{
+            overflow: 'hidden'
+          }}>
           <Main />
           <NextScript />
         </body>
         <style jsx global>{`
-          body {
+          html, body {
             overflow: hidden!important;
+            position: fixed!important;
+          }
+          body {
+            {/* -webkit-overflow-scrolling: touch; */}
             {/* margin: 2vw; */}
             width: 100vw;
             height: 100vh;

@@ -24,9 +24,9 @@ class View extends Component {
     // console.log(this.props.isFirstView);
     this.doAnimationCheck()
     if (!this.props.currentView.isFirstView) {
-      setTimeout(() => { this.setState({ firstViewRender: false }) }, 50)
+      setTimeout(() => { this.setState({ firstViewRender: false }) }, 200)
     } else {
-      setTimeout(() => { this.setState({ firstViewRender: true }) }, 50)
+      setTimeout(() => { this.setState({ firstViewRender: true }) }, 200)
       // this.setState({ firstViewRender: true })
     }
   }
@@ -38,13 +38,13 @@ class View extends Component {
   }
 
   render () {
-    const { currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, color }, fallbackView, animateIn, footerShown, transDir } = this.props
+    const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, color }, fallbackView, animateIn, footerShown, transDir } = this.props
     return (
       <div className='view'>
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
+            <Logo width={width} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
           </div>
 
           <ImageBG color={color} animateIn={animateIn} image={imageUrl} duration={200} />
@@ -52,39 +52,44 @@ class View extends Component {
 
           { this.state.firstViewRender
             ? <div className='txt-wrapper'>
-              <FirstViewText 
-                dir={transDir} 
-                animateIn={animateIn} 
+              <FirstViewText
+                width={width}
+                dir={transDir}
+                animateIn={animateIn}
                 body={viewState[0].bodyCopy} 
                 header={viewState[0].headerCopy} 
                 header2={viewState[0].subHeaderCopy} 
-                duration={200} 
+                duration={200}
                 isFirstView={isFirstView} />
               {/* <FirstViewText fallback dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} header2={fallbackView.subHeaderCopy} duration={200} /> */}
             </div>
             : <div className='txt-wrapper'>
-              <TextBlock 
-                dir={transDir} 
+              <TextBlock
+                height={height}
+                width={width}
+                dir={transDir}
                 animateIn={animateIn}
                 body={bodyCopy}
                 header={headerCopy}
-                duration={200}
+                duration={300}
                 isFirstView={isFirstView} />
               <TextBlock
+                height={height}
+                width={width}
                 fallback
                 dir={transDir}
                 animateIn={animateIn}
                 body={fallbackView.bodyCopy}
                 header={fallbackView.headerCopy}
-                duration={200}
+                duration={300}
                 isFirstView={isFirstView} />
             </div>
           }
           
-          <SideTag show={!isFirstView} duration={200} />
-          <Footer show={footerShown} duration={200} />
+          <SideTag width={width} show={!isFirstView} duration={200} />
+          <Footer width={width} show={footerShown} duration={200} />
         </div>
-        { isFirstView && <ScrollLure duration={200} /> }
+        { (isFirstView && width > 500) && <ScrollLure duration={200} /> }
         <style jsx>{`
           .view {
             width: 96%;
@@ -113,19 +118,10 @@ class View extends Component {
           }
           .txt-wrapper {
             position: absolute;
-            top: 35vh;
+            top: ${width > 500 ? '35vh' : '20vh'};
             z-index: 10;
             width: 100%;
-            height: 30vh;
-          }
-          .side-tag {
-            position: absolute;
-            left: -1vw;
-            top: 35vh;
-            height: 30vh;
-            width: 5vw;
-            z-index: 30;
-            background-color: #4597BB;            
+            height: ${width > 500 ? '30vh' : '45vh'};
           }
         `}</style>
       </div>
@@ -133,13 +129,14 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackView, footerShown, transDir } = state.splash
+  const { animateIn, currentView, fallbackView, footerShown, transDir, dims } = state.splash
   return {
     animateIn,
     currentView,
     fallbackView,
     footerShown,
-    transDir
+    transDir,
+    dims
   }
 }
 

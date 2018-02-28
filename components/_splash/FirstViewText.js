@@ -10,14 +10,16 @@ class FirstViewText extends Component {
       heightVal: '500px'
     }
   }
-  componentDidMount () {
-    if (typeof window !== 'undefined') {
-      this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2)}px` })
-    }
-  }
+  // componentDidMount () {
+  //   if (typeof window !== 'undefined') {
+  //     this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2)}px` })
+  //   }
+  // }
   render () {
+    const { width, height } = this.props
+    const heightVal = `${Math.floor(Math.abs(height) / 2)}px`
     // console.log(this.props.animateIn);
-    const { heightVal } = this.state
+    // const { heightVal } = this.state
     const { duration, dir, body, header, animateIn, isFirstView, fallback, header2 } = this.props
     const regVal = 100
     // const regVal = dir === '>>' ? heightVal : '-' + heightVal
@@ -36,11 +38,11 @@ class FirstViewText extends Component {
       flexGrow: 1,
       opacity: 1,
       color: '#1F5877',
-      width: '100vw',
+      width: `${width > 500 ? '96%' : '100%'}`,
       textAlign: 'center',
       alignItems: 'center',
       left: 0,
-      justifyContent: 'center',
+      justifyContent: `${width > 500 ? 'center' : 'flex-start'}`
     }
     const defaultStyle = {
       transition: `opacity ${duration}ms ease-in, transform ${duration}ms ease-in`
@@ -83,11 +85,12 @@ class FirstViewText extends Component {
             <style jsx>{`
               .text-block h1 {
                 text-transform: uppercase;
-                font-size: 4em;
+                font-size: ${width < 500 ? '2.5em' : '4em'};
                 {/* flex-wrap: nowrap;
                 white-space:nowrap; */}
                 width: 100%;
                 margin:0;
+                margin-top: ${width > 500 ? 0 : '3vh'};
                 {/* line-height: 0;  */}
               }
               .text-block .header-2 {

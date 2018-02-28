@@ -10,14 +10,14 @@ export default class Logo extends Component {
     }
   }
   componentDidMount () {
-    setTimeout(() => { this.setState({ logoIn: true }) }, 200)
+    setTimeout(() => { this.setState({ logoIn: true }) })
   }
   componentWillReceiveProps (nextProps) {
     if (nextProps != this.props) {
       // console.log(nextProps, this.props);
       if (nextProps.isFirstView === undefined) {
         // this.setState({ logoIn: false })
-        setTimeout(() => { this.setState({ logoIn: false }) }, 200) 
+        setTimeout(() => { this.setState({ logoIn: false }) }, 200)
         // console.log('not first view');
       } else {
         setTimeout(() => { this.setState({ logoIn: true }) }, 200)
@@ -29,18 +29,28 @@ export default class Logo extends Component {
     setTimeout(() => {}, this.props.duration)
   }
   render () {
-    const { isFirstView, duration } = this.props
+    const { isFirstView, duration, width } = this.props
 
     const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
 
     const defaultStyle = {
+      opacity: 0,
       transform: 'translate3d(0,0,0)',
-      transition: `transform ${duration}ms ease-out`
+      transition: `all ${duration}ms ease-out`
     }
     const transitionStyles = {
-      entering: { transform: 'translate3d(0,0,0)' },
-      entered: { transform: 'translate3d(0,calc(20vh),0)' },
-      exiting: { transform: 'translate3d(0,0,0)' }
+      entering: {
+        transform: 'translate3d(0,0,0)',
+        opacity: 0
+      },
+      entered: {
+        transform: `translate3d(0,${width > 500 ? 'calc(20vh)' : 0},0)`,
+        opacity: 1
+      },
+      exiting: {
+        transform: 'translate3d(0,0,0)',
+        opacity: 0
+      }
     }
     const terms = !this.state.logoIn ? isFirstView : this.state.logoIn
     return (
