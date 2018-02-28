@@ -19,51 +19,67 @@ class FirstViewText extends Component {
     // console.log(this.props.animateIn);
     const { heightVal } = this.state
     const { duration, dir, body, header, animateIn, isFirstView, fallback, header2 } = this.props
-    const regVal = '100px'
+    const regVal = 100
     // const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     // const firstViewStyles={}
     // console.log(animateIn, );
-    const defaultStyle = {
+    const baseStyles = {
+
+    }
+    const baseStyle = {
       position: 'absolute',
       zIndex: 10,
       height: '100%',
       flexDirection: 'column',
       display: 'flex',
       flexGrow: 1,
-      opacity: 0,
+      opacity: 1,
       color: '#1F5877',
       width: '100vw',
       textAlign: 'center',
       alignItems: 'center',
       left: 0,
       justifyContent: 'center',
+    }
+    const defaultStyle = {
       transition: `opacity ${duration}ms ease-in, transform ${duration}ms ease-in`
     }
     const transitionStyles = {
       entering: {
         opacity: 0,
-        transform: `translate3d(0,-${regVal},0)`,
+        transform: `translate3d(0,-${regVal}px,0)`
       },
       entered: {
         opacity: 1,
-        transform: `translate3d(0,0,0)`,
-      },
-      exiting: {
-        opacity: 0,
-        transform: `translate3d(0,${regVal},0)`
+        transform: `translate3d(0,0,0)`
+      }
+    }
+    const tranStyle2 = {
+      entering: {
+        transform: `translate3d(0,-${regVal / 1.5}px,0)`
+      }
+    }
+    const tranStyle3 = {
+      entering: {
+        transform: `translate3d(0,-${regVal / 2}px,0)`
+      }
+    }
+    const tranStyle4 = {
+      entering: {
+        transform: `translate3d(0,-${regVal / 3}px,0)`
       }
     }
     return (
       <Transition appear in={animateIn} timeout={duration}>
         { state => (
-          <div className='text-block v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-            <h1 className='v-font'>{ header }</h1>
-            <h1><div className='v-font light header-2'>{ header2 }</div></h1>
-            <div className='divider'>
+          <div className='text-block v-font' style={{ ...baseStyle }}>
+            <h1 className='v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>{ header }</h1>
+            <h1><div className='v-font light header-2' style={{ ...defaultStyle, ...transitionStyles[state], ...tranStyle2[state] }}>{ header2 }</div></h1>
+            <div className='divider' style={{ ...defaultStyle, ...transitionStyles[state], ...tranStyle3[state] }}>
               <DividerPink />
             </div>
-            <h3 className='v-font light'>{ body }</h3>
+            <h3 className='v-font light' style={{ ...defaultStyle, ...transitionStyles[state], ...tranStyle4[state] }}>{ body }</h3>
             <style jsx>{`
               .text-block h1 {
                 text-transform: uppercase;

@@ -17,7 +17,7 @@ export default class Logo extends Component {
       // console.log(nextProps, this.props);
       if (nextProps.isFirstView === undefined) {
         // this.setState({ logoIn: false })
-        setTimeout(() => { this.setState({ logoIn: false }) }, 200)  
+        setTimeout(() => { this.setState({ logoIn: false }) }, 200) 
         // console.log('not first view');
       } else {
         setTimeout(() => { this.setState({ logoIn: true }) }, 200)
@@ -35,7 +35,7 @@ export default class Logo extends Component {
 
     const defaultStyle = {
       transform: 'translate3d(0,0,0)',
-      transition: `transform ${duration}ms ease-in`
+      transition: `transform ${duration}ms ease-out`
     }
     const transitionStyles = {
       entering: { transform: 'translate3d(0,0,0)' },
@@ -46,7 +46,7 @@ export default class Logo extends Component {
     return (
       <div className='logo'>
         { terms
-          ? <Transition onExit={this.delayExit} onExiting={this.delayExit} in={this.state.logoIn} timeout={0}>
+          ? <Transition onExit={this.delayExit.bind(this)} onExiting={this.delayExit.bind(this)} in={this.props.firstLogo} timeout={200}>
             {state => (
               <div className='full-name' style={{ ...defaultStyle, ...transitionStyles[state] }}>
                 <LogoFull />

@@ -24,9 +24,9 @@ class View extends Component {
     // console.log(this.props.isFirstView);
     this.doAnimationCheck()
     if (!this.props.currentView.isFirstView) {
-      setTimeout(() => { this.setState({ firstViewRender: false }) }, 100)
+      setTimeout(() => { this.setState({ firstViewRender: false }) }, 50)
     } else {
-      setTimeout(() => { this.setState({ firstViewRender: true }) }, 100)
+      setTimeout(() => { this.setState({ firstViewRender: true }) }, 50)
       // this.setState({ firstViewRender: true })
     }
   }
@@ -44,7 +44,7 @@ class View extends Component {
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo isFirstView={isFirstView} duration={200} />
+            <Logo isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
           </div>
 
           <ImageBG color={color} animateIn={animateIn} image={imageUrl} duration={200} />
@@ -57,7 +57,7 @@ class View extends Component {
                 animateIn={animateIn} 
                 body={viewState[0].bodyCopy} 
                 header={viewState[0].headerCopy} 
-                header2={viewState[0].subheaderCopy} 
+                header2={viewState[0].subHeaderCopy} 
                 duration={200} 
                 isFirstView={isFirstView} />
               {/* <FirstViewText fallback dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} header2={fallbackView.subHeaderCopy} duration={200} /> */}
