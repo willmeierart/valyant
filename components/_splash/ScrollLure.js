@@ -31,7 +31,7 @@ class ScrollLure extends Component {
                 position: fixed;
                 {/* bottom: -6.25vw; */}
                 bottom: 0;
-                width: 98%;
+                width: 96%;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
