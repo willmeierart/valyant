@@ -35,7 +35,7 @@ module.exports = {
     )
     config.plugins = config.plugins.filter(plugin => {
       console.log(plugin)
-      if (plugin.constructor.name === 'UglifyJsPlugin') {
+      if (plugin.name === 'UglifyJsPlugin') {
         return false
       } else {
         return true
