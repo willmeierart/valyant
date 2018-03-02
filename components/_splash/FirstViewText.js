@@ -39,9 +39,9 @@ class FirstViewText extends Component {
       opacity: 1,
       color: '#1F5877',
       width: `${width > 500 ? '96%' : '100%'}`,
+      left: `${width > 500 ? '2%' : 0}`,
       textAlign: 'center',
       alignItems: 'center',
-      left: 0,
       justifyContent: `${width > 500 ? 'center' : 'flex-start'}`
     }
     const defaultStyle = {
