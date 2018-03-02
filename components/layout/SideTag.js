@@ -1,7 +1,7 @@
 import { Transition } from 'react-transition-group'
 
 export default ({ show, duration, width }) => {
-    console.log(width > 500)
+    // console.log(width > 500)
   
   const defaultStyle = {
     opacity: 0,

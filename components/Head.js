@@ -18,6 +18,7 @@ export default (props = initialProps) => {
     <link rel='icon' type='image/png' sizes='32x32' href='/static/favicon-32x32.png' />
     <link rel='icon' type='image/png' sizes='96x96' href='/static/favicon-96x96.png' />
     <link rel='icon' type='image/png' sizes='16x16' href='/static/favicon-16x16.png' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js' />
     {/* <script async src='https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-X' /> */}
   </Head>
 }

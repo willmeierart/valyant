@@ -10,10 +10,15 @@ class ScrollController extends Component {
   constructor (props) {
     super(props)
     this.state = { touchStartY: null, scrollVal: null }
-    binder(this, ['getBaseData', 'changeView', 'handleTouchStart', 'handleScroll'])
+    binder(this, ['getBaseData', 'changeView', 'handleTouchStart', 'handleScroll', 'handleKeyDown'])
   }
 
-  componentDidMount () { this.getBaseData() }
+  componentDidMount () {
+    window.addEventListener('keydown', this.handleKeyDown)
+    this.getBaseData()
+  }
+
+  componentWillUnmount () { window.removeEventListener('keydown', this.handleKeyDown) }
 
   getBaseData () {
     if (this.props.isMobile === null) { this.props.onCheckIfMobile() }
@@ -85,6 +90,7 @@ class ScrollController extends Component {
   }
 
   handleScroll (event) {
+    console.log(event)
     event.preventDefault()
     const e = { ...event }
     if (this.props.canScroll) {
@@ -93,9 +99,39 @@ class ScrollController extends Component {
     }
   }
 
+  handleKeyDown (e) {
+    const { footerShown, onShowFooter, onSetCurrentView, onDoAnimation, onSetTransDir, currentView } = this.props
+    const currentIndex = viewState.indexOf(currentView)
+
+    const forward = e.keyCode === 40 || e.keyCode === 39
+    const back = e.keyCode === 38 || e.keyCode === 37
+
+    if (forward) {
+      onSetTransDir('>>')
+      if (!currentView.isLastView) {
+        onDoAnimation(false)
+        onSetCurrentView(viewState[currentIndex + 1])
+      } else {
+        if (!footerShown) {
+          onShowFooter(true)
+        }
+      }
+    } else if (back) {
+      onSetTransDir('<<')
+      if (!currentView.isFirstView) {
+        onDoAnimation(false)
+        if (currentView.isLastView && footerShown) {
+          onShowFooter(false)
+        } else {
+          onSetCurrentView(viewState[currentIndex - 1])
+        }
+      }
+    }
+  }
+
   render () {
     return (
-      <div className='scroll-controller' onWheel={once(this.handleScroll)} onTouchMove={once(this.handleScroll)} onTouchStart={this.handleTouchStart}>
+      <div className='scroll-controller' onKeyDown={(e) => e.stopPropagation()} onWheel={once(this.handleScroll)} onTouchMove={once(this.handleScroll)} onTouchStart={this.handleTouchStart}>
         <View />
         { this.props.children }
         <style jsx>{`

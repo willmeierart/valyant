@@ -21,13 +21,11 @@ class View extends Component {
   }
   componentDidMount () { this.doAnimationCheck() }
   componentDidUpdate () {
-    // console.log(this.props.isFirstView);
     this.doAnimationCheck()
     if (!this.props.currentView.isFirstView) {
       setTimeout(() => { this.setState({ firstViewRender: false }) }, 200)
     } else {
       setTimeout(() => { this.setState({ firstViewRender: true }) }, 200)
-      // this.setState({ firstViewRender: true })
     }
   }
 
