@@ -128,6 +128,7 @@ class ScrollController extends Component {
         }
       }
     }
+    console.log(e.keyCode)
   }
 
   render () {
