@@ -16,9 +16,9 @@ class TextBlock extends Component {
     }
   }
   render () {
-    const width = typeof window !== 'undefined' ? window.innerWidth : 900    
+    // const width = typeof window !== 'undefined' ? window.innerWidth : 900  
     const { heightVal } = this.state
-    const { duration, dir, body, header, animateIn, isFirstView, fallback } = this.props
+    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height } = this.props
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     // const firstViewStyles={}
@@ -61,7 +61,7 @@ class TextBlock extends Component {
             <h3 className='v-font light'>{ body }</h3>
             <style jsx>{`
               .text-block {
-                width: ${isFirstView || width < 500 ? '100%' : '50%'};
+                width: ${isFirstView || width < 500 ? '100%' : width < height ? '50%' : '75%'};
               }
               .text-block h1 {
                 text-transform: uppercase;
@@ -87,7 +87,7 @@ class TextBlock extends Component {
                 height: 17px;
               }
               .text-block h3 {
-                width: ${width > 500 ? '75%' : '100%'};
+                width: ${width > 500 && width < height ? '75%' : '100%'};
                 font-size: 1.25em;
                 line-height: 1.25em;
                 font-weight: ${isFirstView && !fallback ? 500 : 'normal'};

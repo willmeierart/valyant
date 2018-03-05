@@ -29,7 +29,7 @@ export default class Logo extends Component {
     setTimeout(() => {}, this.props.duration)
   }
   render () {
-    const { isFirstView, duration, width } = this.props
+    const { isFirstView, duration, width, height } = this.props
 
     const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
 
@@ -44,7 +44,7 @@ export default class Logo extends Component {
         opacity: 0
       },
       entered: {
-        transform: `translate3d(0,${width > 700 ? 'calc(15vh)' : 0},0)`,
+        transform: `translate3d(0,${width > 700 ? height > width ? 'calc(15vh)' : 'calc(10vh)' : 0},0)`,
         opacity: 1
       },
       exiting: {
