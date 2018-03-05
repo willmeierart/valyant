@@ -32,9 +32,9 @@ const Footer = ({ show, duration, socials, width }) => {
     <Transition in={show} timeout={duration}>
       {state => (
         <div className='footer' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-          <div className='inner-wrapper'>
-            { show && <div className='logo-wrapper'><LogoFull /></div>}
-            <div className='copy-wrapper'>
+          <div className='inner-wrapper' style={{ flexDirection: width >= 500 ? 'row' : 'column' }}>
+            { show && <div className='logo-wrapper' style={{ display: 'flex', justifyContent: width > 500 ? 'flex-end' : 'center', width: width >= 500 ? '50%' : '100%' }}><LogoFull /></div>}
+            <div className='copy-wrapper' style={{ alignItems: width > 500 ? 'flex-start' : 'center', width: width >= 500 ? '50%' : '100%' }}>
               <div className='q'>In the media? Please feel free to reach out.</div>
               <div className='email'><a href='mailto:mediainquiries@valyant.ai?subject=Hello!'>MEDIAINQUIRIES@VALYANT.AI</a></div>
               <div className='copyright'>Copyright Valyant Ai 2018</div>
