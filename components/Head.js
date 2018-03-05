@@ -7,7 +7,7 @@ const initialProps = {
   initialScale: '1.0'
 }
 
-export default (props = initialProps) => {
+export default (props = initialProps, { children }) => {
   const { title, initialScale } = props
   return <Head>
     <title key='title'>{`Valyant AI - ${title}`}</title>
@@ -18,8 +18,9 @@ export default (props = initialProps) => {
     <link rel='icon' type='image/png' sizes='32x32' href='/static/favicon-32x32.png' />
     <link rel='icon' type='image/png' sizes='96x96' href='/static/favicon-96x96.png' />
     <link rel='icon' type='image/png' sizes='16x16' href='/static/favicon-16x16.png' />
-    <meta name='google-site-verification' content='CCxXT2IRKni8brrPNrEbzFu7ChmofvsFYjPZZiXNtt0' />
+    {/* <meta name='google-site-verification' content='CCxXT2IRKni8brrPNrEbzFu7ChmofvsFYjPZZiXNtt0' /> */}
     <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js' />
+    { children }
     {/* <script async src='https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-X' /> */}
   </Head>
 }
