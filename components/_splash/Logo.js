@@ -44,7 +44,7 @@ export default class Logo extends Component {
         opacity: 0
       },
       entered: {
-        transform: `translate3d(0,${width > 500 ? 'calc(20vh)' : 0},0)`,
+        transform: `translate3d(0,${width > 700 ? 'calc(15vh)' : 0},0)`,
         opacity: 1
       },
       exiting: {

@@ -18,17 +18,13 @@ class FirstViewText extends Component {
   render () {
     const { width, height } = this.props
     const heightVal = `${Math.floor(Math.abs(height) / 2)}px`
-    // console.log(this.props.animateIn);
-    // const { heightVal } = this.state
-    const { duration, dir, body, header, animateIn, isFirstView, fallback, header2 } = this.props
+    const isMobileSize = width >= 500
+    const { duration, dir, body, header, animateIn, fallback, header2 } = this.props
     const regVal = 100
     // const regVal = dir === '>>' ? heightVal : '-' + heightVal
-    const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
+    // const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     // const firstViewStyles={}
     // console.log(animateIn, );
-    const baseStyles = {
-
-    }
     const baseStyle = {
       position: 'absolute',
       zIndex: 10,
