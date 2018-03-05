@@ -65,7 +65,7 @@ class TextBlock extends Component {
               }
               .text-block h1 {
                 text-transform: uppercase;
-                font-size: ${width < 500 ? '3em' : '4em'};
+                font-size: ${width < 500 || isIE ? '3em' : '4em'};
                 flex-wrap: ${isIE && 'nowrap'};
                 white-space: ${isIE && 'nowrap'};
                 margin:0;
