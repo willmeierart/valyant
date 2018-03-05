@@ -34,10 +34,10 @@ class ScrollController extends Component {
 
   changeView (e) {
     const { touchStartY, scrollVal } = this.state
-    const { footerShown, onShowFooter, onSetCurrentView, onDoAnimation, onSetTransDir, currentView, isMobile } = this.props
+    const { footerShown, onShowFooter, onSetCurrentView, onDoAnimation, onSetTransDir, currentView, isMobile, onSetFallbackView } = this.props
     const currentIndex = viewState.indexOf(currentView)
 
-    this.props.onSetFallbackView(currentView)
+    onSetFallbackView(currentView)
 
     if (isMobile && touchStartY !== null) {
       const { clientY } = e.touches[0]
@@ -107,34 +107,39 @@ class ScrollController extends Component {
   }
 
   handleKeyDown (e) {
-    const { footerShown, onShowFooter, onSetCurrentView, onDoAnimation, onSetTransDir, currentView } = this.props
-    const currentIndex = viewState.indexOf(currentView)
+    if (this.props.canScroll) {
+      const { footerShown, onShowFooter, onSetCurrentView, onDoAnimation, onSetTransDir, currentView, onSetFallbackView, onCanScroll } = this.props
+      const currentIndex = viewState.indexOf(currentView)
 
-    const forward = e.keyCode === 40 || e.keyCode === 39
-    const back = e.keyCode === 38 || e.keyCode === 37
+      onSetFallbackView(currentView)
 
-    if (forward) {
-      onSetTransDir('>>')
-      if (!currentView.isLastView) {
-        onDoAnimation(false)
-        onSetCurrentView(viewState[currentIndex + 1])
-      } else {
-        if (!footerShown) {
-          onShowFooter(true)
-        }
-      }
-    } else if (back) {
-      onSetTransDir('<<')
-      if (!currentView.isFirstView) {
-        onDoAnimation(false)
-        if (currentView.isLastView && footerShown) {
-          onShowFooter(false)
+      const forward = e.keyCode === 40 || e.keyCode === 39
+      const back = e.keyCode === 38 || e.keyCode === 37
+
+      if (forward) {
+        onSetTransDir('>>')
+        if (!currentView.isLastView) {
+          onDoAnimation(false)
+          onSetCurrentView(viewState[currentIndex + 1])
         } else {
-          onSetCurrentView(viewState[currentIndex - 1])
+          if (!footerShown) {
+            onShowFooter(true)
+          }
+        }
+      } else if (back) {
+        onSetTransDir('<<')
+        if (!currentView.isFirstView) {
+          onDoAnimation(false)
+          if (currentView.isLastView && footerShown) {
+            onShowFooter(false)
+          } else {
+            onSetCurrentView(viewState[currentIndex - 1])
+          }
         }
       }
+      console.log(e.keyCode)
+      onCanScroll(false)
     }
-    console.log(e.keyCode)
   }
 
   render () {
