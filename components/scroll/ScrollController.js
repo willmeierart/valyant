@@ -3,27 +3,26 @@ import { connect } from 'react-redux'
 import once from 'lodash.once'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
-import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackView, setTransDir, getVPDims } from '../../lib/redux/actions'
+import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackView, setTransDir, getVPDims, checkIfIE } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 
 class ScrollController extends Component {
   constructor (props) {
     super(props)
-    this.state = { touchStartY: null, scrollVal: null }
+    this.state = { touchStartY: null, scrollVal: null, isIE: false }
     binder(this, ['getBaseData', 'changeView', 'handleTouchStart', 'handleScroll', 'handleKeyDown'])
   }
 
   componentDidMount () {
-    const isIE = window.navigator.userAgent.indexOf('indows') !== -1
-    const keydownTarget = isIE ? document : window
+    this.props.onCheckIfIE()
+    const keydownTarget = this.props.isIE ? document : window
     keydownTarget.addEventListener('keydown', this.handleKeyDown)
     keydownTarget.addEventListener('resize', this.props.onGetVPDims)
     this.getBaseData()
   }
 
   componentWillUnmount () {
-    const isIE = window.navigator.userAgent.indexOf('indows') !== -1
-    const keydownTarget = isIE ? document : window
+    const keydownTarget = this.props.isIE ? document : window
     keydownTarget.removeEventListener('keydown', this.handleKeyDown)
   }
 
@@ -164,20 +163,22 @@ class ScrollController extends Component {
 }
 
 function mapStateToProps (state) {
-  const { isMobile, canScroll, currentView, footerShown, animateIn, dims } = state.splash
+  const { isMobile, canScroll, currentView, footerShown, animateIn, dims, isIE } = state.splash
   return {
     isMobile,
     canScroll,
     currentView,
     footerShown,
     animateIn,
-    dims
+    dims,
+    isIE
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     onCheckIfMobile: () => dispatch(checkIfMobile()),
+    onCheckIfIE: () => dispatch(checkIfIE()),
     onSetCurrentView: view => dispatch(setCurrentView(view)),
     onShowFooter: bool => dispatch(showFooter(bool)),
     onCanScroll: bool => dispatch(canScroll(bool)),

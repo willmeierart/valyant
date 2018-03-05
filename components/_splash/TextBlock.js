@@ -18,7 +18,7 @@ class TextBlock extends Component {
   render () {
     // const width = typeof window !== 'undefined' ? window.innerWidth : 900  
     const { heightVal } = this.state
-    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height } = this.props
+    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height, isIE } = this.props
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     // const firstViewStyles={}
@@ -69,6 +69,7 @@ class TextBlock extends Component {
                 {/* flex-wrap: nowrap;
                 white-space:nowrap; */}
                 margin:0;
+                margin-bottom: ${isIE && width < 500 ? '1em' : 0}
                 {/* line-height: 0;  */}
               }
               .text-block .header-2 {

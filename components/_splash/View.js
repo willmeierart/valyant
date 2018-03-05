@@ -36,7 +36,7 @@ class View extends Component {
   }
 
   render () {
-    const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt }, fallbackView, animateIn, footerShown, transDir, isMobile } = this.props
+    const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt }, fallbackView, animateIn, footerShown, transDir, isMobile, isIE } = this.props
     const heightVal = isMobile ? `${height}px` : '100vh'
     return (
       <div className='view'>
@@ -64,6 +64,7 @@ class View extends Component {
             </div>
             : <div className='txt-wrapper'>
               <TextBlock
+                isIE={isIE}
                 height={height}
                 width={width}
                 dir={transDir}
@@ -73,6 +74,7 @@ class View extends Component {
                 duration={300}
                 isFirstView={isFirstView} />
               <TextBlock
+                isIE={isIE}
                 height={height}
                 width={width}
                 fallback
@@ -128,7 +130,7 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isMobile } = state.splash
+  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isMobile, isIE } = state.splash
   return {
     animateIn,
     currentView,
@@ -136,7 +138,8 @@ function mapStateToProps (state) {
     footerShown,
     transDir,
     isMobile,
-    dims
+    dims,
+    isIE
   }
 }
 
