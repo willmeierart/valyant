@@ -14,11 +14,19 @@ class ScrollController extends Component {
   }
 
   componentDidMount () {
-    this.props.onCheckIfIE()
-    const keydownTarget = this.props.isIE ? document : window
-    keydownTarget.addEventListener('keydown', this.handleKeyDown)
-    keydownTarget.addEventListener('resize', this.props.onGetVPDims)
-    this.getBaseData()
+    const init = () => {
+      this.props.onCheckIfIE()
+      if (this.props.isIE !== null) {
+        const keydownTarget = this.props.isIE ? document : window
+        keydownTarget.addEventListener('keydown', this.handleKeyDown)
+        keydownTarget.addEventListener('resize', this.props.onGetVPDims)
+        this.getBaseData()
+      } else {
+        this.props.onCheckIfIE()
+        setTimeout(() => { init() }, 200)
+      }
+    }
+    init()
   }
 
   componentWillUnmount () {
