@@ -15,6 +15,7 @@ class ScrollController extends Component {
 
   componentDidMount () {
     window.addEventListener('keydown', this.handleKeyDown)
+    window.addEventListener('resize', this.props.onGetVPDims)
     this.getBaseData()
   }
 
@@ -90,7 +91,7 @@ class ScrollController extends Component {
   }
 
   handleScroll (event) {
-    console.log(event)
+    // console.log(event)
     event.preventDefault()
     const e = { ...event }
     if (this.props.canScroll) {

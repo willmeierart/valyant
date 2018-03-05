@@ -19,7 +19,7 @@ class ImageBG extends Component {
     }
   }
   render () {
-    const { animateIn, duration, image } = this.props
+    const { animateIn, duration, image, alt } = this.props
     const defaultStyle = {
       opacity: 0,
       backgroundImage: `url('${image}')`,
@@ -34,7 +34,7 @@ class ImageBG extends Component {
     return (
       <Transition in={animateIn} timeout={duration}>
         { state => (
-          <div className='img-wrapper' style={{ ...defaultStyle, ...transitionStyles[state] }}>
+          <div className='img-wrapper' alt={alt} style={{ ...defaultStyle, ...transitionStyles[state] }}>
             <div className='inner-wrapper' style={{ ...defaultStyle.backgroundPosition }} />
             <style jsx>{`
               .inner-wrapper {

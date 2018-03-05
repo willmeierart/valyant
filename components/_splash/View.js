@@ -36,7 +36,7 @@ class View extends Component {
   }
 
   render () {
-    const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, color }, fallbackView, animateIn, footerShown, transDir } = this.props
+    const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt }, fallbackView, animateIn, footerShown, transDir } = this.props
     return (
       <div className='view'>
         <div className='inner-view'>
@@ -45,7 +45,7 @@ class View extends Component {
             <Logo width={width} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
           </div>
 
-          <ImageBG color={color} animateIn={animateIn} image={imageUrl} duration={200} />
+          <ImageBG alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
           <div className='fallback-img' style={{ zIndex: 6 }} />
 
           { this.state.firstViewRender

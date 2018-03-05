@@ -3,6 +3,7 @@ import { LogoFull } from '../assets/SVGassets'
 import { FaFacebook, FaTwitter, FaInstagram, FaVimeo } from 'react-icons/lib/fa'
 
 const Footer = ({ show, duration, socials, width }) => {
+  const isMobileSize = width >= 700
   // const links = {
   //   twitter: '',
   //   facebook: '',
@@ -13,7 +14,7 @@ const Footer = ({ show, duration, socials, width }) => {
     transition: `transform ${duration}ms ease-in`,
     zIndex: 0,
     opacity: 0,
-    height: width >= 500 ? '20vh' : '30vh'
+    height: isMobileSize ? '20vh' : '30vh'
   }
   const transitionStyles = {
     entering: { transform: 'translate3d(0,10vh,0)', zIndex: 0, opacity: 0 },
@@ -32,9 +33,9 @@ const Footer = ({ show, duration, socials, width }) => {
     <Transition in={show} timeout={duration}>
       {state => (
         <div className='footer' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-          <div className='inner-wrapper' style={{ flexDirection: width >= 500 ? 'row' : 'column' }}>
-            { show && <div className='logo-wrapper' style={{ display: 'flex', justifyContent: width > 500 ? 'flex-end' : 'center', width: width >= 500 ? '50%' : '100%' }}><LogoFull /></div>}
-            <div className='copy-wrapper' style={{ alignItems: width > 500 ? 'flex-start' : 'center', width: width >= 500 ? '50%' : '100%' }}>
+          <div className='inner-wrapper' style={{ flexDirection: isMobileSize ? 'row' : 'column' }}>
+            { show && <div className='logo-wrapper' style={{ display: 'flex', justifyContent: isMobileSize ? 'flex-end' : 'center', width: isMobileSize ? '50%' : '100%' }}><LogoFull /></div>}
+            <div className='copy-wrapper' style={{ alignItems: isMobileSize ? 'flex-start' : 'center', width: isMobileSize ? '50%' : '100%' }}>
               <div className='q'>In the media? Please feel free to reach out.</div>
               <div className='email'><a href='mailto:mediainquiries@valyant.ai?subject=Hello!'>MEDIAINQUIRIES@VALYANT.AI</a></div>
               <div className='copyright'>Copyright Valyant Ai 2018</div>
@@ -51,7 +52,7 @@ const Footer = ({ show, duration, socials, width }) => {
               position: fixed; 
               box-sizing: border-box;
               width: 100vw;
-              height: ${width >= 500 ? '20vh' : '30vh'};
+              height: ${isMobileSize ? '20vh' : '30vh'};
               {/* height: 20vh; */}
               background-color: white;
               bottom: 0;
@@ -65,7 +66,7 @@ const Footer = ({ show, duration, socials, width }) => {
               height: 100%;
               position: relative;
               display: flex;
-              flex-direction: ${width >= 500 ? 'row' : 'column'};
+              flex-direction: ${isMobileSize ? 'row' : 'column'};
               flex-grow: 1;
               justify-content: center;
               align-items: center;
@@ -88,13 +89,13 @@ const Footer = ({ show, duration, socials, width }) => {
               display: flex;
               flex-direction: column;
               justify-content: center;
-              align-items: ${width > 500 ? 'flex-start' : 'center'};
+              align-items: ${isMobileSize ? 'flex-start' : 'center'};
               letter-spacing: .05em;
               line-height: 1.1em;
               {/* margin-bottom: -3em; */}
               height: 108px;
               margin-left: 1em;
-              width: ${width < 500 ? '100%' : '50%'};
+              width: ${!isMobileSize ? '100%' : '50%'};
             }
             .email {
               font-weight: 800;
