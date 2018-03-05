@@ -69,7 +69,7 @@ class TextBlock extends Component {
                 {/* flex-wrap: nowrap;
                 white-space:nowrap; */}
                 margin:0;
-                margin-bottom: ${isIE && width < 500 ? '1em' : 0}
+                margin-bottom: ${isIE && width < 700 ? '1em' : 0};
                 {/* line-height: 0;  */}
               }
               .text-block .header-2 {
