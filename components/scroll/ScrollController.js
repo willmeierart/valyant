@@ -15,9 +15,7 @@ class ScrollController extends Component {
 
   componentDidMount () {
     window.addEventListener('keydown', this.handleKeyDown)
-    window.attachEvent('onkeydown', this.handleKeyDown) // for IE...
     document.addEventListener('keydown', this.handleKeyDown) // for IE...
-    document.attachEvent('onkeydown', this.handleKeyDown) // for IE...
     window.addEventListener('resize', this.props.onGetVPDims)
     this.getBaseData()
   }
