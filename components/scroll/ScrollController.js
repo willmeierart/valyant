@@ -111,6 +111,7 @@ class ScrollController extends Component {
       const { footerShown, onShowFooter, onSetCurrentView, onDoAnimation, onSetTransDir, currentView, onSetFallbackView, onCanScroll } = this.props
       const currentIndex = viewState.indexOf(currentView)
 
+      onCanScroll(false)
       onSetFallbackView(currentView)
 
       const forward = e.keyCode === 40 || e.keyCode === 39
@@ -124,6 +125,7 @@ class ScrollController extends Component {
         } else {
           if (!footerShown) {
             onShowFooter(true)
+            onCanScroll(true)
           }
         }
       } else if (back) {
@@ -132,13 +134,12 @@ class ScrollController extends Component {
           onDoAnimation(false)
           if (currentView.isLastView && footerShown) {
             onShowFooter(false)
+            onCanScroll(true)
           } else {
             onSetCurrentView(viewState[currentIndex - 1])
           }
         }
       }
-      console.log(e.keyCode)
-      onCanScroll(false)
     }
   }
 
