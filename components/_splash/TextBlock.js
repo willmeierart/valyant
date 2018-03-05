@@ -66,10 +66,10 @@ class TextBlock extends Component {
               .text-block h1 {
                 text-transform: uppercase;
                 font-size: ${width < 500 ? '3em' : '4em'};
-                {/* flex-wrap: nowrap;
-                white-space:nowrap; */}
+                flex-wrap: ${isIE && 'nowrap'};
+                white-space: ${isIE && 'nowrap'};
                 margin:0;
-                margin-bottom: ${isIE && width < 700 ? '1em' : 0};
+                {/* margin-bottom: ${isIE && width < 700 ? '1em' : 0}; */}
                 {/* line-height: 0;  */}
               }
               .text-block .header-2 {
