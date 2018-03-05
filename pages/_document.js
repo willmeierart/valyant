@@ -5,6 +5,10 @@ import { binder } from '../lib/_utils'
 export default class CustomDocument extends Document {
   constructor (props) {
     super(props)
+    this.state = {
+      height: null,
+      isMobile: null
+    }
     binder(this, ['preventScrollNav'])
   }
   preventScrollNav (e) {
@@ -16,6 +20,21 @@ export default class CustomDocument extends Document {
     window.addEventListener('touchmove', (e) => { this.preventScrollNav(e) })
     window.addEventListener('touchstart', (e) => { this.preventScrollNav(e) })
     window.addEventListener('touchend', (e) => { this.preventScrollNav(e) })
+    if (this.state.height === null) {
+      if (window) {
+        this.setState({
+          height: window.innerHeight,
+          isMobile: typeof window.orientation !== 'undefined'
+        })
+      } else {
+        setTimeout(() => {
+          this.setState({
+            height: window.innerHeight,
+            isMobile: typeof window.orientation !== 'undefined'
+          })
+        }, 500)
+      }
+    }
   }
   render () {
     return (
@@ -45,7 +64,7 @@ export default class CustomDocument extends Document {
             {/* -webkit-overflow-scrolling: touch; */}
             {/* margin: 2vw; */}
             width: 100vw;
-            height: 100vh;
+            height: ${this.state.isMobile ? this.state.height + 'px' : '100vh'};
             box-sizing: border-box;
           }
         `}</style>

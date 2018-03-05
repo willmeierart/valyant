@@ -131,6 +131,7 @@ class ScrollController extends Component {
   }
 
   render () {
+    const { isMobile, dims: { height } } = this.props
     return (
       <div className='scroll-controller' onKeyDown={(e) => e.stopPropagation()} onWheel={once(this.handleScroll)} onTouchMove={once(this.handleScroll)} onTouchStart={this.handleTouchStart}>
         <View />
@@ -138,7 +139,7 @@ class ScrollController extends Component {
         <style jsx>{`
           .scroll-controller {
             width: 100%;
-            height: 100vh;
+            height: ${isMobile ? height + 'px' : '100vh'};
             box-sizing: border-box;
             position: relative;
             overflow: hidden;

@@ -36,7 +36,8 @@ class View extends Component {
   }
 
   render () {
-    const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt }, fallbackView, animateIn, footerShown, transDir } = this.props
+    const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt }, fallbackView, animateIn, footerShown, transDir, isMobile } = this.props
+    const heightVal = isMobile ? `${height}px` : '100vh'
     return (
       <div className='view'>
         <div className='inner-view'>
@@ -91,7 +92,7 @@ class View extends Component {
         <style jsx>{`
           .view {
             width: 96%;
-            height: calc(100vh - 4vw);
+            height: calc(${heightVal} - 4vw);
             padding: 2vw;
             position: absolute;
           }
@@ -127,13 +128,14 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackView, footerShown, transDir, dims } = state.splash
+  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isMobile } = state.splash
   return {
     animateIn,
     currentView,
     fallbackView,
     footerShown,
     transDir,
+    isMobile,
     dims
   }
 }
