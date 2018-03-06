@@ -11,7 +11,10 @@ class FirstViewText extends Component {
     }
   }
   render () {
-    const { width } = this.props
+    const width = this.props.width !== null
+      ? this.props.width
+      : typeof window !== 'undefined'
+        ? window.innerWidth : 500
     // const heightVal = `${Math.floor(Math.abs(height) / 2)}px`
     // const isMobileSize = width >= 500
     const { duration, body, header, animateIn, fallback, header2 } = this.props
