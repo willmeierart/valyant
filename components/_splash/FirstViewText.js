@@ -67,7 +67,7 @@ class FirstViewText extends Component {
         { state => (
           <div className='text-block v-font' style={{ ...baseStyle }}>
             <h1 className='v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>{ header }</h1>
-            <h1><div className='v-font light header-2' style={{ ...defaultStyle, ...transitionStyles[state], ...tranStyle2[state] }}>{ header2 }</div></h1>
+            {/* <h1><div className='v-font light header-2' style={{ ...defaultStyle, ...transitionStyles[state], ...tranStyle2[state] }}>{ header2 }</div></h1> */}
             <div className='divider' style={{ ...defaultStyle, ...transitionStyles[state], ...tranStyle3[state] }}>
               <DividerPink />
             </div>
@@ -83,12 +83,11 @@ class FirstViewText extends Component {
                 margin-top: ${width > 500 ? 0 : '3vh'};
                 {/* line-height: 0;  */}
               }
-              .text-block .header-2 {
+              {/* .text-block .header-2 {
                 font-size: .8em;
                 letter-spacing: .25em;
                 padding-top: .5em;
-              }
-
+              } */}
               .text-block h3, .text-block h1 {
                 z-index: 10;
               }
