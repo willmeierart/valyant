@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Transition } from 'react-transition-group'
-import { DividerPink, DividerWhite } from '../assets/SVGassets'
-import { binder } from '../../lib/_utils'
+import { DividerWhite } from '../assets/SVGassets'
 
 class TextBlock extends Component {
   constructor (props) {
@@ -16,12 +15,10 @@ class TextBlock extends Component {
     }
   }
   render () {
-    // const width = typeof window !== 'undefined' ? window.innerWidth : 900  
     const { heightVal } = this.state
     const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height, isIE } = this.props
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
-    // const firstViewStyles={}
     const defaultStyle = {
       position: 'absolute',
       zIndex: 10,
@@ -43,7 +40,6 @@ class TextBlock extends Component {
         opacity: fallback ? 1 : 0,
         transform: `translate3d(0,${fallback ? 0 : regVal},0)`
       },
-      // entering: { transform: `translateX(${el === 'txt' ? 100 : -100})` },
       entered: {
         opacity: fallback ? 0 : 1,
         transform: `translate3d(0,${fallback ? fallbackVal : 0},0)`,
@@ -69,8 +65,6 @@ class TextBlock extends Component {
                 flex-wrap: ${isIE && 'nowrap'};
                 white-space: ${isIE && 'nowrap'};
                 margin:0;
-                {/* margin-bottom: ${isIE && width < 700 ? '1em' : 0}; */}
-                {/* line-height: 0;  */}
               }
               .text-block .header-2 {
                 font-size: .8em;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Transition } from 'react-transition-group'
-import { DividerPink, DividerWhite } from '../assets/SVGassets'
-import { binder } from '../../lib/_utils'
+import { DividerPink } from '../assets/SVGassets'
+// import { binder } from '../../lib/_utils'
 
 class FirstViewText extends Component {
   constructor (props) {
@@ -10,21 +10,12 @@ class FirstViewText extends Component {
       heightVal: '500px'
     }
   }
-  // componentDidMount () {
-  //   if (typeof window !== 'undefined') {
-  //     this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2)}px` })
-  //   }
-  // }
   render () {
-    const { width, height } = this.props
-    const heightVal = `${Math.floor(Math.abs(height) / 2)}px`
-    const isMobileSize = width >= 500
-    const { duration, dir, body, header, animateIn, fallback, header2 } = this.props
+    const { width } = this.props
+    // const heightVal = `${Math.floor(Math.abs(height) / 2)}px`
+    // const isMobileSize = width >= 500
+    const { duration, body, header, animateIn, fallback, header2 } = this.props
     const regVal = 100
-    // const regVal = dir === '>>' ? heightVal : '-' + heightVal
-    // const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
-    // const firstViewStyles={}
-    // console.log(animateIn, );
     const baseStyle = {
       position: 'absolute',
       zIndex: 10,

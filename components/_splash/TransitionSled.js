@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { TransitionMotion, spring, presets } from 'react-motion'
+import { TransitionMotion, spring } from 'react-motion'
 import { binder } from '../../lib/_utils'
 
 export default class TransitionSled extends Component {
@@ -10,17 +9,11 @@ export default class TransitionSled extends Component {
   }
 
   componentDidMount () {
-    // const { lockScrollOMatic, completePageTransition } = this.props
-    // setTimeout(() => { completePageTransition(true) }, 500)
-    // setTimeout(() => { lockScrollOMatic(false) }, 1000)
     this.props.readyTimeout()
   }
 
   willEnter () {
-    return {
-      translate: this.props.width
-      // opacity: 0
-    }
+    return { translate: this.props.width }
   }
 
   render () {
@@ -34,7 +27,6 @@ export default class TransitionSled extends Component {
             { interpolated.map(config =>
               <div key={config.key} config={config} style={{
                 transform: `translate3d(${config.style.translate}px,0,0)`,
-                // opacity: config.style.opacity,
                 willChange: 'transform',
                 overflow: 'hidden',
                 width: '100%',

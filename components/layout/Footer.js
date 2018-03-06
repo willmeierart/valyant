@@ -27,7 +27,6 @@ const Footer = ({ show, duration, socials, width }) => {
     padding: '.15em',
     borderRadius: '200px',
     boxSizing: 'content-box'
-    // marginRight: '1em'
   }
   return (
     <Transition in={show} timeout={duration}>
@@ -53,11 +52,9 @@ const Footer = ({ show, duration, socials, width }) => {
               box-sizing: border-box;
               width: 100vw;
               height: ${isMobileSize ? '20vh' : '30vh'};
-              {/* height: 20vh; */}
               background-color: white;
               bottom: 0;
               left: 0;
-              {/* z-index: ${show ? 100 : 0}; */}
               color: #1F5877;
               padding: 2vw 2vw 0 2vw;
             }
@@ -73,10 +70,6 @@ const Footer = ({ show, duration, socials, width }) => {
             }
             .logo-wrapper {
               margin-right: 1em;
-              {/* position: relative; */}
-              {/* width: ${width < 500 ? '75%' : '100%'}; */}
-              {/* width: 20%;
-              height:20%; */}
             }
             a {
               text-decoration: none;
@@ -92,7 +85,6 @@ const Footer = ({ show, duration, socials, width }) => {
               align-items: ${isMobileSize ? 'flex-start' : 'center'};
               letter-spacing: .05em;
               line-height: 1.1em;
-              {/* margin-bottom: -3em; */}
               height: 108px;
               margin-left: 1em;
               width: ${!isMobileSize ? '100%' : '50%'};
@@ -100,25 +92,13 @@ const Footer = ({ show, duration, socials, width }) => {
             .email {
               font-weight: 800;
               letter-spacing: .1em;
-              {/* margin-bottom: 1em; */}
-              {/* display: inline-block; */}
-              {/* margin-left: 1em; */}
             }
-            {/* .q {
-              display: flex;
-              flex-direction: ${width >= 1000 ? 'row' : 'column'};
-              align-items: flex-end;
-              justify-content: flex-end;
-              width: 50vw;
-            } */}
             .socials {
               display: flex;
               justify-content: space-between;
               width: 20vw;
               margin-right: ${width >= 1000 ? '1em' : 0};
               margin: ${width >= 1000 ? 0 : '1em'};
-              {/* margin-right: ${width >= 1000 ? '1em' : 0};
-              margin: ${width >= 1000 ? 0 : '1em'};               */}
             }
           `}</style>
         </div>

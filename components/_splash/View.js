@@ -55,12 +55,11 @@ class View extends Component {
                 width={width}
                 dir={transDir}
                 animateIn={animateIn}
-                body={viewState[0].bodyCopy} 
-                header={viewState[0].headerCopy} 
-                header2={viewState[0].subHeaderCopy} 
+                body={viewState[0].bodyCopy}
+                header={viewState[0].headerCopy}
+                header2={viewState[0].subHeaderCopy}
                 duration={200}
                 isFirstView={isFirstView} />
-              {/* <FirstViewText fallback dir={transDir} animateIn={animateIn} body={fallbackView.bodyCopy} header={fallbackView.headerCopy} header2={fallbackView.subHeaderCopy} duration={200} /> */}
             </div>
             : <div className='txt-wrapper'>
               <TextBlock
@@ -86,7 +85,7 @@ class View extends Component {
                 isFirstView={isFirstView} />
             </div>
           }
-          
+
           <SideTag width={width} show={!isFirstView} duration={200} />
           <Footer width={width} show={footerShown} duration={200} />
         </div>

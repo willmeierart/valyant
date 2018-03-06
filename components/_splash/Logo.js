@@ -13,15 +13,11 @@ export default class Logo extends Component {
     setTimeout(() => { this.setState({ logoIn: true }) })
   }
   componentWillReceiveProps (nextProps) {
-    if (nextProps != this.props) {
-      // console.log(nextProps, this.props);
+    if (nextProps !== this.props) {
       if (nextProps.isFirstView === undefined) {
-        // this.setState({ logoIn: false })
         setTimeout(() => { this.setState({ logoIn: false }) }, 200)
-        // console.log('not first view');
       } else {
         setTimeout(() => { this.setState({ logoIn: true }) }, 200)
-        // console.log('first view')      
       }
     }
   }
@@ -31,7 +27,7 @@ export default class Logo extends Component {
   render () {
     const { isFirstView, duration, width, height } = this.props
 
-    const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
+    // const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
 
     const defaultStyle = {
       opacity: 0,
@@ -72,7 +68,6 @@ export default class Logo extends Component {
             color: white;
           }
           .full-name {
-            {/* margin-top: 20vh; */}
           }
           .logo div {
             font-family: sans-serif;
@@ -83,22 +78,3 @@ export default class Logo extends Component {
     )
   }
 }
-
-  // return (
-  //   <Transition in={isFirstView} timeout={duration}>
-  //     {state => (
-  //       <div className='side-tag' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-  //         <style jsx>{`
-  //           .side-tag {
-  //             position: absolute;
-  //             left: -1vw;
-  //             top: 35vh;
-  //             height: 30vh;
-  //             width: 5vw;
-  //             z-index: 30;
-  //             background-color: #4597BB;            
-  //           }
-  //         `}</style>
-  //       </div>
-  //     )}
-  //   </Transition>

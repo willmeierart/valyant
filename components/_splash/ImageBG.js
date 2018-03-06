@@ -6,7 +6,6 @@ import { doAnimation, canScroll, showFooter } from '../../lib/redux/actions'
 class ImageBG extends Component {
   componentWillUpdate (nextProps) {
     if (this.props.image !== nextProps.image) {
-      // this.props.footerShown && this.props.howFooter(false)
       if (this.scrollTimer) {
         clearTimeout(this.scrollTimer)
         this.scrollTimer = null
@@ -25,7 +24,6 @@ class ImageBG extends Component {
       backgroundImage: `url('${image}')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center'
-      // background: color
     }
     const transitionStyles = {
       entering: { opacity: 0 },
@@ -55,7 +53,6 @@ class ImageBG extends Component {
                 width: 100%;
                 height: 100%;
                 z-index: 2;
-                {/* opacity:0;  */}
               }
             `}</style>
           </div>
@@ -66,10 +63,7 @@ class ImageBG extends Component {
 }
 
 function mapStateToProps (state) {
-  // const { animateIn, currentView, fallbackView, footerShown, transDir } = state.splash
-  return {
-    footerShown: state.splash.footerShown
-  }
+  return { footerShown: state.splash.footerShown }
 }
 
 function mapDispatchToProps (dispatch) {

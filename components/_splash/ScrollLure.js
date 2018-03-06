@@ -12,7 +12,6 @@ class ScrollLure extends Component {
     const { duration } = this.props
     const defaultStyle = {
       transform: 'translateY(125px)'
-      // background: color
     }
     const transitionStyles = {
       entering: { transform: 'translateY(125px)' },
@@ -29,7 +28,6 @@ class ScrollLure extends Component {
             <style jsx>{`
               .firstview-footer {
                 position: fixed;
-                {/* bottom: -6.25vw; */}
                 bottom: 0;
                 width: 96%;
                 display: flex;
@@ -37,7 +35,6 @@ class ScrollLure extends Component {
                 justify-content: space-between;
                 align-items: center;
                 z-index: 5;
-                {/* margin-bottom: 0; */}
               }
               .firstview-footer .tag {
                 margin-bottom: 1em;

@@ -61,8 +61,6 @@ export default class CustomDocument extends Document {
             position: fixed!important;
           }
           body {
-            {/* -webkit-overflow-scrolling: touch; */}
-            {/* margin: 2vw; */}
             width: 100vw;
             height: ${this.state.isMobile ? this.state.height + 'px' : '100vh'};
             box-sizing: border-box;
