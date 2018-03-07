@@ -33,7 +33,7 @@ class App extends Component {
     const { title, isMobile, dims: { height } } = this.props
     const { orientation } = this.state
     return (
-      <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: isMobile ? height : '100%' }}>
+      <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: isMobile ? height + 'px' : '100%' }}>
         <Head title={title} />
         <main>
           {/* { !isMobile || (isMobile && orientation !== null && orientation === 0)
