@@ -21,7 +21,7 @@ class TextBlock extends Component {
       if (body.length > 300 && isMobile) {
         const slicer = body.lastIndexOf('. ') + 2
         const sliced = body.substring(0, slicer)
-        this.setState({ abbrevBody: sliced })
+        this.setState({ abbrevBody: sliced }) // if text is long and you're on mobile, slice off the last sentence....
       }
     }
   }
@@ -67,9 +67,6 @@ class TextBlock extends Component {
             </div>
             <h3 className='v-font light'>{ this.state.abbrevBody || body }</h3>
             <style jsx>{`
-              .text-block {
-                {/* width: ${isFirstView || width < 500 ? '100%' : width < height ? '50%' : '75%'}; */}
-              }
               .text-block h1 {
                 text-transform: uppercase;
                 font-size: ${width < 500 || isIE || mobileSideways ? '3em' : '4em'};
@@ -82,7 +79,6 @@ class TextBlock extends Component {
                 letter-spacing: .25em;
                 padding-top: .5em;
               }
-
               .text-block h3, .text-block h1 {
                 z-index: 10;
               }

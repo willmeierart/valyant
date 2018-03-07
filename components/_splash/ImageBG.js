@@ -10,11 +10,11 @@ class ImageBG extends Component {
         clearTimeout(this.scrollTimer)
         this.scrollTimer = null
       }
-      this.props.onCanScroll(false)
+      this.props.onCanScroll(false) // lock up scrolling momentarily
       this.scrollTimer = setTimeout(() => {
         this.props.onCanScroll(true)
         clearTimeout(this.scrollTimer)
-      }, 1600)
+      }, 1600) // this is the ABSOLUTE minimum interval for scrolling where you can't accidentally trigger a double route change
     }
   }
   render () {

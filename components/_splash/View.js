@@ -34,17 +34,7 @@ class View extends Component {
       this.props.onDoAnimation(true)
     }
   }
-
-  // renderTxtBlocks () {
-  //   [0, 1].map(x => {
-  //     return (
-
-  //     )
-  //   })
-  // }
-
   render () {
-    // console.log('render')
     const {
       dims: { width, height },
       currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt },
@@ -56,7 +46,7 @@ class View extends Component {
       isIE,
       mobileSideways
     } = this.props
-    
+
     const heightVal = isMobile ? `${height}px` : '100vh'
     const smallLogo = width < 500 // && isMobile
     const sfx = isMobile ? '-do.jpg' : '.jpg'
@@ -87,6 +77,7 @@ class View extends Component {
                 mobileSideways={mobileSideways} />
             </div>
             : <div className='txt-wrapper'>
+              {/* maybe consider consolidating the following:  */}
               <TextBlock
                 isIE={isIE}
                 height={height}

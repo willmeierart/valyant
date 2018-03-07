@@ -7,7 +7,7 @@ class ScrollLure extends Component {
     super(props)
     this.state = { show: false }
   }
-  componentDidMount () { setTimeout(() => { this.setState({ show: true }) }, 500) }
+  componentDidMount () { setTimeout(() => { this.setState({ show: true }) }, 500) } // same kinda timeout thing as with logo: mount, then animate
   render () {
     const { duration } = this.props
     const defaultStyle = {

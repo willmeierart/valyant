@@ -15,7 +15,7 @@ export default class Logo extends Component {
   componentWillReceiveProps (nextProps) {
     if (nextProps !== this.props) {
       if (nextProps.isFirstView === undefined) {
-        setTimeout(() => { this.setState({ logoIn: false }) }, 200)
+        setTimeout(() => { this.setState({ logoIn: false }) }, 200) // conditional rendering timeout so animations can occur regardless of mounting state
       } else {
         setTimeout(() => { this.setState({ logoIn: true }) }, 200)
       }
@@ -49,7 +49,7 @@ export default class Logo extends Component {
       }
     }
     const terms = !this.state.logoIn ? isFirstView : this.state.logoIn
-    const w = small || mobileSideways ? 226 : 339
+    const w = small || mobileSideways ? 226 : 339 // pass size props down to svg
     const h = small || mobileSideways ? 78 : 108
     return (
       <div className='logo'>

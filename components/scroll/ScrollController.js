@@ -29,7 +29,6 @@ class ScrollController extends Component {
     init()
     window.addEventListener('orientationchange', () => {
       this.props.onGetVPDims()
-      // console.log(this.props.mobileSideways)      
     })
   }
 
@@ -157,7 +156,6 @@ class ScrollController extends Component {
 
   render () {
     const { isMobile, dims: { height } } = this.props
-    // console.log(height)
     return (
       <div className='scroll-controller' onKeyDown={(e) => e.stopPropagation()} onWheel={once(this.handleScroll)} onTouchMove={once(this.handleScroll)} onTouchStart={this.handleTouchStart}>
         <View />

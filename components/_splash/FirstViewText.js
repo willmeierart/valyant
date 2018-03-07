@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import { Transition } from 'react-transition-group'
 import { DividerPink } from '../assets/SVGassets'
-// import { binder } from '../../lib/_utils'
 
 class FirstViewText extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      heightVal: '500px'
-    }
+    this.state = { heightVal: '500px' }
   }
   render () {
-    const { duration, body, header, animateIn, fallback, width, isMobile, mobileSideways, isIE } = this.props
+    const { duration, body, header, animateIn, fallback, width, isMobile, isIE } = this.props
     const regVal = 100
     const lg = width > 500
     const baseStyle = {
@@ -42,12 +39,12 @@ class FirstViewText extends Component {
         transform: `translate3d(0,0,0)`
       }
     }
-    // const tranStyle2 = {
+    // const tranStyle2 = {  // there was a subheader...
     //   entering: {
     //     transform: `translate3d(0,-${regVal / 1.5}px,0)`
     //   }
     // }
-    const tranStyle3 = {
+    const tranStyle3 = { // having these multiple tiered styling blocks allows cascading animation of different elements
       entering: {
         transform: `translate3d(0,-${regVal / 2}px,0)`
       }
