@@ -56,6 +56,7 @@ class View extends Component {
       isIE,
       mobileSideways
     } = this.props
+    
     const heightVal = isMobile ? `${height}px` : '100vh'
     const smallLogo = width < 500 // && isMobile
     const sfx = isMobile ? '-do.jpg' : '.jpg'
@@ -64,7 +65,7 @@ class View extends Component {
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
+            <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} mobileSideways={mobileSideways} />
           </div>
 
           <ImageBG isMobile={isMobile} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
@@ -80,7 +81,10 @@ class View extends Component {
                 header={viewState[0].headerCopy}
                 header2={viewState[0].subHeaderCopy}
                 duration={200}
-                isFirstView={isFirstView} />
+                isFirstView={isFirstView}
+                isMobile={isMobile}
+                isIE={isIE}
+                mobileSideways={mobileSideways} />
             </div>
             : <div className='txt-wrapper'>
               <TextBlock
@@ -114,7 +118,7 @@ class View extends Component {
           <SideTag width={width} show={!isFirstView} duration={200} />
           <Footer small={smallLogo} width={width} show={footerShown} duration={200} mobileSideways={mobileSideways} />
         </div>
-        { (isFirstView && width > 500) && <ScrollLure duration={200} /> }
+        { (isFirstView && width > 500 && !mobileSideways) && <ScrollLure duration={200} /> }
         <style jsx>{`
           .view {
             width: 96%;

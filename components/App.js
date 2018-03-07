@@ -33,7 +33,7 @@ class App extends Component {
     const { title, isMobile, dims: { width, height } } = this.props
     const { orientation } = this.state
     return (
-      <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: isMobile ? '98%' : '100%' }}>
+      <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: isMobile ? height : '100%' }}>
         <Head title={title} />
         <main>
           {/* { !isMobile || (isMobile && orientation !== null && orientation === 0)
@@ -47,7 +47,7 @@ class App extends Component {
         <style jsx global>{`
           body {
             {/* height: ${isMobile ? height + 'px' : '100vh'}; */}
-            height: ${isMobile ? '100vh' : '100vh'};
+            height: ${isMobile ? height + 'px' : '100vh'};
           }
         `}</style>
       </div>

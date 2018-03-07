@@ -53,7 +53,7 @@ const Footer = ({ show, duration, socials, width, small, mobileSideways }) => {
               position: fixed; 
               box-sizing: border-box;
               width: 100vw;
-              height: ${isMobileSize ? '20vh' : '30vh'};
+              height: ${isMobileSize ? mobileSideways ? '30vh' : '20vh' : '30vh'};
               background-color: white;
               bottom: 0;
               left: 0;
@@ -88,7 +88,7 @@ const Footer = ({ show, duration, socials, width, small, mobileSideways }) => {
               letter-spacing: .05em;
               line-height: 1.1em;
               height: 108px;
-              margin-left: 1em;
+              margin-left: ${isMobileSize || mobileSideways ? '1em' : 0};
               width: ${!isMobileSize ? '100%' : '50%'};
             }
             .email {

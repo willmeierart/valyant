@@ -18,7 +18,7 @@ class FirstViewText extends Component {
     //     : 499
     // const heightVal = `${Math.floor(Math.abs(height) / 2)}px`
     // const isMobileSize = width >= 500
-    const { duration, body, header, animateIn, fallback, width } = this.props
+    const { duration, body, header, animateIn, fallback, width, isMobile, mobileSideways, isIE } = this.props
     // console.log(width)    
     const regVal = 100
     const lg = width > 500
@@ -33,7 +33,6 @@ class FirstViewText extends Component {
       color: '#1F5877',
       width: lg ? '96%' : '100%',
       left: lg ? '2%' : 0,
-      // fontSize: lg ? '4em' : '2.5em',
       textAlign: 'center',
       alignItems: 'center',
       justifyContent: lg ? 'center' : 'flex-start'
@@ -80,7 +79,7 @@ class FirstViewText extends Component {
             <style jsx>{`
               .text-block h1 {
                 text-transform: uppercase;
-                font-size: ${width < 500 ? '2.5em' : '4em'};
+                font-size: ${width < 500 || isIE ? '2.5em' : '4em'};
                 {/* flex-wrap: nowrap;
                 white-space:nowrap; */}
                 {/* width: 100%; */}
@@ -105,7 +104,7 @@ class FirstViewText extends Component {
               .text-block h3 {
                 width: ${width < 500 ? '100%' : '75%'};
                 font-size: 1.25em;
-                line-height: 1.25em;
+                line-height: ${isMobile ? '1em' : '1.25em'};
                 font-weight: ${!fallback ? 500 : 'normal'};
                 letter-spacing: ${!fallback ? '.05em' : 0}
               }
