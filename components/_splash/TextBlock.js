@@ -6,12 +6,23 @@ class TextBlock extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      heightVal: '500px'
+      heightVal: '500px',
+      abbrevBody: null
     }
   }
   componentDidMount () {
     if (typeof window !== 'undefined') {
       this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2.5)}px` })
+    }
+  }
+  componentDidUpdate (prevProps) {
+    const { body, isMobile } = this.props
+    if (body !== prevProps.body) {
+      if (body.length > 300 && isMobile) {
+        const slicer = body.lastIndexOf('. ') + 2
+        const sliced = body.substring(0, slicer)
+        this.setState({ abbrevBody: sliced })
+      }
     }
   }
   render () {
@@ -46,7 +57,6 @@ class TextBlock extends Component {
         transition: `opacity ${duration}ms ease-in, transform ${duration}ms cubic-bezier(0.075, 0.82, 0.165, 1)`
       }
     }
-    // console.log(width);
     return (
       <Transition in={animateIn} timeout={duration}>
         { state => (
@@ -55,7 +65,7 @@ class TextBlock extends Component {
             <div className='divider'>
               <DividerWhite />
             </div>
-            <h3 className='v-font light'>{ body }</h3>
+            <h3 className='v-font light'>{ this.state.abbrevBody || body }</h3>
             <style jsx>{`
               .text-block {
                 {/* width: ${isFirstView || width < 500 ? '100%' : width < height ? '50%' : '75%'}; */}

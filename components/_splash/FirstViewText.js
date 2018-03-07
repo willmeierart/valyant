@@ -11,15 +11,7 @@ class FirstViewText extends Component {
     }
   }
   render () {
-    // const width = this.props.width !== null
-    //   ? this.props.width
-    //   : typeof window !== 'undefined'
-    //     ? window.innerWidth
-    //     : 499
-    // const heightVal = `${Math.floor(Math.abs(height) / 2)}px`
-    // const isMobileSize = width >= 500
     const { duration, body, header, animateIn, fallback, width, isMobile, mobileSideways, isIE } = this.props
-    // console.log(width)    
     const regVal = 100
     const lg = width > 500
     const baseStyle = {
@@ -66,8 +58,8 @@ class FirstViewText extends Component {
       }
     }
     return (
-      width !== null ?
-      <Transition appear in={animateIn} timeout={duration}>
+      width !== null
+      ? <Transition appear in={animateIn} timeout={duration}>
         { state => (
           <div className='text-block v-font' style={{ ...baseStyle }}>
             <h1 className='v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>{ header }</h1>
@@ -80,12 +72,8 @@ class FirstViewText extends Component {
               .text-block h1 {
                 text-transform: uppercase;
                 font-size: ${width < 500 || isIE ? '2.5em' : '4em'};
-                {/* flex-wrap: nowrap;
-                white-space:nowrap; */}
-                {/* width: 100%; */}
                 margin:0;
                 margin-top: ${lg ? 0 : '3vh'};
-                {/* line-height: 0;  */}
               }
               {/* .text-block .header-2 {
                 font-size: .8em;

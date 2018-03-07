@@ -157,7 +157,7 @@ class ScrollController extends Component {
 
   render () {
     const { isMobile, dims: { height } } = this.props
-    console.log(height)
+    // console.log(height)
     return (
       <div className='scroll-controller' onKeyDown={(e) => e.stopPropagation()} onWheel={once(this.handleScroll)} onTouchMove={once(this.handleScroll)} onTouchStart={this.handleTouchStart}>
         <View />
