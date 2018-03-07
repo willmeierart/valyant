@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import once from 'lodash.once'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
-import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackView, setTransDir, getVPDims, checkIfIE } from '../../lib/redux/actions'
+import { setCurrentView, showFooter, canScroll, checkIfMobile, doAnimation, setFallbackView, setTransDir, getVPDims, checkIfIE, lockOrientation } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 
 class ScrollController extends Component {
@@ -27,6 +27,10 @@ class ScrollController extends Component {
       }
     }
     init()
+    window.addEventListener('orientationchange', () => {
+      console.log('orientationchange')
+      this.props.onGetVPDims()
+    })
   }
 
   componentWillUnmount () {
@@ -35,8 +39,10 @@ class ScrollController extends Component {
   }
 
   getBaseData () {
-    if (this.props.isMobile === null) { this.props.onCheckIfMobile() }
-    if (this.props.dims.width === null) { this.props.onGetVPDims() }
+    const { isMobile, onCheckIfMobile, dims: { width }, onGetVPDims } = this.props
+    if (isMobile === null) { onCheckIfMobile() }
+    if (width === null) { onGetVPDims() }
+    // if (screenLocked === false && onLockOrientation() !== false) { onLockOrientation() }
   }
 
   changeView (e) {
@@ -104,7 +110,6 @@ class ScrollController extends Component {
   }
 
   handleScroll (event) {
-    // console.log(event)
     event.preventDefault()
     const e = { ...event }
     if (this.props.canScroll) {
@@ -171,7 +176,7 @@ class ScrollController extends Component {
 }
 
 function mapStateToProps (state) {
-  const { isMobile, canScroll, currentView, footerShown, animateIn, dims, isIE } = state.splash
+  const { isMobile, canScroll, currentView, footerShown, animateIn, dims, isIE, screenLocked } = state.splash
   return {
     isMobile,
     canScroll,
@@ -179,7 +184,8 @@ function mapStateToProps (state) {
     footerShown,
     animateIn,
     dims,
-    isIE
+    isIE,
+    screenLocked
   }
 }
 
@@ -193,7 +199,8 @@ function mapDispatchToProps (dispatch) {
     onDoAnimation: bool => dispatch(doAnimation(bool)),
     onSetFallbackView: view => dispatch(setFallbackView(view)),
     onSetTransDir: dir => dispatch(setTransDir(dir)),
-    onGetVPDims: () => dispatch(getVPDims())
+    onGetVPDims: () => dispatch(getVPDims()),
+    onLockOrientation: () => dispatch(lockOrientation())
   }
 }
 

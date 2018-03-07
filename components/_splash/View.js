@@ -20,7 +20,7 @@ class View extends Component {
     binder(this, ['doAnimationCheck'])
   }
   componentDidMount () { this.doAnimationCheck() }
-  componentDidUpdate () {
+  componentDidUpdate (prevprops, prevstate) {
     this.doAnimationCheck()
     if (!this.props.currentView.isFirstView) {
       setTimeout(() => { this.setState({ firstViewRender: false }) }, 200)
@@ -36,17 +36,20 @@ class View extends Component {
   }
 
   render () {
+    // console.log('render')
     const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt }, fallbackView, animateIn, footerShown, transDir, isMobile, isIE } = this.props
     const heightVal = isMobile ? `${height}px` : '100vh'
+    const smallLogo = width < 500 // && isMobile
+    const sfx = isMobile ? '-do.jpg' : '.jpg'
     return (
       <div className='view'>
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo small={width < 500} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
+            <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
           </div>
 
-          <ImageBG alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
+          <ImageBG isMobile={isMobile} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
           <div className='fallback-img' style={{ zIndex: 6 }} />
 
           { this.state.firstViewRender
@@ -87,7 +90,7 @@ class View extends Component {
           }
 
           <SideTag width={width} show={!isFirstView} duration={200} />
-          <Footer width={width} show={footerShown} duration={200} />
+          <Footer small={smallLogo} width={width} show={footerShown} duration={200} />
         </div>
         { (isFirstView && width > 500) && <ScrollLure duration={200} /> }
         <style jsx>{`
@@ -109,7 +112,7 @@ class View extends Component {
             width: 100%;
           }
           .fallback-img {
-            background-image: url('${fallbackView.imageUrl}');
+            background-image: url('${fallbackView.imageUrl + sfx}');
             background-size: cover;
             background-position: center;
             width: 100%;

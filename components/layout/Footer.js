@@ -2,8 +2,10 @@ import { Transition } from 'react-transition-group'
 import { LogoFull } from '../assets/SVGassets'
 import { FaFacebook, FaTwitter, FaInstagram, FaVimeo } from 'react-icons/lib/fa'
 
-const Footer = ({ show, duration, socials, width }) => {
+const Footer = ({ show, duration, socials, width, small }) => {
   const isMobileSize = width >= 700
+  const w = small ? 226 : 339
+  const h = small ? 78 : 108
   // const links = {
   //   twitter: '',
   //   facebook: '',
@@ -33,7 +35,7 @@ const Footer = ({ show, duration, socials, width }) => {
       {state => (
         <div className='footer' style={{ ...defaultStyle, ...transitionStyles[state] }}>
           <div className='inner-wrapper' style={{ flexDirection: isMobileSize ? 'row' : 'column' }}>
-            { show && <div className='logo-wrapper' style={{ display: 'flex', justifyContent: isMobileSize ? 'flex-end' : 'center', width: isMobileSize ? '50%' : '100%' }}><LogoFull /></div>}
+            { show && <div className='logo-wrapper' style={{ display: 'flex', justifyContent: isMobileSize ? 'flex-end' : 'center', width: isMobileSize ? '50%' : '100%' }}><LogoFull w={w} h={h} /></div>}
             <div className='copy-wrapper' style={{ alignItems: isMobileSize ? 'flex-start' : 'center', width: isMobileSize ? '50%' : '100%' }}>
               <div className='q'>In the media? Please feel free to reach out.</div>
               <div className='email'><a href='mailto:mediainquiries@valyant.ai?subject=Hello!'>MEDIAINQUIRIES@VALYANT.AI</a></div>

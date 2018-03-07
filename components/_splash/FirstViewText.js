@@ -11,14 +11,17 @@ class FirstViewText extends Component {
     }
   }
   render () {
-    const width = this.props.width !== null
-      ? this.props.width
-      : typeof window !== 'undefined'
-        ? window.innerWidth : 500
+    // const width = this.props.width !== null
+    //   ? this.props.width
+    //   : typeof window !== 'undefined'
+    //     ? window.innerWidth
+    //     : 499
     // const heightVal = `${Math.floor(Math.abs(height) / 2)}px`
     // const isMobileSize = width >= 500
-    const { duration, body, header, animateIn, fallback, header2 } = this.props
+    const { duration, body, header, animateIn, fallback, width } = this.props
+    // console.log(width)    
     const regVal = 100
+    const lg = width > 500
     const baseStyle = {
       position: 'absolute',
       zIndex: 10,
@@ -28,11 +31,12 @@ class FirstViewText extends Component {
       flexGrow: 1,
       opacity: 1,
       color: '#1F5877',
-      width: `${width > 500 ? '96%' : '100%'}`,
-      left: `${width > 500 ? '2%' : 0}`,
+      width: lg ? '96%' : '100%',
+      left: lg ? '2%' : 0,
+      // fontSize: lg ? '4em' : '2.5em',
       textAlign: 'center',
       alignItems: 'center',
-      justifyContent: `${width > 500 ? 'center' : 'flex-start'}`
+      justifyContent: lg ? 'center' : 'flex-start'
     }
     const defaultStyle = {
       transition: `opacity ${duration}ms ease-in, transform ${duration}ms ease-in`
@@ -47,11 +51,11 @@ class FirstViewText extends Component {
         transform: `translate3d(0,0,0)`
       }
     }
-    const tranStyle2 = {
-      entering: {
-        transform: `translate3d(0,-${regVal / 1.5}px,0)`
-      }
-    }
+    // const tranStyle2 = {
+    //   entering: {
+    //     transform: `translate3d(0,-${regVal / 1.5}px,0)`
+    //   }
+    // }
     const tranStyle3 = {
       entering: {
         transform: `translate3d(0,-${regVal / 2}px,0)`
@@ -63,6 +67,7 @@ class FirstViewText extends Component {
       }
     }
     return (
+      width !== null ?
       <Transition appear in={animateIn} timeout={duration}>
         { state => (
           <div className='text-block v-font' style={{ ...baseStyle }}>
@@ -78,9 +83,9 @@ class FirstViewText extends Component {
                 font-size: ${width < 500 ? '2.5em' : '4em'};
                 {/* flex-wrap: nowrap;
                 white-space:nowrap; */}
-                width: 100%;
+                {/* width: 100%; */}
                 margin:0;
-                margin-top: ${width > 500 ? 0 : '3vh'};
+                margin-top: ${lg ? 0 : '3vh'};
                 {/* line-height: 0;  */}
               }
               {/* .text-block .header-2 {
@@ -98,7 +103,7 @@ class FirstViewText extends Component {
                 height: 17px;
               }
               .text-block h3 {
-                width: 75%;
+                width: ${width < 500 ? '100%' : '75%'};
                 font-size: 1.25em;
                 line-height: 1.25em;
                 font-weight: ${!fallback ? 500 : 'normal'};
@@ -108,6 +113,7 @@ class FirstViewText extends Component {
           </div>
         )}
       </Transition>
+      : null
     )
   }
 }

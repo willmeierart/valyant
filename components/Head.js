@@ -12,7 +12,7 @@ export default (props = initialProps, { children }) => {
   return <Head>
     <title key='title'>{`Valyant AI - ${title}`}</title>
     <meta key='charset' charSet='utf-8' />
-    <meta key='viewport' name='viewport' content={`inital-scale=${initialScale || initialProps.initialScale}, width=device-width, shrink-to-fit=no`} />
+    <meta key='viewport' name='viewport' content={`initial-scale=${initialScale || initialProps.initialScale}, width=device-width, shrink-to-fit=no`} />
     <meta key='meta-title' name='title' content='Valyant AI' />
     <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
     <link rel='icon' type='image/png' sizes='32x32' href='/static/favicon-32x32.png' />
