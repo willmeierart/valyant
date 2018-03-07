@@ -46,6 +46,7 @@ class TextBlock extends Component {
         transition: `opacity ${duration}ms ease-in, transform ${duration}ms cubic-bezier(0.075, 0.82, 0.165, 1)`
       }
     }
+    // console.log(width);
     return (
       <Transition in={animateIn} timeout={duration}>
         { state => (

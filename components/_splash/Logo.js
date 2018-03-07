@@ -25,7 +25,7 @@ export default class Logo extends Component {
     setTimeout(() => {}, this.props.duration)
   }
   render () {
-    const { isFirstView, duration, width, height } = this.props
+    const { isFirstView, duration, width, height, small } = this.props
 
     // const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
 
@@ -49,13 +49,15 @@ export default class Logo extends Component {
       }
     }
     const terms = !this.state.logoIn ? isFirstView : this.state.logoIn
+    const w = small ? 226 : 339
+    const h = small ? 78 : 108
     return (
       <div className='logo'>
         { terms
           ? <Transition onExit={this.delayExit.bind(this)} onExiting={this.delayExit.bind(this)} in={this.props.firstLogo} timeout={200}>
             {state => (
               <div className='full-name' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-                <LogoFull />
+                <LogoFull w={w} h={h} />
               </div>
             )}
           </Transition>
@@ -68,6 +70,8 @@ export default class Logo extends Component {
             color: white;
           }
           .full-name {
+            width: ${w};
+            height: ${h};
           }
           .logo div {
             font-family: sans-serif;

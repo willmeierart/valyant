@@ -43,7 +43,7 @@ class View extends Component {
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
+            <Logo small={width < 500} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
           </div>
 
           <ImageBG alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
