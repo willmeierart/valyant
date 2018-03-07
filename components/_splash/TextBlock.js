@@ -16,7 +16,7 @@ class TextBlock extends Component {
   }
   render () {
     const { heightVal } = this.state
-    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height, isIE } = this.props
+    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height, isIE, isMobile, mobileSideways } = this.props
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     const defaultStyle = {
@@ -29,7 +29,7 @@ class TextBlock extends Component {
       opacity: fallback ? 1 : 0,
       transform: `translate3d(0,${fallback ? 0 : regVal},0)`,
       color: 'white',
-      width: isFirstView && !fallback ? '100vw' : width < 500 ? '90vw' : '50vw',
+      width: isFirstView && !fallback ? '100vw' : width < 500 || mobileSideways ? '90vw' : '50vw',
       textAlign: isFirstView && !fallback ? 'center' : 'left',
       alignItems: isFirstView && !fallback ? 'center' : 'left',
       left: isFirstView && !fallback ? 0 : '5vw',
@@ -58,11 +58,11 @@ class TextBlock extends Component {
             <h3 className='v-font light'>{ body }</h3>
             <style jsx>{`
               .text-block {
-                width: ${isFirstView || width < 500 ? '100%' : width < height ? '50%' : '75%'};
+                {/* width: ${isFirstView || width < 500 ? '100%' : width < height ? '50%' : '75%'}; */}
               }
               .text-block h1 {
                 text-transform: uppercase;
-                font-size: ${width < 500 || isIE ? '3em' : '4em'};
+                font-size: ${width < 500 || isIE || mobileSideways ? '3em' : '4em'};
                 flex-wrap: ${isIE && 'nowrap'};
                 white-space: ${isIE && 'nowrap'};
                 margin:0;
@@ -83,9 +83,9 @@ class TextBlock extends Component {
                 height: 17px;
               }
               .text-block h3 {
-                width: ${width > 500 && width < height ? '75%' : '100%'};
+                width: ${width > 500 && width < height ? mobileSideways ? '100%' : '75%' : '100%'};
                 font-size: 1.25em;
-                line-height: 1.25em;
+                line-height: ${isMobile ? '1em' : '1.25em'};
                 font-weight: ${isFirstView && !fallback ? 500 : 'normal'};
                 letter-spacing: ${isFirstView && !fallback ? '.05em' : 0}
               }

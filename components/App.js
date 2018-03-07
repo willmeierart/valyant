@@ -33,16 +33,23 @@ class App extends Component {
     const { title, isMobile, dims: { width, height } } = this.props
     const { orientation } = this.state
     return (
-      <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: '100%' }}>
+      <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: isMobile ? '98%' : '100%' }}>
         <Head title={title} />
         <main>
-          { !isMobile || (isMobile && orientation !== null && orientation === 0)
+          {/* { !isMobile || (isMobile && orientation !== null && orientation === 0)
             ? <ScrollController />
             : <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', overflow: 'hidden' }}>
                 <LogoFull w={width} h={height} />
               </div>
-          }
+          } */}
+          <ScrollController mobileSideways={orientation !== 0 && orientation !== null} />
         </main>
+        <style jsx global>{`
+          body {
+            {/* height: ${isMobile ? height + 'px' : '100vh'}; */}
+            height: ${isMobile ? '100vh' : '100vh'};
+          }
+        `}</style>
       </div>
     )
   }

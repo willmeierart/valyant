@@ -2,8 +2,8 @@ import { Transition } from 'react-transition-group'
 import { LogoFull } from '../assets/SVGassets'
 import { FaFacebook, FaTwitter, FaInstagram, FaVimeo } from 'react-icons/lib/fa'
 
-const Footer = ({ show, duration, socials, width, small }) => {
-  const isMobileSize = width >= 700
+const Footer = ({ show, duration, socials, width, small, mobileSideways }) => {
+  const isMobileSize = width >= 700 || mobileSideways
   const w = small ? 226 : 339
   const h = small ? 78 : 108
   // const links = {

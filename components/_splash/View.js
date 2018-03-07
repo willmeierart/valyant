@@ -35,9 +35,27 @@ class View extends Component {
     }
   }
 
+  // renderTxtBlocks () {
+  //   [0, 1].map(x => {
+  //     return (
+
+  //     )
+  //   })
+  // }
+
   render () {
     // console.log('render')
-    const { dims: { width, height }, currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt }, fallbackView, animateIn, footerShown, transDir, isMobile, isIE } = this.props
+    const {
+      dims: { width, height },
+      currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt },
+      fallbackView,
+      animateIn,
+      footerShown,
+      transDir,
+      isMobile,
+      isIE,
+      mobileSideways
+    } = this.props
     const heightVal = isMobile ? `${height}px` : '100vh'
     const smallLogo = width < 500 // && isMobile
     const sfx = isMobile ? '-do.jpg' : '.jpg'
@@ -74,7 +92,9 @@ class View extends Component {
                 body={bodyCopy}
                 header={headerCopy}
                 duration={300}
-                isFirstView={isFirstView} />
+                isFirstView={isFirstView}
+                isMobile={isMobile}
+                mobileSideways={mobileSideways} />
               <TextBlock
                 isIE={isIE}
                 height={height}
@@ -85,12 +105,14 @@ class View extends Component {
                 body={fallbackView.bodyCopy}
                 header={fallbackView.headerCopy}
                 duration={300}
-                isFirstView={isFirstView} />
+                isFirstView={isFirstView}
+                isMobile={isMobile}
+                mobileSideways={mobileSideways} />
             </div>
           }
 
           <SideTag width={width} show={!isFirstView} duration={200} />
-          <Footer small={smallLogo} width={width} show={footerShown} duration={200} />
+          <Footer small={smallLogo} width={width} show={footerShown} duration={200} mobileSideways={mobileSideways} />
         </div>
         { (isFirstView && width > 500) && <ScrollLure duration={200} /> }
         <style jsx>{`
@@ -132,7 +154,7 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isMobile, isIE } = state.splash
+  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isMobile, isIE, mobileSideways } = state.splash
   return {
     animateIn,
     currentView,
@@ -141,7 +163,8 @@ function mapStateToProps (state) {
     transDir,
     isMobile,
     dims,
-    isIE
+    isIE,
+    mobileSideways
   }
 }
 

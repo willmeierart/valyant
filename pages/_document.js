@@ -20,21 +20,6 @@ export default class CustomDocument extends Document {
     window.addEventListener('touchmove', (e) => { this.preventScrollNav(e) })
     window.addEventListener('touchstart', (e) => { this.preventScrollNav(e) })
     window.addEventListener('touchend', (e) => { this.preventScrollNav(e) })
-    if (this.state.height === null) {
-      if (window) {
-        this.setState({
-          height: window.innerHeight,
-          isMobile: typeof window.orientation !== 'undefined'
-        })
-      } else {
-        setTimeout(() => {
-          this.setState({
-            height: window.innerHeight,
-            isMobile: typeof window.orientation !== 'undefined'
-          })
-        }, 500)
-      }
-    }
   }
   render () {
     return (
@@ -61,8 +46,8 @@ export default class CustomDocument extends Document {
             position: fixed!important;
           }
           body {
+            height: 100vh;
             width: 100vw;
-            height: ${this.state.isMobile ? this.state.height + 'px' : '100vh'};
             box-sizing: border-box;
           }
         `}</style>
