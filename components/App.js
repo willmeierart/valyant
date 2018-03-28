@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { checkIfMobile, getVPDims } from '../lib/redux/actions'
 import Head from './Head'
 import ScrollController from '../components/scroll/ScrollController'
+import MobileScroller from '../components/scroll/MobileScroller'
 import { LogoFull } from './assets/SVGassets'
 
 class App extends Component {
@@ -33,7 +34,11 @@ class App extends Component {
     const { title, isMobile, dims: { height, width } } = this.props
     const { orientation } = this.state
     return (
-      <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: isMobile ? height + 'px' : '100%' }}>
+      <div style={{
+        overflow: !isMobile ? 'hidden' : 'auto',
+        position: !isMobile ? 'fixed' : 'static',
+        width: '100%',
+        height: isMobile ? 'auto' : '100%' }}>
         <Head title={title} />
         <main>
           {/* { !isMobile || (isMobile && orientation !== null && orientation === 0)
@@ -42,11 +47,15 @@ class App extends Component {
                 <LogoFull w={width * 0.9} h={height} />
               </div>  // this all right here is cool onRotation alt mode, but they don't want it
           } */}
-          <ScrollController mobileSideways={orientation !== 0 && orientation !== null} />
+          {/* <ScrollController mobileSideways={orientation !== 0 && orientation !== null} /> */}
+          { isMobile
+            ? <MobileScroller />
+            : <ScrollController mobileSideways={orientation !== 0 && orientation !== null} />
+          }
         </main>
         <style jsx global>{`
           body {
-            height: ${isMobile ? height + 'px' : '100vh'};
+            height: ${isMobile ? 'auto' : '100vh'};
           }
         `}</style>
       </div>

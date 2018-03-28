@@ -18,13 +18,16 @@ class ImageBG extends Component {
     }
   }
   render () {
-    const { animateIn, duration, image, alt, isMobile } = this.props
+    const { animateIn, duration, image, alt, isMobile, isFirstView } = this.props
     const sfx = isMobile ? '-do.jpg' : '.jpg'
     const defaultStyle = {
       opacity: 0,
       backgroundImage: `url('${image + sfx}')`,
       backgroundSize: 'cover',
-      backgroundPosition: 'center'
+      backgroundPosition: 'center',
+      width: isFirstView || isMobile ? '100%' : '50%',
+      position: isMobile ? 'static' : 'absolute',
+      height: isMobile ? '100vh' : '100%'
     }
     const transitionStyles = {
       entering: { opacity: 0 },
@@ -43,16 +46,8 @@ class ImageBG extends Component {
                 height: 100%;
                 z-index: 6;
               }
-              h1 {
-                position: absolute;
-                top: 20vh;
-                right: 20vw;
-                color: black;
-              }
               .img-wrapper {
-                position: absolute;
-                width: 100%;
-                height: 100%;
+                right: 0;
                 z-index: 2;
               }
             `}</style>

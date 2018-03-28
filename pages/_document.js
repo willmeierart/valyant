@@ -7,27 +7,41 @@ export default class CustomDocument extends Document {
     super(props)
     this.state = {
       height: null,
-      isMobile: null
+      isMobile: true
     }
     binder(this, ['preventScrollNav'])
   }
   preventScrollNav (e) {
-    e.preventDefault()
-    e.stopPropagation()
+    if (!this.state.isMobile) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
   }
   componentDidMount () {
-    window.addEventListener('scroll', (e) => { this.preventScrollNav(e) })
-    window.addEventListener('touchmove', (e) => { this.preventScrollNav(e) })
-    window.addEventListener('touchstart', (e) => { this.preventScrollNav(e) })
-    window.addEventListener('touchend', (e) => { this.preventScrollNav(e) })
+    const init = () => {
+      if (typeof window !== 'undefined') {
+        if (typeof window.orientation !== 'undefined') {
+          this.setState({ isMobile: true })
+        } else {
+          window.addEventListener('scroll', (e) => { this.preventScrollNav(e) })
+          window.addEventListener('touchmove', (e) => { this.preventScrollNav(e) })
+          window.addEventListener('touchstart', (e) => { this.preventScrollNav(e) })
+          window.addEventListener('touchend', (e) => { this.preventScrollNav(e) })
+        }
+      } else {
+        setTimeout(() => { init() }, 200)
+      }
+    }
+    init()
   }
   render () {
+    const { isMobile } = this.state
     return (
       <html lang='en-US'
         onWheel={(e) => { this.preventScrollNav(e) }}
         onTouchStart={(e) => { this.preventScrollNav(e) }}
         onTouchMove={(e) => { this.preventScrollNav(e) }}
-        style={{ overflow: 'hidden' }}>
+        style={{ overflow: !isMobile ? 'hidden' : 'auto' }}>
         <Head>
           <meta name='google-site-verification' content='CCxXT2IRKni8brrPNrEbzFu7ChmofvsFYjPZZiXNtt0' />
         </Head>
@@ -35,19 +49,16 @@ export default class CustomDocument extends Document {
           onTouchMove={(e) => { this.preventScrollNav(e) }}
           onWheel={(e) => { this.preventScrollNav(e) }}
           style={{
-            overflow: 'hidden'
+            overflow: !isMobile ? 'hidden' : 'auto',
+            height: !isMobile ? '100vh' : 'auto',
+            width: '100vw'
           }}>
           <Main />
           <NextScript />
         </body>
         <style jsx global>{`
-          html, body {
-            overflow: hidden!important;
-            position: fixed!important;
-          }
           body {
-            height: 100vh;
-            width: 100vw;
+            
             box-sizing: border-box;
           }
         `}</style>

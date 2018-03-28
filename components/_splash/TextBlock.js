@@ -31,16 +31,16 @@ class TextBlock extends Component {
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     const defaultStyle = {
-      position: 'absolute',
+      position: isMobile ? 'static' : 'absolute',
       zIndex: 10,
-      height: '100%',
       flexDirection: 'column',
       display: 'flex',
       flexGrow: 1,
       opacity: fallback ? 1 : 0,
       transform: `translate3d(0,${fallback ? 0 : regVal},0)`,
-      color: 'white',
+      color: '#1F5877',
       width: isFirstView && !fallback ? '100vw' : width < 500 || mobileSideways ? '90vw' : '50vw',
+      height: isMobile ? '100vh' : '100%',
       textAlign: isFirstView && !fallback ? 'center' : 'left',
       alignItems: isFirstView && !fallback ? 'center' : 'left',
       left: isFirstView && !fallback ? 0 : '5vw',

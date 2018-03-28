@@ -58,7 +58,7 @@ class View extends Component {
             <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} mobileSideways={mobileSideways} />
           </div>
 
-          <ImageBG isMobile={isMobile} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
+          <ImageBG isFirstView={isFirstView} isMobile={isMobile} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
           <div className='fallback-img' style={{ zIndex: 6 }} />
 
           { this.state.firstViewRender
@@ -81,7 +81,7 @@ class View extends Component {
               <TextBlock
                 isIE={isIE}
                 height={height}
-                width={width}
+                width={width / 2}
                 dir={transDir}
                 animateIn={animateIn}
                 body={bodyCopy}
@@ -93,7 +93,7 @@ class View extends Component {
               <TextBlock
                 isIE={isIE}
                 height={height}
-                width={width}
+                width={width / 2}
                 fallback
                 dir={transDir}
                 animateIn={animateIn}
@@ -132,7 +132,8 @@ class View extends Component {
             background-image: url('${fallbackView.imageUrl + sfx}');
             background-size: cover;
             background-position: center;
-            width: 100%;
+            width: 50%;
+            margin-left: 50%;
             height: 100%;
             z-index: 6;
           }
