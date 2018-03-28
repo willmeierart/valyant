@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { checkIfMobile, getVPDims } from '../lib/redux/actions'
 import Head from './Head'
 import ScrollController from '../components/scroll/ScrollController'
-// import { LogoFull } from './assets/SVGassets'
+import { LogoFull } from './assets/SVGassets'
 
 class App extends Component {
   constructor (props) {
@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   render () {
-    const { title, isMobile, dims: { height } } = this.props
+    const { title, isMobile, dims: { height, width } } = this.props
     const { orientation } = this.state
     return (
       <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: isMobile ? height + 'px' : '100%' }}>
@@ -39,7 +39,7 @@ class App extends Component {
           {/* { !isMobile || (isMobile && orientation !== null && orientation === 0)
             ? <ScrollController />
             : <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-                <LogoFull w={width} h={height} />
+                <LogoFull w={width * 0.9} h={height} />
               </div>  // this all right here is cool onRotation alt mode, but they don't want it
           } */}
           <ScrollController mobileSideways={orientation !== 0 && orientation !== null} />
