@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Transition } from 'react-transition-group'
-import { DividerPink } from '../assets/SVGassets'
+import { DividerPink } from '../../assets/SVGassets'
 
 class FirstViewText extends Component {
   constructor (props) {
@@ -12,9 +12,8 @@ class FirstViewText extends Component {
     const regVal = 100
     const lg = width > 500
     const baseStyle = {
-      position: 'absolute',
       zIndex: 10,
-      height: '100%',
+      height: '50vh',
       flexDirection: 'column',
       display: 'flex',
       flexGrow: 1,
@@ -50,8 +49,7 @@ class FirstViewText extends Component {
       }
     }
     return (
-      width !== null
-      ? <Transition appear in={animateIn} timeout={duration}>
+      <Transition appear in={animateIn} timeout={duration}>
         { state => (
           <div className='text-block v-font' style={{ ...baseStyle }}>
             <h1 className='v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>{ header }</h1>
@@ -78,7 +76,7 @@ class FirstViewText extends Component {
               .text-block h3 {
                 width: ${width < 500 ? '100%' : '75%'};
                 font-size: 1.25em;
-                line-height: 1.25em;
+                line-height: 1em;
                 font-weight: ${!fallback ? 500 : 'normal'};
                 letter-spacing: ${!fallback ? '.05em' : 0}
               }
@@ -86,7 +84,6 @@ class FirstViewText extends Component {
           </div>
         )}
       </Transition>
-      : null
     )
   }
 }

@@ -1,5 +1,6 @@
 const express = require('express')
 const next = require('next')
+const compression = require('compression')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -9,6 +10,8 @@ const port = process.env.PORT || 3000
 app.prepare()
   .then(() => {
     const server = express()
+    server.use(compression())
+
     server.use('/static', express.static('static'))
 
     // server.get('/thing/:id', (req, res) => {

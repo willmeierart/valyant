@@ -15,23 +15,13 @@ class TextBlock extends Component {
       this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2.5)}px` })
     }
   }
-  componentDidUpdate (prevProps) {
-    const { body, isMobile } = this.props
-    if (body !== prevProps.body) {
-      if (body.length > 300 && isMobile) {
-        const slicer = body.lastIndexOf('. ') + 2
-        const sliced = body.substring(0, slicer)
-        this.setState({ abbrevBody: sliced }) // if text is long and you're on mobile, slice off the last sentence....
-      }
-    }
-  }
   render () {
     const { heightVal } = this.state
-    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height, isIE, isMobile, mobileSideways } = this.props
+    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height, isIE } = this.props
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     const defaultStyle = {
-      position: isMobile ? 'static' : 'absolute',
+      position: 'absolute',
       zIndex: 10,
       flexDirection: 'column',
       display: 'flex',
@@ -39,8 +29,8 @@ class TextBlock extends Component {
       opacity: fallback ? 1 : 0,
       transform: `translate3d(0,${fallback ? 0 : regVal},0)`,
       color: '#1F5877',
-      width: isFirstView && !fallback ? '100vw' : width < 500 || mobileSideways ? '90vw' : '50vw',
-      height: isMobile ? '100vh' : '100%',
+      width: isFirstView && !fallback ? '100vw' : width < 500 ? '90vw' : '50vw',
+      height: '100%',
       textAlign: isFirstView && !fallback ? 'center' : 'left',
       alignItems: isFirstView && !fallback ? 'center' : 'left',
       left: isFirstView && !fallback ? 0 : '5vw',
@@ -65,11 +55,11 @@ class TextBlock extends Component {
             <div className='divider'>
               <DividerWhite />
             </div>
-            <h3 className='v-font light'>{ this.state.abbrevBody || body }</h3>
+            <h3 className='v-font light'>{ body }</h3>
             <style jsx>{`
               .text-block h1 {
                 text-transform: uppercase;
-                font-size: ${width < 500 || isIE || mobileSideways ? '3em' : '4em'};
+                font-size: ${width < 500 || isIE ? '3em' : '4em'};
                 flex-wrap: ${isIE && 'nowrap'};
                 white-space: ${isIE && 'nowrap'};
                 margin:0;
@@ -89,9 +79,9 @@ class TextBlock extends Component {
                 height: 17px;
               }
               .text-block h3 {
-                width: ${width > 500 && width < height ? mobileSideways ? '100%' : '75%' : '100%'};
+                width: ${width > 500 && width < height ? '75%' : '100%'};
                 font-size: 1.25em;
-                line-height: ${isMobile ? '1em' : '1.25em'};
+                line-height: 1.25em;
                 font-weight: ${isFirstView && !fallback ? 500 : 'normal'};
                 letter-spacing: ${isFirstView && !fallback ? '.05em' : 0}
               }

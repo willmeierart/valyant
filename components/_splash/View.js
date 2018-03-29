@@ -42,23 +42,21 @@ class View extends Component {
       animateIn,
       footerShown,
       transDir,
-      isMobile,
-      isIE,
-      mobileSideways
+      isIE
     } = this.props
 
-    const heightVal = isMobile ? `${height}px` : '100vh'
-    const smallLogo = width < 500 // && isMobile
-    const sfx = isMobile ? '-do.jpg' : '.jpg'
+    const heightVal = '100vh'
+    const smallLogo = width < 500
+    const sfx = '.jpg'
     return (
       <div className='view'>
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} mobileSideways={mobileSideways} />
+            <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
           </div>
 
-          <ImageBG isFirstView={isFirstView} isMobile={isMobile} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
+          <ImageBG isFirstView={isFirstView} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
           <div className='fallback-img' style={{ zIndex: 6 }} />
 
           { this.state.firstViewRender
@@ -72,9 +70,7 @@ class View extends Component {
                 header2={viewState[0].subHeaderCopy}
                 duration={200}
                 isFirstView={isFirstView}
-                isMobile={isMobile}
-                isIE={isIE}
-                mobileSideways={mobileSideways} />
+                isIE={isIE} />
             </div>
             : <div className='txt-wrapper'>
               {/* maybe consider consolidating the following:  */}
@@ -87,9 +83,7 @@ class View extends Component {
                 body={bodyCopy}
                 header={headerCopy}
                 duration={300}
-                isFirstView={isFirstView}
-                isMobile={isMobile}
-                mobileSideways={mobileSideways} />
+                isFirstView={isFirstView} />
               <TextBlock
                 isIE={isIE}
                 height={height}
@@ -100,16 +94,14 @@ class View extends Component {
                 body={fallbackView.bodyCopy}
                 header={fallbackView.headerCopy}
                 duration={300}
-                isFirstView={isFirstView}
-                isMobile={isMobile}
-                mobileSideways={mobileSideways} />
+                isFirstView={isFirstView} />
             </div>
           }
 
           <SideTag width={width} show={!isFirstView} duration={200} />
-          <Footer small={smallLogo} width={width} show={footerShown} duration={200} mobileSideways={mobileSideways} />
+          <Footer small={smallLogo} width={width} show={footerShown} duration={200} />
         </div>
-        { (isFirstView && width > 500 && !mobileSideways) && <ScrollLure duration={200} /> }
+        { (isFirstView && width > 500 ) && <ScrollLure duration={200} /> }
         <style jsx>{`
           .view {
             width: 96%;
@@ -150,17 +142,15 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isMobile, isIE, mobileSideways } = state.splash
+  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isIE } = state.splash
   return {
     animateIn,
     currentView,
     fallbackView,
     footerShown,
     transDir,
-    isMobile,
     dims,
-    isIE,
-    mobileSideways
+    isIE
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Transition } from 'react-transition-group'
-import { doAnimation, canScroll, showFooter } from '../../lib/redux/actions'
+import { doAnimation, canScroll, showFooter } from '../../../lib/redux/actions'
 
 class ImageBG extends Component {
   componentWillUpdate (nextProps) {
@@ -18,16 +18,16 @@ class ImageBG extends Component {
     }
   }
   render () {
-    const { animateIn, duration, image, alt, isFirstView } = this.props
-    const sfx = '.jpg'
+    const { animateIn, duration, image, alt } = this.props
+    const sfx = '-do.jpg'
     const defaultStyle = {
       opacity: 0,
       backgroundImage: `url('${image + sfx}')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-      width: isFirstView ? '100%' : '50%',
-      position: 'absolute',
-      height: '100%'
+      width: '100%',
+      position: 'static',
+      height: '100vh'
     }
     const transitionStyles = {
       entering: { opacity: 0 },
