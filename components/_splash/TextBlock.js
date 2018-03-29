@@ -29,7 +29,7 @@ class TextBlock extends Component {
       opacity: fallback ? 1 : 0,
       transform: `translate3d(0,${fallback ? 0 : regVal},0)`,
       color: '#1F5877',
-      width: isFirstView && !fallback ? '100vw' : '45vw',
+      width: isFirstView && !fallback ? '100vw' : '40vw',
       height: '100%',
       textAlign: isFirstView && !fallback ? 'center' : 'left',
       alignItems: isFirstView && !fallback ? 'center' : 'left',
@@ -79,7 +79,7 @@ class TextBlock extends Component {
                 height: 17px;
               }
               .text-block h3 {
-                width: ${width > 500 && width < height ? '75%' : '100%'};
+                width: 75%;
                 font-size: 1.25em;
                 line-height: 1.25em;
                 font-weight: ${isFirstView && !fallback ? 500 : 'normal'};
