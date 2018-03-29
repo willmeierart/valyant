@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { checkIfMobile, getVPDims } from '../lib/redux/actions'
 import Head from './Head'
@@ -36,7 +37,7 @@ class App extends Component {
   }
 
   render () {
-    const { title, isMobile } = this.props
+    const { title } = this.props
     const { orientation, mobileVersion } = this.state
     return (
       <div style={{
@@ -77,6 +78,14 @@ function mapDispatchToProps (dispatch) {
     onCheckIfMobile: () => dispatch(checkIfMobile()),
     onGetVPDims: () => dispatch(getVPDims())
   }
+}
+
+App.propTypes = {
+  onCheckIfMobile: PropTypes.func.isRequired,
+  onGetVPDims: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  dims: PropTypes.object.isRequired,
+  title: PropTypes.string
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

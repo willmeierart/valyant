@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setCurrentView, showFooter, canScroll, doAnimation, setFallbackView, setTransDir, getVPDims } from '../../lib/redux/actions'
+import { getVPDims } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 import View from '../_splash/mobile/View'
 
 class MobileScroller extends Component {
   constructor (props) {
     super(props)
-    binder(this, ['getBaseData', 'handleScroll'])
+    binder(this, ['getBaseData'])
   }
 
   componentDidMount () {
     const init = () => {
       if (typeof window !== 'undefined') {
-        window.addEventListener('scroll', this.handleScroll)
         window.addEventListener('orientationchange', () => {
           this.props.onGetVPDims()
         })
@@ -22,8 +21,6 @@ class MobileScroller extends Component {
     }
     init()
   }
-
-  handleScroll () {}
 
   getBaseData () {
     const { dims: { width }, onGetVPDims } = this.props
@@ -41,27 +38,19 @@ class MobileScroller extends Component {
 }
 
 MobileScroller.propTypes = {
-
+  dims: PropTypes.object.isRequired,
+  onGetVPDims: PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
-  const { currentView, footerShown, animateIn, dims } = state.splash
+  const { dims } = state.splash
   return {
-    currentView,
-    footerShown,
-    animateIn,
     dims
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    onSetCurrentView: view => dispatch(setCurrentView(view)),
-    onShowFooter: bool => dispatch(showFooter(bool)),
-    onCanScroll: bool => dispatch(canScroll(bool)),
-    onDoAnimation: bool => dispatch(doAnimation(bool)),
-    onSetFallbackView: view => dispatch(setFallbackView(view)),
-    onSetTransDir: dir => dispatch(setTransDir(dir)),
     onGetVPDims: () => dispatch(getVPDims())
   }
 }

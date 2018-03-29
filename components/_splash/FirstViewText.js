@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 import { DividerPink } from '../assets/SVGassets'
 
@@ -89,6 +90,16 @@ class FirstViewText extends Component {
       : null
     )
   }
+}
+
+FirstViewText.propTypes = {
+  duration: PropTypes.number.isRequired,
+  body: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired,
+  animateIn: PropTypes.bool.isRequired,
+  fallback: PropTypes.bool.isRequired,
+  width: PropTypes.number.isRequired,
+  isIE: PropTypes.bool.isRequired
 }
 
 export default FirstViewText

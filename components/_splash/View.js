@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { doAnimation, canScroll } from '../../lib/redux/actions'
 import ImageBG from './ImageBG'
@@ -160,6 +161,17 @@ function mapDispatchToProps (dispatch) {
     onDoAnimation: bool => dispatch(doAnimation(bool)),
     onCanScroll: bool => dispatch(canScroll(bool))
   }
+}
+
+View.propTypes = {
+  animateIn: PropTypes.bool.isRequired,
+  currentView: PropTypes.object.isRequired,
+  fallbackView: PropTypes.object.isRequired,
+  footerShown: PropTypes.bool.isRequired,
+  isFirstView: PropTypes.bool.isRequired,
+  isIE: PropTypes.bool.isRequired,
+  dims: PropTypes.object.isRequired,
+  transDir: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(View)

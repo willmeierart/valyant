@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import LazyLoad from 'react-lazyload'
 import { connect } from 'react-redux'
 import { doAnimation, canScroll } from '../../../lib/redux/actions'
@@ -71,7 +72,6 @@ class View extends Component {
 
           <div className='main-wrapper'>{ this.renderImgTxtSets() }</div>
 
-          <SideTag width={width} show={!isFirstView} duration={200} />
           <Footer isMobile small={smallLogo} width={width} duration={200} mobileSideways={mobileSideways} />
         </div>
         <style jsx>{`
@@ -96,7 +96,7 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isIE, mobileSideways } = state.splash
+  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, mobileSideways } = state.splash
   return {
     animateIn,
     currentView,
@@ -104,16 +104,21 @@ function mapStateToProps (state) {
     footerShown,
     transDir,
     dims,
-    isIE,
     mobileSideways
   }
 }
 
 function mapDispatchToProps (dispatch) {
-  return {
-    onDoAnimation: bool => dispatch(doAnimation(bool)),
-    onCanScroll: bool => dispatch(canScroll(bool))
-  }
+  return {}
+}
+
+View.propTypes = {
+  animateIn: PropTypes.bool.isRequired,
+  currentView: PropTypes.object.isRequired,
+  isFirstView: PropTypes.bool.isRequired,
+  dims: PropTypes.object.isRequired,
+  transDir: PropTypes.string.isRequired,
+  mobileSideways: PropTypes.bool.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(View)

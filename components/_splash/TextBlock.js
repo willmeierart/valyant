@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 import { DividerPink } from '../assets/SVGassets'
 
@@ -17,7 +18,7 @@ class TextBlock extends Component {
   }
   render () {
     const { heightVal } = this.state
-    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height, isIE } = this.props
+    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, isIE } = this.props
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     const defaultStyle = {
@@ -91,6 +92,18 @@ class TextBlock extends Component {
       </Transition>
     )
   }
+}
+
+TextBlock.propTypes = {
+  body: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
+  dir: PropTypes.string.isRequired,
+  animateIn: PropTypes.bool.isRequired,
+  isFirstView: PropTypes.bool.isRequired,
+  fallback: PropTypes.bool.isRequired,
+  width: PropTypes.number.isRequired,
+  isIE: PropTypes.bool.isRequired
 }
 
 export default TextBlock

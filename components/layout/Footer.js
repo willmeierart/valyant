@@ -1,4 +1,5 @@
 import { Transition } from 'react-transition-group'
+import PropTypes from 'prop-types'
 import { LogoFull } from '../assets/SVGassets'
 import { FaFacebook, FaTwitter, FaInstagram, FaVimeo } from 'react-icons/lib/fa'
 
@@ -180,6 +181,15 @@ const Footer = ({ isMobile, show, duration, socials, width, small, mobileSideway
       `}</style>
     </div>
   )
+}
+
+Footer.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
+  show: PropTypes.bool.isRequired,
+  duration: PropTypes.number.isRequired,
+  socials: PropTypes.bool.isRequired,
+  width: PropTypes.number.isRequired,
+  small: PropTypes.bool.isRequired
 }
 
 export default Footer

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { DividerPink } from '../../assets/SVGassets'
 
 class TextBlock extends Component {
@@ -55,6 +56,11 @@ class TextBlock extends Component {
       </div>
     )
   }
+}
+
+TextBlock.propTypes = {
+  body: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired
 }
 
 export default TextBlock

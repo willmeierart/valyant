@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Transition } from 'react-transition-group'
-import { doAnimation, canScroll, showFooter } from '../../../lib/redux/actions'
+import { canScroll } from '../../../lib/redux/actions'
 
 class ImageBG extends Component {
   componentWillUpdate (nextProps) {
@@ -58,15 +59,21 @@ class ImageBG extends Component {
 }
 
 function mapStateToProps (state) {
-  return { footerShown: state.splash.footerShown }
+  return {}
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    onDoAnimation: bool => dispatch(doAnimation(bool)),
-    onCanScroll: bool => dispatch(canScroll(bool)),
-    onShowFooter: bool => dispatch(showFooter(bool))
+    onCanScroll: bool => dispatch(canScroll(bool))
   }
+}
+
+ImageBG.propTypes = {
+  animateIn: PropTypes.bool.isRequired,
+  duration: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  onCanScroll: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageBG)

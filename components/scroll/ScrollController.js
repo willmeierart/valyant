@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import once from 'lodash.once'
 import View from '../_splash/View'
@@ -159,6 +160,22 @@ function mapDispatchToProps (dispatch) {
     onSetTransDir: dir => dispatch(setTransDir(dir)),
     onGetVPDims: () => dispatch(getVPDims())
   }
+}
+
+ScrollController.propTypes = {
+  isIE: PropTypes.bool.isRequired,
+  currentView: PropTypes.object.isRequired,
+  canScroll: PropTypes.bool.isRequired,
+  footerShown: PropTypes.bool.isRequired,
+  animateIn: PropTypes.bool.isRequired,
+  dims: PropTypes.object.isRequired,
+  onSetCurrentView: PropTypes.func.isRequired,
+  onShowFooter: PropTypes.func.isRequired,
+  onCanScroll: PropTypes.func.isRequired,
+  onDoAnimation: PropTypes.func.isRequired,
+  onSetFallbackView: PropTypes.func.isRequired,
+  onSetTransDir: PropTypes.func.isRequired,
+  onGetVPDims: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollController)
