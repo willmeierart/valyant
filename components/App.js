@@ -47,7 +47,7 @@ class App extends Component {
         height: !mobileVersion ? '100vh' : 'auto' }}>
         <Head title={title} />
         <main>
-          { mobileVersion
+          { mobileVersion // works completely different on mobile... here's the fork in the road:
             ? <MobileScroller mobileSideways={orientation !== 0 && orientation !== null} />
             : <ScrollController />
           }
