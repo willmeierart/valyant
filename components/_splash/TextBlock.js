@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Transition } from 'react-transition-group'
-import { DividerWhite } from '../assets/SVGassets'
+import { DividerPink } from '../assets/SVGassets'
 
 class TextBlock extends Component {
   constructor (props) {
@@ -29,7 +29,7 @@ class TextBlock extends Component {
       opacity: fallback ? 1 : 0,
       transform: `translate3d(0,${fallback ? 0 : regVal},0)`,
       color: '#1F5877',
-      width: isFirstView && !fallback ? '100vw' : width < 500 ? '90vw' : '50vw',
+      width: isFirstView && !fallback ? '100vw' : '45vw',
       height: '100%',
       textAlign: isFirstView && !fallback ? 'center' : 'left',
       alignItems: isFirstView && !fallback ? 'center' : 'left',
@@ -53,7 +53,7 @@ class TextBlock extends Component {
           <div className='text-block v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>
             <h1 className='v-font'>{ header }</h1>
             <div className='divider'>
-              <DividerWhite />
+              <DividerPink />
             </div>
             <h3 className='v-font light'>{ body }</h3>
             <style jsx>{`

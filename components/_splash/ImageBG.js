@@ -18,12 +18,13 @@ class ImageBG extends Component {
     }
   }
   render () {
-    const { animateIn, duration, image, alt, isFirstView } = this.props
-    const sfx = '.jpg'
+    const { animateIn, duration, image, alt, isFirstView, width } = this.props
+    const sfx = width <= 500 ? '_500.jpg' : '_1000.jpg'
     const defaultStyle = {
       opacity: 0,
-      backgroundImage: `url('${image + sfx}')`,
-      backgroundSize: 'cover',
+      backgroundImage: 'url("' + image.split('%%')[0] + sfx + '")',
+      backgroundSize: isFirstView ? 'cover' : 'contain',
+      backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       width: isFirstView ? '100%' : '50%',
       position: 'absolute',

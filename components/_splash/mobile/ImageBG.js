@@ -19,11 +19,12 @@ class ImageBG extends Component {
   }
   render () {
     const { animateIn, duration, image, alt } = this.props
-    const sfx = '-do.jpg'
+    const sfx = '_500.jpg'
     const defaultStyle = {
       opacity: 0,
-      backgroundImage: `url('${image + sfx}')`,
-      backgroundSize: 'cover',
+      backgroundImage: 'url("' + image.split('%%')[0] + sfx + '")',
+      backgroundSize: 'contain',
+      backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       width: '100%',
       position: 'static',
@@ -40,8 +41,6 @@ class ImageBG extends Component {
             <div className='inner-wrapper' style={{ ...defaultStyle.backgroundPosition }} />
             <style jsx>{`
               .inner-wrapper {
-                background-size: cover;
-                background-position: center;
                 width: 100%;
                 height: 100%;
                 z-index: 6;

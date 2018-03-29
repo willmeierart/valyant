@@ -8,7 +8,6 @@ import TextBlock from './TextBlock'
 import FirstViewText from './FirstViewText'
 import SideTag from '../../layout/SideTag'
 import Footer from '../../layout/Footer'
-import ScrollLure from '.././ScrollLure'
 import { binder } from '../../../lib/_utils'
 import viewState from '../../../lib/data/viewState'
 
@@ -20,10 +19,6 @@ class View extends Component {
     }
     binder(this, ['renderImgTxtSets'])
   }
-  componentDidMount () {
-    console.log(viewState)
-  }
-  componentDidUpdate (prevprops, prevstate) {}
 
   renderImgTxtSets () {
     const { animateIn, isFirstView, isIE, dims: { width, height }, transDir, mobileSideways } = this.props
@@ -33,35 +28,29 @@ class View extends Component {
       return (
         <div key={i} className='wrapper'>
           <LazyLoad height={heightVal} once>
-            { i === 0
-              ? <FirstViewText
-                width={width}
-                dir={transDir}
-                animateIn={animateIn}
-                body={viewState[0].bodyCopy}
-                header={viewState[0].headerCopy}
-                header2={viewState[0].subHeaderCopy}
-                duration={200}
-                isFirstView={isFirstView}
-                isIE={isIE}
-                mobileSideways={mobileSideways} />
-              : <TextBlock
-                isIE={isIE}
-                height={height / 2}
-                width={width}
-                dir={transDir}
-                animateIn={animateIn}
-                body={bodyCopy}
-                header={headerCopy}
-                duration={300}
-                isFirstView={isFirstView}
-                mobileSideways={mobileSideways} />
-            }
-            <ImageBG isFirstView={isFirstView} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
+            <div className='text'>
+              { i === 0
+                ? <FirstViewText
+                  width={width}
+                  dir={transDir}
+                  animateIn={animateIn}
+                  body={viewState[0].bodyCopy}
+                  header={viewState[0].headerCopy}
+                  header2={viewState[0].subHeaderCopy}
+                  duration={200}
+                  isFirstView={isFirstView}
+                  isIE={isIE}
+                  mobileSideways={mobileSideways} />
+                : <TextBlock
+                  body={bodyCopy}
+                  header={headerCopy} />
+              }
+            </div>
+            { i !== 0 && <ImageBG isFirstView={isFirstView} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} /> }
           </LazyLoad>
           <style jsx>{`
-            .wrapper {
-              height: ${heightVal};
+            .text {
+              margin: 10vh 0;
             }
           `}</style>
         </div>
@@ -70,7 +59,7 @@ class View extends Component {
   }
 
   render () {
-    const { dims: { width, height }, currentView: { isFirstView }, footerShown, mobileSideways } = this.props
+    const { dims: { width, height }, currentView: { isFirstView }, mobileSideways } = this.props
     const smallLogo = width < 500
     return (
       <div className='view'>
@@ -83,9 +72,8 @@ class View extends Component {
           <div className='main-wrapper'>{ this.renderImgTxtSets() }</div>
 
           <SideTag width={width} show={!isFirstView} duration={200} />
-          <Footer small={smallLogo} width={width} show={footerShown} duration={200} mobileSideways={mobileSideways} />
+          <Footer isMobile small={smallLogo} width={width} duration={200} mobileSideways={mobileSideways} />
         </div>
-        { (isFirstView && width > 500 && !mobileSideways) && <ScrollLure duration={200} /> }
         <style jsx>{`
           .view {
             width: 96%;
@@ -98,7 +86,6 @@ class View extends Component {
             position: relative;
           }
           .logo-wrapper {
-            position:absolute;
             z-index: 10;
             top: 2%;
             width: 100%;

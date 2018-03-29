@@ -4,7 +4,6 @@ import { checkIfMobile, getVPDims } from '../lib/redux/actions'
 import Head from './Head'
 import ScrollController from '../components/scroll/ScrollController'
 import MobileScroller from '../components/scroll/MobileScroller'
-import { LogoFull } from './assets/SVGassets'
 
 class App extends Component {
   constructor (props) {
@@ -31,31 +30,28 @@ class App extends Component {
   }
 
   render () {
-    const { title, isMobile, dims: { height, width } } = this.props
+    const { title, isMobile } = this.props
     const { orientation } = this.state
     return (
       <div style={{
         overflow: !isMobile ? 'hidden' : 'auto',
         position: !isMobile ? 'fixed' : 'static',
         width: '100%',
-        height: isMobile ? 'auto' : '100%' }}>
+        height: !isMobile ? '100vh' : 'auto' }}>
         <Head title={title} />
         <main>
-          {/* { !isMobile || (isMobile && orientation !== null && orientation === 0)
-            ? <ScrollController />
-            : <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-                <LogoFull w={width * 0.9} h={height} />
-              </div>  // this all right here is cool onRotation alt mode, but they don't want it
-          } */}
-          {/* <ScrollController mobileSideways={orientation !== 0 && orientation !== null} /> */}
           { isMobile
-            ? <MobileScroller />
-            : <ScrollController mobileSideways={orientation !== 0 && orientation !== null} />
+            ? <MobileScroller mobileSideways={orientation !== 0 && orientation !== null} />
+            : <ScrollController />
           }
         </main>
         <style jsx global>{`
           body {
             height: ${isMobile ? 'auto' : '100vh'};
+            overflow: ${isMobile ? 'auto' : 'hidden'};
+          }
+          main {
+            height: 100vh;
           }
         `}</style>
       </div>
@@ -78,4 +74,3 @@ function mapDispatchToProps (dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
-// export default App

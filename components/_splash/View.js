@@ -45,9 +45,9 @@ class View extends Component {
       isIE
     } = this.props
 
+    const sfx = width <= 500 ? '_500.jpg' : '_1000.jpg'
     const heightVal = '100vh'
     const smallLogo = width < 500
-    const sfx = '.jpg'
     return (
       <div className='view'>
         <div className='inner-view'>
@@ -56,8 +56,8 @@ class View extends Component {
             <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
           </div>
 
-          <ImageBG isFirstView={isFirstView} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
-          <div className='fallback-img' style={{ zIndex: 6 }} />
+          <ImageBG width={width} isFirstView={isFirstView} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
+          <div className='fallback-img' style={{ zIndex: 6, backgroundSize: isFirstView ? 'cover' : 'contain' }} />
 
           { this.state.firstViewRender
             ? <div className='txt-wrapper'>
@@ -101,17 +101,18 @@ class View extends Component {
           <SideTag width={width} show={!isFirstView} duration={200} />
           <Footer small={smallLogo} width={width} show={footerShown} duration={200} />
         </div>
-        { (isFirstView && width > 500 ) && <ScrollLure duration={200} /> }
+        { (isFirstView && width > 500) && <ScrollLure duration={200} /> }
         <style jsx>{`
           .view {
             width: 96%;
             height: calc(${heightVal} - 4vw);
             padding: 2vw;
             position: absolute;
+            height: 100vh;
           }
           .inner-view {
             width: 100%;
-            height: 100%;
+            height: 100vh;
             position: relative;
           }
           .logo-wrapper {
@@ -121,8 +122,8 @@ class View extends Component {
             width: 100%;
           }
           .fallback-img {
-            background-image: url('${fallbackView.imageUrl + sfx}');
-            background-size: cover;
+            background-image: ${fallbackView ? 'url("' + fallbackView.imageUrl.split('%%')[0] + sfx + '")' : ''};
+            background-repeat: no-repeat;
             background-position: center;
             width: 50%;
             margin-left: 50%;

@@ -5,10 +5,6 @@ import { binder } from '../lib/_utils'
 export default class CustomDocument extends Document {
   constructor (props) {
     super(props)
-    this.state = {
-      height: null,
-      isMobile: true
-    }
     binder(this, ['preventScrollNav'])
   }
   preventScrollNav (e) {
@@ -35,33 +31,20 @@ export default class CustomDocument extends Document {
     init()
   }
   render () {
-    const { isMobile } = this.state
     return (
       <html lang='en-US'
         onWheel={(e) => { this.preventScrollNav(e) }}
         onTouchStart={(e) => { this.preventScrollNav(e) }}
-        onTouchMove={(e) => { this.preventScrollNav(e) }}
-        style={{ overflow: !isMobile ? 'hidden' : 'auto' }}>
+        onTouchMove={(e) => { this.preventScrollNav(e) }}>
         <Head>
           <meta name='google-site-verification' content='CCxXT2IRKni8brrPNrEbzFu7ChmofvsFYjPZZiXNtt0' />
         </Head>
         <body className='v-font base' onTouchStart={(e) => { this.preventScrollNav(e) }}
           onTouchMove={(e) => { this.preventScrollNav(e) }}
-          onWheel={(e) => { this.preventScrollNav(e) }}
-          style={{
-            overflow: !isMobile ? 'hidden' : 'auto',
-            height: !isMobile ? '100vh' : 'auto',
-            width: '100vw'
-          }}>
+          onWheel={(e) => { this.preventScrollNav(e) }}>
           <Main />
           <NextScript />
         </body>
-        <style jsx global>{`
-          body {
-            
-            box-sizing: border-box;
-          }
-        `}</style>
       </html>
     )
   }

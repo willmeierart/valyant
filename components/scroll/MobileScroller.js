@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setCurrentView, showFooter, canScroll, doAnimation, setFallbackView, setTransDir, getVPDims, lockOrientation } from '../../lib/redux/actions'
+import { setCurrentView, showFooter, canScroll, doAnimation, setFallbackView, setTransDir, getVPDims } from '../../lib/redux/actions'
 import { binder } from '../../lib/_utils'
 import View from '../_splash/mobile/View'
 
@@ -23,14 +23,11 @@ class MobileScroller extends Component {
     init()
   }
 
-  handleScroll () {
-
-  }
+  handleScroll () {}
 
   getBaseData () {
     const { dims: { width }, onGetVPDims } = this.props
     if (width === null) { onGetVPDims() }
-    // if (screenLocked === false && onLockOrientation() !== false) { onLockOrientation() }
   }
 
   render () {
@@ -48,14 +45,12 @@ MobileScroller.propTypes = {
 }
 
 function mapStateToProps (state) {
-  const { canScroll, currentView, footerShown, animateIn, dims, screenLocked } = state.splash
+  const { currentView, footerShown, animateIn, dims } = state.splash
   return {
-    canScroll,
     currentView,
     footerShown,
     animateIn,
-    dims,
-    screenLocked
+    dims
   }
 }
 
@@ -67,8 +62,7 @@ function mapDispatchToProps (dispatch) {
     onDoAnimation: bool => dispatch(doAnimation(bool)),
     onSetFallbackView: view => dispatch(setFallbackView(view)),
     onSetTransDir: dir => dispatch(setTransDir(dir)),
-    onGetVPDims: () => dispatch(getVPDims()),
-    onLockOrientation: () => dispatch(lockOrientation())
+    onGetVPDims: () => dispatch(getVPDims())
   }
 }
 

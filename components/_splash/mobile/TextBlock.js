@@ -1,25 +1,14 @@
 import React, { Component } from 'react'
-import { DividerWhite } from '../../assets/SVGassets'
+import { DividerPink } from '../../assets/SVGassets'
 
 class TextBlock extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      heightVal: '500px'
-    }
-  }
-  componentDidMount () {
-    if (typeof window !== 'undefined') {
-      this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2.5)}px` })
-    }
-  }
   render () {
     const { body, header } = this.props
     return (
       <div className='text-block v-font'>
         <h1 className='v-font'>{ header }</h1>
         <div className='divider'>
-          <DividerWhite />
+          <DividerPink />
         </div>
         <h3 className='v-font light'>{ body }</h3>
         <style jsx>{`
@@ -32,7 +21,6 @@ class TextBlock extends Component {
             opacity: 1;
             color: #1F5877;
             width: 96vw;
-            margin: 25vh 0;
             text-align: center;
             align-items: center;
             justify-content: center;
