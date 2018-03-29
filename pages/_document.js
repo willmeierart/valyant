@@ -38,6 +38,7 @@ export default class CustomDocument extends Document {
         onTouchMove={(e) => { this.preventScrollNav(e) }}>
         <Head>
           <meta name='google-site-verification' content='CCxXT2IRKni8brrPNrEbzFu7ChmofvsFYjPZZiXNtt0' />
+          <meta name='google-site-verification' content='SstcJEgyuadqOh5iE_vCZRPSOeIqBVdMhDPvmH9Hjos' />
         </Head>
         <body className='v-font base' onTouchStart={(e) => { this.preventScrollNav(e) }}
           onTouchMove={(e) => { this.preventScrollNav(e) }}
