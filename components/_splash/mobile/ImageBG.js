@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Transition } from 'react-transition-group'
-import { canScroll, showFooter } from '../../lib/redux/actions'
+import { canScroll } from '../../../lib/redux/actions'
 
 class ImageBG extends Component {
   componentWillUpdate (nextProps) {
@@ -19,17 +19,17 @@ class ImageBG extends Component {
     }
   }
   render () {
-    const { animateIn, duration, image, alt, isFirstView, width } = this.props
-    const sfx = width <= 500 ? '-half.jpg' : '.jpg'
+    const { animateIn, duration, image, alt } = this.props
+    const sfx = '_500.jpg'
     const defaultStyle = {
       opacity: 0,
-      backgroundImage: `url('${image + sfx}')`,
-      backgroundSize: isFirstView ? 'cover' : 'contain',
+      backgroundImage: 'url("' + image.split('%%')[0] + sfx + '")',
+      backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
-      width: isFirstView ? '100%' : '50%',
-      position: 'absolute',
-      height: '100%'
+      width: '100%',
+      position: 'static',
+      height: '100vh'
     }
     const transitionStyles = {
       entering: { opacity: 0 },
@@ -42,8 +42,6 @@ class ImageBG extends Component {
             <div className='inner-wrapper' style={{ ...defaultStyle.backgroundPosition }} />
             <style jsx>{`
               .inner-wrapper {
-                background-size: cover;
-                background-position: center;
                 width: 100%;
                 height: 100%;
                 z-index: 6;
@@ -61,13 +59,12 @@ class ImageBG extends Component {
 }
 
 function mapStateToProps (state) {
-  return { footerShown: state.splash.footerShown }
+  return {}
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    onCanScroll: bool => dispatch(canScroll(bool)),
-    onShowFooter: bool => dispatch(showFooter(bool))
+    onCanScroll: bool => dispatch(canScroll(bool))
   }
 }
 
@@ -76,9 +73,7 @@ ImageBG.propTypes = {
   duration: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
-  footerShown: PropTypes.bool.isRequired,
-  onCanScroll: PropTypes.func.isRequired,
-  onShowFooter: PropTypes.func.isRequired
+  onCanScroll: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageBG)

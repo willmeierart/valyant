@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
-import { DividerWhite } from '../assets/SVGassets'
+import { DividerPink } from '../assets/SVGassets'
 
 class TextBlock extends Component {
   constructor (props) {
@@ -15,32 +16,22 @@ class TextBlock extends Component {
       this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2.5)}px` })
     }
   }
-  componentDidUpdate (prevProps) {
-    const { body, isMobile } = this.props
-    if (body !== prevProps.body) {
-      if (body.length > 300 && isMobile) {
-        const slicer = body.lastIndexOf('. ') + 2
-        const sliced = body.substring(0, slicer)
-        this.setState({ abbrevBody: sliced }) // if text is long and you're on mobile, slice off the last sentence....
-      }
-    }
-  }
   render () {
     const { heightVal } = this.state
-    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, height, isIE, isMobile, mobileSideways } = this.props
+    const { duration, dir, body, header, animateIn, isFirstView, fallback, width, isIE } = this.props
     const regVal = dir === '>>' ? heightVal : '-' + heightVal
     const fallbackVal = dir === '>>' ? '-' + heightVal : heightVal
     const defaultStyle = {
       position: 'absolute',
       zIndex: 10,
-      height: '100%',
       flexDirection: 'column',
       display: 'flex',
       flexGrow: 1,
       opacity: fallback ? 1 : 0,
       transform: `translate3d(0,${fallback ? 0 : regVal},0)`,
-      color: 'white',
-      width: isFirstView && !fallback ? '100vw' : width < 500 || mobileSideways ? '90vw' : '50vw',
+      color: '#1F5877',
+      width: isFirstView && !fallback ? '100vw' : '40vw',
+      height: '100%',
       textAlign: isFirstView && !fallback ? 'center' : 'left',
       alignItems: isFirstView && !fallback ? 'center' : 'left',
       left: isFirstView && !fallback ? 0 : '5vw',
@@ -63,13 +54,13 @@ class TextBlock extends Component {
           <div className='text-block v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>
             <h1 className='v-font'>{ header }</h1>
             <div className='divider'>
-              <DividerWhite />
+              <DividerPink />
             </div>
-            <h3 className='v-font light'>{ this.state.abbrevBody || body }</h3>
+            <h3 className='v-font light'>{ body }</h3>
             <style jsx>{`
               .text-block h1 {
                 text-transform: uppercase;
-                font-size: ${width < 500 || isIE || mobileSideways ? '3em' : '4em'};
+                font-size: ${width < 500 || isIE ? '3em' : '4em'};
                 flex-wrap: ${isIE && 'nowrap'};
                 white-space: ${isIE && 'nowrap'};
                 margin:0;
@@ -89,9 +80,9 @@ class TextBlock extends Component {
                 height: 17px;
               }
               .text-block h3 {
-                width: ${width > 500 && width < height ? mobileSideways ? '100%' : '75%' : '100%'};
+                width: 75%;
                 font-size: 1.25em;
-                line-height: ${isMobile ? '1em' : '1.25em'};
+                line-height: 1.25em;
                 font-weight: ${isFirstView && !fallback ? 500 : 'normal'};
                 letter-spacing: ${isFirstView && !fallback ? '.05em' : 0}
               }
@@ -101,6 +92,18 @@ class TextBlock extends Component {
       </Transition>
     )
   }
+}
+
+TextBlock.propTypes = {
+  body: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
+  dir: PropTypes.string.isRequired,
+  animateIn: PropTypes.bool.isRequired,
+  isFirstView: PropTypes.bool.isRequired,
+  fallback: PropTypes.bool.isRequired,
+  width: PropTypes.number.isRequired,
+  isIE: PropTypes.bool.isRequired
 }
 
 export default TextBlock

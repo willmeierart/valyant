@@ -1,3 +1,5 @@
+[x] fix scroll animation trigger on desktop
+[x] add PropTypes
 [] comment code
 [] update images
   [] need 1, 1-half naming convention

@@ -1,21 +1,28 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { checkIfMobile, getVPDims } from '../lib/redux/actions'
 import Head from './Head'
 import ScrollController from '../components/scroll/ScrollController'
-import { LogoFull } from './assets/SVGassets'
+import MobileScroller from '../components/scroll/MobileScroller'
 
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = { orientation: null }
+    this.state = { orientation: null, mobileVersion: false }
   }
 
   componentDidMount () {
     const init = () => {
-      this.props.onGetVPDims() // set global js sizing of vp
-      this.props.onCheckIfMobile()
+      const { onGetVPDims, onCheckIfMobile, isMobile } = this.props
+      onGetVPDims() // set global js sizing of vp
+      onCheckIfMobile()
+      this.setState({ mobileVersion: isMobile || window.innerWidth < 700 })
       if (typeof window !== 'undefined') { // something done throughout app, if window undefined (bc serverside rendered at first) then keep trying til it's not...
+        window.addEventListener('resize', async () => {
+          this.setState({ mobileVersion: isMobile || window.innerWidth < 700 })
+          console.log(this.state.mobileVersion)
+        })
         if (typeof window.orientation !== 'undefined') {
           if (this.state.orientation === null) {
             this.setState({ orientation: window.orientation }) // if we're on mobile, keep track of orientation
@@ -30,23 +37,28 @@ class App extends Component {
   }
 
   render () {
-    const { title, isMobile, dims: { height, width } } = this.props
-    const { orientation } = this.state
+    const { title } = this.props
+    const { orientation, mobileVersion } = this.state
     return (
-      <div style={{ overflow: 'hidden', position: 'fixed', width: '100%', height: isMobile ? height + 'px' : '100%' }}>
+      <div style={{
+        overflow: !mobileVersion ? 'hidden' : 'auto',
+        position: !mobileVersion ? 'fixed' : 'static',
+        width: '100%',
+        height: !mobileVersion ? '100vh' : 'auto' }}>
         <Head title={title} />
         <main>
-          {/* { !isMobile || (isMobile && orientation !== null && orientation === 0)
-            ? <ScrollController />
-            : <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-                <LogoFull w={width * 0.9} h={height} />
-              </div>  // this all right here is cool onRotation alt mode, but they don't want it
-          } */}
-          <ScrollController mobileSideways={orientation !== 0 && orientation !== null} />
+          { mobileVersion // works completely different on mobile... here's the fork in the road:
+            ? <MobileScroller mobileSideways={orientation !== 0 && orientation !== null} />
+            : <ScrollController />
+          }
         </main>
         <style jsx global>{`
           body {
-            height: ${isMobile ? height + 'px' : '100vh'};
+            height: ${mobileVersion ? 'auto' : '100vh'};
+            overflow: ${mobileVersion ? 'auto' : 'hidden'};
+          }
+          main {
+            height: 100vh;
           }
         `}</style>
       </div>
@@ -68,5 +80,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
+App.propTypes = {
+  onCheckIfMobile: PropTypes.func.isRequired,
+  onGetVPDims: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  dims: PropTypes.object.isRequired,
+  title: PropTypes.string
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(App)
-// export default App

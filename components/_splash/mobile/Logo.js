@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
-import { LogoFull, LogoMono } from '../assets/SVGassets'
+import { LogoFull, LogoMono } from '../../assets/SVGassets'
 
 export default class Logo extends Component {
   constructor (props) {

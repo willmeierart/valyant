@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 import { LineDot } from '../assets/SVGassets'
 
@@ -52,6 +53,10 @@ class ScrollLure extends Component {
       </Transition>
     )
   }
+}
+
+ScrollLure.propTypes = {
+  duration: PropTypes.number.isRequired
 }
 
 export default ScrollLure
