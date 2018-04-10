@@ -57,6 +57,7 @@ class View extends Component {
               position: relative;
               height: 100vh;
               display: flex;
+              flex-grow: 1;
               flex-direction: column;
               justify-content: space-around;
             }

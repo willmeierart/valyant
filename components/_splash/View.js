@@ -130,6 +130,7 @@ class View extends Component {
             margin-left: 50%;
             height: 100%;
             z-index: 6;
+            opacity: ${isFirstView || fallbackView.imageUrl.indexOf('01') !== -1 ? 0 : 1};
           }
           .txt-wrapper {
             position: absolute;
