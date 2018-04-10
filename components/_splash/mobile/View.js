@@ -47,11 +47,34 @@ class View extends Component {
                   header={headerCopy} />
               }
             </div>
-            { i !== 0 && <ImageBG isFirstView={isFirstView} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} /> }
+            <div className='img-wrapper'>
+              <ImageBG isFirstView={i === 0} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
+              { i === 0 && <div className='fadeout' /> }
+            </div>
           </LazyLoad>
           <style jsx>{`
+            .wrapper {
+              position: relative;
+              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-around;
+            }
+            .img-wrapper {
+              position: ${i === 0 ? 'absolute' : 'static'};
+              height: ${i === 0 ? '100%' : '50%'};
+              width: 100%;
+            }
+            .fadeout {
+              background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1));
+              position: absolute;
+              width: 100%;
+              height: 50%;
+              bottom: 0;
+            }
             .text {
-              margin: 10vh 0;
+              top: 0;
+              {/* margin: 10vh 0; */}
             }
           `}</style>
         </div>

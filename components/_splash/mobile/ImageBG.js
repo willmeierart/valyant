@@ -19,17 +19,17 @@ class ImageBG extends Component {
     }
   }
   render () {
-    const { animateIn, duration, image, alt } = this.props
+    const { animateIn, duration, image, alt, isFirstView } = this.props
     const sfx = '-half.jpg'
     const defaultStyle = {
       opacity: 0,
-      backgroundImage: 'url("' + image.split('%%')[0] + sfx + '")',
-      backgroundSize: 'contain',
+      backgroundImage: `url('${image + sfx}')`,
+      backgroundSize: isFirstView ? 'cover' : 'contain',
       backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
+      backgroundPosition: isFirstView ? 'left' : 'center',
       width: '100%',
       position: 'static',
-      height: '100vh'
+      height: '100%'
     }
     const transitionStyles = {
       entering: { opacity: 0 },
