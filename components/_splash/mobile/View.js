@@ -55,7 +55,7 @@ class View extends Component {
           <style jsx>{`
             .wrapper {
               position: relative;
-              height: 100vh;
+              height: ${i === 0 ? '100vh' : '150vh'};
               display: flex;
               flex-grow: 1;
               flex-direction: column;
