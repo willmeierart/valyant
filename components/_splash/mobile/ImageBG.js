@@ -20,7 +20,7 @@ class ImageBG extends Component {
   }
   render () {
     const { animateIn, duration, image, alt } = this.props
-    const sfx = '_500.jpg'
+    const sfx = '-half.jpg'
     const defaultStyle = {
       opacity: 0,
       backgroundImage: 'url("' + image.split('%%')[0] + sfx + '")',
