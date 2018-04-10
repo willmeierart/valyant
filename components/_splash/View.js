@@ -123,7 +123,7 @@ class View extends Component {
             width: 100%;
           }
           .fallback-img {
-            background-image: ${fallbackView ? 'url("' + fallbackView.imageUrl.split('%%')[0] + sfx + '")' : ''};
+            background-image: url('${fallbackView.imageUrl + sfx}');
             background-repeat: no-repeat;
             background-position: center;
             width: 50%;

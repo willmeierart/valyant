@@ -23,7 +23,7 @@ class ImageBG extends Component {
     const sfx = width <= 500 ? '-half.jpg' : '.jpg'
     const defaultStyle = {
       opacity: 0,
-      backgroundImage: 'url("' + image.split('%%')[0] + sfx + '")',
+      backgroundImage: `url('${image + sfx}')`,
       backgroundSize: isFirstView ? 'cover' : 'contain',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
