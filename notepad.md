@@ -8,3 +8,4 @@
 [] work out initial view
   [] img background?
   [] transition?
+[] spacing between images on mobile

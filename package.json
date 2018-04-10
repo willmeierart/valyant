@@ -5,9 +5,11 @@
   "scripts": {
     "test": "jest",
     "dev": "NODE_ENV=development node server/index.js",
+    "devstage": "NODE_ENV=development node server/stage.js",
     "next": "next",
     "build": "next build",
-    "start": "NODE_ENV=production node server/index.js"
+    "start": "NODE_ENV=production node server/index.js",
+    "startstage": "NODE_ENV=production node server/stage.js"
   },
   "jest": {
     "setupFiles": [
