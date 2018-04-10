@@ -46,7 +46,7 @@ class View extends Component {
       isIE
     } = this.props
 
-    const sfx = width <= 500 ? '_500.jpg' : '_1000.jpg'
+    const sfx = width <= 500 ? '-half.jpg' : '.jpg'
     const heightVal = '100vh'
     const smallLogo = width < 500
     return (
