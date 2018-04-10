@@ -19,7 +19,7 @@ class ImageBG extends Component {
   }
   render () {
     const { animateIn, duration, image, alt, isMobile } = this.props
-    const sfx = isMobile ? '-do.jpg' : '.jpg'
+    const sfx = isMobile ? '-half.jpg' : '.jpg'
     const defaultStyle = {
       opacity: 0,
       backgroundImage: `url('${image + sfx}')`,

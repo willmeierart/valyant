@@ -49,7 +49,7 @@ class View extends Component {
 
     const heightVal = isMobile ? `${height}px` : '100vh'
     const smallLogo = width < 500 // && isMobile
-    const sfx = isMobile ? '-do.jpg' : '.jpg'
+    const sfx = isMobile ? '-half.jpg' : '.jpg'
     return (
       <div className='view'>
         <div className='inner-view'>
