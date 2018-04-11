@@ -55,7 +55,7 @@ class View extends Component {
           <style jsx>{`
             .wrapper {
               position: relative;
-              height: ${i === 0 ? '100vh' : '150vh'};
+              height: ${i === 0 ? '120vh' : 'unset'};
               display: flex;
               flex-grow: 1;
               flex-direction: column;
@@ -63,7 +63,7 @@ class View extends Component {
             }
             .img-wrapper {
               position: ${i === 0 ? 'absolute' : 'static'};
-              height: ${i === 0 ? '100%' : '50%'};
+              height: ${i === 0 ? '100%' : 'auto'};
               width: 100%;
               {/* display: flex; */}
               {/* align-items: center; */}

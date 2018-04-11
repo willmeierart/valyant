@@ -29,7 +29,7 @@ class ImageBG extends Component {
       backgroundPosition: isFirstView ? 'left' : 'center',
       width: '100%',
       position: 'static',
-      height: '100%'
+      height: isFirstView ? '100%' : '100vw'
     }
     const transitionStyles = {
       entering: { opacity: 0 },
