@@ -32,20 +32,23 @@ export default class Logo extends Component {
 
     const defaultStyle = {
       opacity: 0,
-      transform: 'translate3d(0,0,0)',
-      transition: `all ${duration}ms ease-out`
+      // transform: 'translate3d(0,0,0)',
+      transform: `translate3d(0,${width > 700 && !mobileSideways ? height > width ? 'calc(25vh)' : 'calc(20vh)' : 0},0)`,
+      transition: `all ${1.5 * duration}ms ease-out ${0.5 * duration}ms`
     }
     const transitionStyles = {
       entering: {
-        transform: 'translate3d(0,0,0)',
+        transform: `translate3d(0,${width > 700 && !mobileSideways ? height > width ? 'calc(25vh)' : 'calc(20vh)' : 0},0)`,
+        // transform: 'translate3d(0,0,0)',
         opacity: 0
       },
       entered: {
+        // transform: 'translate3d(0,0,0)',
         transform: `translate3d(0,${width > 700 && !mobileSideways ? height > width ? 'calc(15vh)' : 'calc(10vh)' : 0},0)`,
         opacity: 1
       },
       exiting: {
-        transform: 'translate3d(0,0,0)',
+        transform: `translate3d(0,${width > 700 && !mobileSideways ? height > width ? 'calc(25vh)' : 'calc(20vh)' : 0},0)`,
         opacity: 0
       }
     }
@@ -55,10 +58,10 @@ export default class Logo extends Component {
     return (
       <div className='logo'>
         { terms
-          ? <Transition onExit={this.delayExit.bind(this)} onExiting={this.delayExit.bind(this)} in={this.props.firstLogo} timeout={200}>
+          ? <Transition mountOnEnter onExit={this.delayExit.bind(this)} onExiting={this.delayExit.bind(this)} in={this.state.logoIn} timeout={200}>
             {state => (
-              <div className='full-name' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-                <LogoFull w={w} h={h} />
+              <div className='full-name' style={{ opacity: 0, ...defaultStyle, ...transitionStyles[state] }}>
+                <LogoFull w={w} h={h} opacity={this.state.logoIn} />
               </div>
             )}
           </Transition>

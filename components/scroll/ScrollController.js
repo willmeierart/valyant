@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import once from 'lodash.once'
+import throttle from 'lodash.throttle'
+import debounce from 'lodash.debounce'
+import { Throttle, Debounce } from 'react-throttle'
 import View from '../_splash/View'
 import viewState from '../../lib/data/viewState'
 import { setCurrentView, showFooter, canScroll, doAnimation, setFallbackView, setTransDir, getVPDims, checkIfIE } from '../../lib/redux/actions'
@@ -10,8 +13,10 @@ import { binder } from '../../lib/_utils'
 class ScrollController extends Component {
   constructor (props) {
     super(props)
-    this.state = { isIE: false }
-    binder(this, ['getBaseData', 'changeView', 'handleScroll', 'handleKeyDown'])
+    this.state = { isIE: false, scrolling: false }
+    binder(this, ['getBaseData', 'changeView', 'handleScroll', 'handleKeyDown', 'scrollAction'])
+    this.timeout = null
+    this.debouncedHandleScroll = debounce(this.handleScroll, 100, { trailing: false })
   }
 
   componentDidMount () {
@@ -76,9 +81,57 @@ class ScrollController extends Component {
   handleScroll (event) {
     event.preventDefault()
     const e = { ...event }
+    if (this.props.footerShown) {
+      this.props.onCanScroll(true)
+      clearTimeout(this.timeout)
+      this.setState({ scrolling: false })
+    }
+    this.scrollAction(e)
+    // const debounced = debounce(() => {
+    //   // this.scrollAction(e)
+    //   console.log(e)
+    //   if (this.props.canScroll) {
+    //     this.changeView(e)
+    //     this.props.onCanScroll(false)
+    //     // once(() => { this.props.onCanScroll(false) })
+    //     // throttle(() => this.props.onCanScroll(false), 500)
+    //     // once(() => this.props.onCanScroll(false), 500)
+    //     // debounce(() => this.props.onCanScroll(false), 500)
+    //     // e.cancel()
+    //     console.log(e)
+    //   }
+    // }, 100, { trailing: false })
+    // debounced()
+    // this.scrollAction(e)
+    // if (!this.state.scrolling) {
+    //   // once(() => { this.scrollAction(e) })
+    //   console.log('not scroll state')
+    //   this.setState({ scrolling: true })   
+    //   // once(() => this.scrollAction(e))
+    //   this.scrollAction(e)
+    //   setTimeout(() => {}, 301)
+    // } else {
+    //   this.timeout = setTimeout(() => {
+    //     this.setState({ scrolling: false })
+    //   }, 1001)
+    // }
+  }
+
+  scrollAction (e) {
+    console.log(e)
     if (this.props.canScroll) {
       this.changeView(e)
-      this.props.onCanScroll(true)
+      this.props.onCanScroll(false)
+      // once(() => { this.props.onCanScroll(false) })
+      // throttle(() => this.props.onCanScroll(false), 500)
+      // once(() => this.props.onCanScroll(false), 500)
+      // debounce(() => this.props.onCanScroll(false), 500)
+      // e.cancel()
+      console.log(e)
+    }
+    else {
+      // this.props.onCanScroll(true)
+      // once(() => { this.props.onCanScroll(true) })
     }
   }
 
@@ -121,19 +174,21 @@ class ScrollController extends Component {
 
   render () {
     return (
-      <div className='scroll-controller' onKeyDown={(e) => e.stopPropagation()} onWheel={once(this.handleScroll)} >
-        <View />
-        { this.props.children }
-        <style jsx>{`
-          .scroll-controller {
-            width: 100%;
-            height: 100vh;
-            box-sizing: border-box;
-            position: relative;
-            overflow: hidden;
-          }
-        `}</style>
-      </div>
+      // <Throttle time={100} handlers={['onWheel', 'onKeyDown']}>
+        <div className='scroll-controller' onKeyDown={(e) => e.stopPropagation()} onWheel={this.handleScroll} >
+          <View />
+          { this.props.children }
+          <style jsx>{`
+            .scroll-controller {
+              width: 100%;
+              height: 100vh;
+              box-sizing: border-box;
+              position: relative;
+              overflow: hidden;
+            }
+          `}</style>
+        </div>
+      // </Throttle>
     )
   }
 }

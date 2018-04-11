@@ -8,6 +8,9 @@ class FirstViewText extends Component {
     super(props)
     this.state = { heightVal: '500px' }
   }
+  componentDidMount () {
+    this.props.onCanScroll(true)
+  }
   render () {
     const { duration, body, header, animateIn, fallback, width, isIE } = this.props
     const regVal = 100

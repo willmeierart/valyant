@@ -24,12 +24,23 @@ class View extends Component {
     console.log(this.props)
     this.doAnimationCheck()
   }
-  componentDidUpdate (prevprops, prevstate) {
+  componentDidUpdate (prevProps, prevState) {
     this.doAnimationCheck()
     if (!this.props.currentView.isFirstView) {
       setTimeout(() => { this.setState({ firstViewRender: false }) }, 200)
     } else {
       setTimeout(() => { this.setState({ firstViewRender: true }) }, 200)
+    }
+    if (this.props.currentView.imageUrl !== prevProps.currentView.imageUrl || this.props.footerShown || this.props.isFirstView) {
+      if (this.scrollTimer) {
+        clearTimeout(this.scrollTimer)
+        this.scrollTimer = null
+      }
+      this.props.onCanScroll(false) // lock up scrolling momentarily
+      this.scrollTimer = setTimeout(() => {
+        this.props.onCanScroll(true)
+        clearTimeout(this.scrollTimer)
+      }, 1600) // 1600 is the ABSOLUTE minimum interval for scrolling where you can't accidentally trigger a double route change
     }
   }
 
@@ -50,7 +61,8 @@ class View extends Component {
       onSetSideTagCurrentHeight,
       onSetSideTagFallbackHeight,
       sideTagCurrentHeight,
-      sideTagFallbackHeight
+      sideTagFallbackHeight,
+      onCanScroll
     } = this.props
 
     const sfx = width <= 500 ? '-half.jpg' : '.jpg'
@@ -61,23 +73,24 @@ class View extends Component {
         <div className='inner-view'>
 
           <div className='logo-wrapper'>
-            <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={200} />
+            <Logo small={smallLogo} width={width} height={height} isFirstView={isFirstView} firstLogo={this.state.firstViewRender} duration={500} />
           </div>
 
           <ImageBG width={width} isFirstView={isFirstView} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
-          <img style={{ visibility: 'hidden', height: 0, display: 'none' }} src={nextImageUrl} />
+          <img style={{ visibility: 'hidden', height: 0, position: 'absolute' }} src={nextImageUrl + sfx} />
           <div className='fallback-img' style={{ zIndex: 6, backgroundSize: isFirstView ? 'cover' : 'contain' }} />
 
           { this.state.firstViewRender
             ? <div className='txt-wrapper'>
               <FirstViewText
+                onCanScroll={onCanScroll}
                 width={width}
                 dir={transDir}
                 animateIn={animateIn}
                 body={viewState[0].bodyCopy}
                 header={viewState[0].headerCopy}
                 header2={viewState[0].subHeaderCopy}
-                duration={200}
+                duration={500}
                 isFirstView={isFirstView}
                 isIE={isIE} />
             </div>
@@ -187,7 +200,8 @@ View.propTypes = {
   isIE: PropTypes.bool,
   dims: PropTypes.object.isRequired,
   transDir: PropTypes.string.isRequired,
-  onSetSideTagHeight: PropTypes.func.isRequired
+  onSetSideTagCurrentHeight: PropTypes.func.isRequired,
+  onSetSideTagFallbackHeight: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(View)
