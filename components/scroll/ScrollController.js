@@ -163,11 +163,11 @@ function mapDispatchToProps (dispatch) {
 }
 
 ScrollController.propTypes = {
-  isIE: PropTypes.bool.isRequired,
+  isIE: PropTypes.bool,
   currentView: PropTypes.object.isRequired,
   canScroll: PropTypes.bool.isRequired,
   footerShown: PropTypes.bool.isRequired,
-  animateIn: PropTypes.bool.isRequired,
+  animateIn: PropTypes.bool,
   dims: PropTypes.object.isRequired,
   onSetCurrentView: PropTypes.func.isRequired,
   onShowFooter: PropTypes.func.isRequired,

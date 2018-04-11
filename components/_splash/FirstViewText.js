@@ -97,9 +97,9 @@ FirstViewText.propTypes = {
   body: PropTypes.string.isRequired,
   header: PropTypes.string.isRequired,
   animateIn: PropTypes.bool.isRequired,
-  fallback: PropTypes.bool.isRequired,
-  width: PropTypes.number.isRequired,
-  isIE: PropTypes.bool.isRequired
+  fallback: PropTypes.bool,
+  width: PropTypes.number,
+  isIE: PropTypes.bool
 }
 
 export default FirstViewText

@@ -83,7 +83,7 @@ function mapDispatchToProps (dispatch) {
 App.propTypes = {
   onCheckIfMobile: PropTypes.func.isRequired,
   onGetVPDims: PropTypes.func.isRequired,
-  isMobile: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool,
   dims: PropTypes.object.isRequired,
   title: PropTypes.string
 }

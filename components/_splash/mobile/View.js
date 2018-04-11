@@ -144,7 +144,7 @@ function mapDispatchToProps (dispatch) {
 View.propTypes = {
   animateIn: PropTypes.bool.isRequired,
   currentView: PropTypes.object.isRequired,
-  isFirstView: PropTypes.bool.isRequired,
+  isFirstView: PropTypes.bool,
   dims: PropTypes.object.isRequired,
   transDir: PropTypes.string.isRequired,
   mobileSideways: PropTypes.bool.isRequired

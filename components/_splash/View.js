@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { doAnimation, canScroll } from '../../lib/redux/actions'
+import { doAnimation, canScroll, setSideTagHeight } from '../../lib/redux/actions'
 import ImageBG from './ImageBG'
 import Logo from './Logo'
 import TextBlock from './TextBlock'
@@ -20,7 +20,10 @@ class View extends Component {
     }
     binder(this, ['doAnimationCheck'])
   }
-  componentDidMount () { this.doAnimationCheck() }
+  componentDidMount () {
+    console.log(this.props)
+    this.doAnimationCheck()
+  }
   componentDidUpdate (prevprops, prevstate) {
     this.doAnimationCheck()
     if (!this.props.currentView.isFirstView) {
@@ -160,19 +163,21 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     onDoAnimation: bool => dispatch(doAnimation(bool)),
-    onCanScroll: bool => dispatch(canScroll(bool))
+    onCanScroll: bool => dispatch(canScroll(bool)),
+    onSetSideTagHeight: h => dispatch(setSideTagHeight(h))
   }
 }
 
 View.propTypes = {
   animateIn: PropTypes.bool.isRequired,
   currentView: PropTypes.object.isRequired,
-  fallbackView: PropTypes.object.isRequired,
+  fallbackView: PropTypes.object,
   footerShown: PropTypes.bool.isRequired,
-  isFirstView: PropTypes.bool.isRequired,
-  isIE: PropTypes.bool.isRequired,
+  isFirstView: PropTypes.bool,
+  isIE: PropTypes.bool,
   dims: PropTypes.object.isRequired,
-  transDir: PropTypes.string.isRequired
+  transDir: PropTypes.string.isRequired,
+  onSetSideTagHeight: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(View)

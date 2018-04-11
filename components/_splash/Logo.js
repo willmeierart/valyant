@@ -87,8 +87,8 @@ export default class Logo extends Component {
 Logo.propTypes = {
   isFirstView: PropTypes.bool.isRequired,
   duration: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
   small: PropTypes.bool.isRequired,
-  mobileSideways: PropTypes.bool.isRequired
+  mobileSideways: PropTypes.bool
 }

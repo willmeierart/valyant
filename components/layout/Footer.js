@@ -184,11 +184,11 @@ const Footer = ({ isMobile, show, duration, socials, width, small, mobileSideway
 }
 
 Footer.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
-  show: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool,
+  show: PropTypes.bool,
   duration: PropTypes.number.isRequired,
-  socials: PropTypes.bool.isRequired,
-  width: PropTypes.number.isRequired,
+  socials: PropTypes.bool,
+  width: PropTypes.number,
   small: PropTypes.bool.isRequired
 }
 

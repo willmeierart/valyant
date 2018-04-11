@@ -100,8 +100,8 @@ TextBlock.propTypes = {
   duration: PropTypes.number.isRequired,
   dir: PropTypes.string.isRequired,
   animateIn: PropTypes.bool.isRequired,
-  isFirstView: PropTypes.bool.isRequired,
-  fallback: PropTypes.bool.isRequired,
+  isFirstView: PropTypes.bool,
+  fallback: PropTypes.bool,
   width: PropTypes.number.isRequired,
   isIE: PropTypes.bool.isRequired
 }

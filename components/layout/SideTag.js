@@ -38,7 +38,7 @@ const SideTag = ({ show, duration, width }) => {
 SideTag.propTypes = {
   show: PropTypes.bool.isRequired,
   duration: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired
+  width: PropTypes.number
 }
 
 export default SideTag
