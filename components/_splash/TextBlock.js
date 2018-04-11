@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 import { DividerPink } from '../assets/SVGassets'
@@ -8,12 +9,47 @@ class TextBlock extends Component {
     super(props)
     this.state = {
       heightVal: '500px',
-      abbrevBody: null
+      abbrevBody: null,
+      innerHeight: null
     }
+    this.setSideTagHeight = this.setSideTagHeight.bind(this)
   }
   componentDidMount () {
     if (typeof window !== 'undefined') {
-      this.setState({ heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2.5)}px` })
+      this.setState(
+        {
+          heightVal: `${Math.floor(Math.abs(window.innerHeight) / 2.5)}px`,
+          innerHeight: window.innerHeight
+        }, this.setSideTagHeight()
+      )
+    }
+  }
+  componentDidUpdate (prevProps) {
+    if (this.props.body !== prevProps.body) {
+      this.setSideTagHeight()
+    }
+  }
+  setSideTagHeight () {
+    const { fallback } = this.props
+    let currentHeight = null
+    let fallbackHeight = null
+    if (!fallback) {
+      const h1Height = 1.2 * this.h1.clientHeight
+      const dividerHeight = this.divider.clientHeight
+      const h3Height = this.h3.clientHeight
+      const compositeHeight = h1Height + dividerHeight + h3Height
+      currentHeight = compositeHeight
+      console.log(currentHeight)
+      this.props.onSetSideTagCurrentHeight(currentHeight)
+    }
+    if (fallback) {
+      const h1Height = 1.2 * this.fallbackH1.clientHeight
+      const dividerHeight = this.fallbackDivider.clientHeight
+      const h3Height = this.fallbackH3.clientHeight
+      const compositeHeight = h1Height + dividerHeight + h3Height
+      fallbackHeight = compositeHeight
+      console.log(fallbackHeight)
+      this.props.onSetSideTagFallbackHeight(fallbackHeight)
     }
   }
   render () {
@@ -52,11 +88,11 @@ class TextBlock extends Component {
       <Transition in={animateIn} timeout={duration}>
         { state => (
           <div className='text-block v-font' style={{ ...defaultStyle, ...transitionStyles[state] }}>
-            <h1 className='v-font'>{ header }</h1>
-            <div className='divider'>
+            <h1 ref={h1 => { fallback ? this.fallbackH1 = h1 : this.h1 = h1 }} className='v-font'>{ header }</h1>
+            <div ref={divider => { fallback ? this.fallbackDivider = divider : this.divider = divider }} className='divider'>
               <DividerPink />
             </div>
-            <h3 className='v-font light'>{ body }</h3>
+            <h3 ref={h3 => { fallback ? this.fallbackH3 = h3 : this.h3 = h3 }} className='v-font light'>{ body }</h3>
             <style jsx>{`
               .text-block h1 {
                 text-transform: uppercase;

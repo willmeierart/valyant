@@ -21,7 +21,6 @@ class App extends Component {
       if (typeof window !== 'undefined') { // something done throughout app, if window undefined (bc serverside rendered at first) then keep trying til it's not...
         window.addEventListener('resize', async () => {
           this.setState({ mobileVersion: isMobile || window.innerWidth < 700 })
-          console.log(this.state.mobileVersion)
         })
         if (typeof window.orientation !== 'undefined') {
           if (this.state.orientation === null) {

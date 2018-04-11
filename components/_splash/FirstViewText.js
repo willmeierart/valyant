@@ -28,7 +28,7 @@ class FirstViewText extends Component {
       justifyContent: lg ? 'center' : 'flex-start'
     }
     const defaultStyle = {
-      transition: `opacity ${duration}ms ease-in, transform ${duration}ms ease-in`
+      transition: `opacity ${duration}ms ease-out, transform ${duration}ms ease-out`
     }
     const transitionStyles = {
       entering: {

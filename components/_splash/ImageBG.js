@@ -33,7 +33,7 @@ class ImageBG extends Component {
     }
     const transitionStyles = {
       entering: { opacity: 0 },
-      entered: { opacity: 1, transition: `opacity ${duration}ms ease-in` }
+      entered: { opacity: 1, transition: `opacity ${3 * duration}ms ease-out` }
     }
     return (
       <Transition in={animateIn} timeout={duration}>

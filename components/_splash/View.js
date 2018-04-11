@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { doAnimation, canScroll, setSideTagHeight } from '../../lib/redux/actions'
+import { doAnimation, canScroll, setSideTagCurrentHeight, setSideTagFallbackHeight } from '../../lib/redux/actions'
 import ImageBG from './ImageBG'
 import Logo from './Logo'
 import TextBlock from './TextBlock'
@@ -41,12 +41,16 @@ class View extends Component {
   render () {
     const {
       dims: { width, height },
-      currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt },
+      currentView: { imageUrl, isFirstView, bodyCopy, headerCopy, alt, nextImageUrl },
       fallbackView,
       animateIn,
       footerShown,
       transDir,
-      isIE
+      isIE,
+      onSetSideTagCurrentHeight,
+      onSetSideTagFallbackHeight,
+      sideTagCurrentHeight,
+      sideTagFallbackHeight
     } = this.props
 
     const sfx = width <= 500 ? '-half.jpg' : '.jpg'
@@ -61,6 +65,7 @@ class View extends Component {
           </div>
 
           <ImageBG width={width} isFirstView={isFirstView} alt={alt} animateIn={animateIn} image={imageUrl} duration={200} />
+          <img style={{ visibility: 'hidden', height: 0, display: 'none' }} src={nextImageUrl} />
           <div className='fallback-img' style={{ zIndex: 6, backgroundSize: isFirstView ? 'cover' : 'contain' }} />
 
           { this.state.firstViewRender
@@ -87,7 +92,8 @@ class View extends Component {
                 body={bodyCopy}
                 header={headerCopy}
                 duration={300}
-                isFirstView={isFirstView} />
+                isFirstView={isFirstView}
+                onSetSideTagCurrentHeight={onSetSideTagCurrentHeight} />
               <TextBlock
                 isIE={isIE}
                 height={height}
@@ -98,11 +104,12 @@ class View extends Component {
                 body={fallbackView.bodyCopy}
                 header={fallbackView.headerCopy}
                 duration={300}
-                isFirstView={isFirstView} />
+                isFirstView={isFirstView}
+                onSetSideTagFallbackHeight={onSetSideTagFallbackHeight} />
             </div>
           }
 
-          <SideTag width={width} show={!isFirstView} duration={200} />
+          <SideTag currentHeight={sideTagCurrentHeight} fallbackHeight={sideTagFallbackHeight} width={width} show={!isFirstView} duration={200} />
           <Footer small={smallLogo} width={width} show={footerShown} duration={200} />
         </div>
         { (isFirstView && width > 500) && <ScrollLure duration={200} /> }
@@ -116,7 +123,7 @@ class View extends Component {
           }
           .inner-view {
             width: 100%;
-            height: 100vh;
+            height: 96vh;
             position: relative;
           }
           .logo-wrapper {
@@ -148,7 +155,7 @@ class View extends Component {
   }
 }
 function mapStateToProps (state) {
-  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isIE } = state.splash
+  const { animateIn, currentView, fallbackView, footerShown, transDir, dims, isIE, sideTagCurrentHeight, sideTagFallbackHeight } = state.splash
   return {
     animateIn,
     currentView,
@@ -156,7 +163,9 @@ function mapStateToProps (state) {
     footerShown,
     transDir,
     dims,
-    isIE
+    isIE,
+    sideTagCurrentHeight,
+    sideTagFallbackHeight
   }
 }
 
@@ -164,7 +173,8 @@ function mapDispatchToProps (dispatch) {
   return {
     onDoAnimation: bool => dispatch(doAnimation(bool)),
     onCanScroll: bool => dispatch(canScroll(bool)),
-    onSetSideTagHeight: h => dispatch(setSideTagHeight(h))
+    onSetSideTagCurrentHeight: h => dispatch(setSideTagCurrentHeight(h)),
+    onSetSideTagFallbackHeight: h => dispatch(setSideTagFallbackHeight(h))
   }
 }
 
