@@ -118,7 +118,7 @@ class ScrollController extends Component {
   }
 
   scrollAction (e) {
-    console.log(e)
+    // console.log(e)
     if (this.props.canScroll) {
       this.changeView(e)
       this.props.onCanScroll(false)
@@ -127,7 +127,7 @@ class ScrollController extends Component {
       // once(() => this.props.onCanScroll(false), 500)
       // debounce(() => this.props.onCanScroll(false), 500)
       // e.cancel()
-      console.log(e)
+      // console.log(e)
     }
     else {
       // this.props.onCanScroll(true)
