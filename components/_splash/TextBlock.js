@@ -39,7 +39,6 @@ class TextBlock extends Component {
       const h3Height = this.h3.clientHeight
       const compositeHeight = h1Height + dividerHeight + h3Height
       currentHeight = compositeHeight
-      console.log(currentHeight)
       this.props.onSetSideTagCurrentHeight(currentHeight)
     }
     if (fallback) {
@@ -48,7 +47,6 @@ class TextBlock extends Component {
       const h3Height = this.fallbackH3.clientHeight
       const compositeHeight = h1Height + dividerHeight + h3Height
       fallbackHeight = compositeHeight
-      console.log(fallbackHeight)
       this.props.onSetSideTagFallbackHeight(fallbackHeight)
     }
   }
