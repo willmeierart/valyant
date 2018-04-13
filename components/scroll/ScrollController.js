@@ -14,7 +14,7 @@ class ScrollController extends Component {
   constructor (props) {
     super(props)
     this.state = { isIE: false, scrolling: false }
-    binder(this, ['getBaseData', 'changeView', 'handleScroll', 'handleKeyDown', 'scrollAction'])
+    binder(this, ['getBaseData', 'changeView', 'handleScroll', 'handleKeyDown', 'scrollAction', 'scrollGate'])
     this.timeout = null
     this.debouncedHandleScroll = debounce(this.handleScroll, 100, { trailing: false })
   }
@@ -36,6 +36,15 @@ class ScrollController extends Component {
     window.addEventListener('orientationchange', () => {
       this.props.onGetVPDims()
     })
+  }
+
+  componentDidUpdate (prevProps) {
+    const { footerShown, onCanScroll } = this.props
+    if (footerShown !== prevProps.footerShown && footerShown === true) {
+      console.log('footershown')
+      this.setState({ scrolling: false})
+      onCanScroll(true)
+    }
   }
 
   componentWillUnmount () {
@@ -83,10 +92,11 @@ class ScrollController extends Component {
     const e = { ...event }
     if (this.props.footerShown) {
       this.props.onCanScroll(true)
-      clearTimeout(this.timeout)
-      this.setState({ scrolling: false })
+      // this.setState({ scrolling: false })
+      // clearTimeout(this.timeout)
+      // this.setState({ scrolling: false })
     }
-    this.scrollAction(e)
+    // this.scrollAction(e)
     // const debounced = debounce(() => {
     //   // this.scrollAction(e)
     //   console.log(e)
@@ -103,18 +113,25 @@ class ScrollController extends Component {
     // }, 100, { trailing: false })
     // debounced()
     // this.scrollAction(e)
-    // if (!this.state.scrolling) {
-    //   // once(() => { this.scrollAction(e) })
-    //   console.log('not scroll state')
-    //   this.setState({ scrolling: true })   
-    //   // once(() => this.scrollAction(e))
-    //   this.scrollAction(e)
-    //   setTimeout(() => {}, 301)
-    // } else {
+    if (!this.state.scrolling) {
+      // once(() => { this.scrollAction(e) })
+      // console.log('not scroll state')
+      this.setState({ scrolling: true })
+      // once(() => this.scrollAction(e))
+      this.scrollAction(e)
+      setTimeout(() => { this.setState({ scrolling: false }) }, 500)
+    }
+    // else {
     //   this.timeout = setTimeout(() => {
     //     this.setState({ scrolling: false })
     //   }, 1001)
     // }
+  }
+
+  scrollGate (e) {
+    this.state.scrolling
+      ? null
+      : this.scrollAction(e)
   }
 
   scrollAction (e) {
@@ -130,7 +147,7 @@ class ScrollController extends Component {
       // console.log(e)
     }
     else {
-      // this.props.onCanScroll(true)
+      this.props.onCanScroll(true)
       // once(() => { this.props.onCanScroll(true) })
     }
   }
@@ -173,21 +190,27 @@ class ScrollController extends Component {
   }
 
   render () {
+    const scrollTerms = !this.state.scrolling || this.props.footerShown
     return (
       // <Throttle time={100} handlers={['onWheel', 'onKeyDown']}>
-        <div className='scroll-controller' onKeyDown={(e) => e.stopPropagation()} onWheel={this.handleScroll} >
-          <View />
-          { this.props.children }
-          <style jsx>{`
-            .scroll-controller {
-              width: 100%;
-              height: 100vh;
-              box-sizing: border-box;
-              position: relative;
-              overflow: hidden;
-            }
-          `}</style>
-        </div>
+
+      // WHAT IF THERE WAS A COMPONENT THAT WAS ONLY RENDERED ON CANSCROLLL THAT THE HANDLER WAS ATTACHED TO?:
+      // { canScroll && <div onWheel={this.handleScroll} /> }
+
+      <div className='scroll-controller' onKeyDown={(e) => e.stopPropagation()} /* onWheel={this.scrollGate} */>
+      { scrollTerms && <div className='SCROLLTHING' style={{ zIndex: 1000, width: '100%', height: '100%', position: 'absolute' }} onWheel={this.handleScroll} /> }
+        <View />
+        { this.props.children }
+        <style jsx>{`
+          .scroll-controller {
+            width: 100%;
+            height: 100vh;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+          }
+        `}</style>
+      </div>
       // </Throttle>
     )
   }

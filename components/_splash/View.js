@@ -40,7 +40,7 @@ class View extends Component {
       this.scrollTimer = setTimeout(() => {
         this.props.onCanScroll(true)
         clearTimeout(this.scrollTimer)
-      }, 1600) // 1600 is the ABSOLUTE minimum interval for scrolling where you can't accidentally trigger a double route change
+      }, 500) // 1600 is the ABSOLUTE minimum interval for scrolling where you can't accidentally trigger a double route change
     }
   }
 
