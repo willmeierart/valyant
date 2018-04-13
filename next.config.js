@@ -33,14 +33,14 @@ module.exports = {
         ]
       }
     )
-    config.plugins = config.plugins.filter(plugin => {
-      // console.log(plugin)
-      if (plugin.name === 'UglifyJsPlugin') {
-        return false
-      } else {
-        return true
-      }
-    })
+    // config.plugins = config.plugins.filter(plugin => {
+    //   // console.log(plugin)
+    //   if (plugin.name === 'UglifyJsPlugin') {
+    //     return false
+    //   } else {
+    //     return true
+    //   }
+    // })
     return config
   }
 }
