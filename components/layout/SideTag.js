@@ -14,7 +14,6 @@ class SideTag extends Component {
         height ${duration}ms ease-in ${1.5 * duration}ms
       `,
       top: width > 500 ? '35vh' : '20vh',
-      // height: width > 500 ? '30vh' : '45vh'
       height: fallbackHeight || currentHeight
     }
     const transitionStyles = {
@@ -30,7 +29,6 @@ class SideTag extends Component {
                 position: absolute;
                 left: -1vw;
                 top: ${width > 500 ? '35vh' : '20vh'};
-                {/* height: ${width > 500 ? '30vh' : '45vh'}; */}
                 height: ${1.5 * currentHeight};
                 width: 5vw;
                 z-index: 30;

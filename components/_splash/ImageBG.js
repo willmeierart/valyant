@@ -5,19 +5,6 @@ import { Transition } from 'react-transition-group'
 import { canScroll, showFooter } from '../../lib/redux/actions'
 
 class ImageBG extends Component {
-  componentDidUpdate (nextProps) {
-    // if (this.props.image !== nextProps.image || this.props.footerShown) {
-    //   if (this.scrollTimer) {
-    //     clearTimeout(this.scrollTimer)
-    //     this.scrollTimer = null
-    //   }
-    //   this.props.onCanScroll(false) // lock up scrolling momentarily
-    //   this.scrollTimer = setTimeout(() => {
-    //     this.props.onCanScroll(true)
-    //     clearTimeout(this.scrollTimer)
-    //   }, 500) // 1600 is the ABSOLUTE minimum interval for scrolling where you can't accidentally trigger a double route change
-    // }
-  }
   render () {
     const { animateIn, duration, image, alt, isFirstView, width } = this.props
     const sfx = width <= 500 ? '-half.jpg' : '.jpg'

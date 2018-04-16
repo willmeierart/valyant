@@ -66,8 +66,6 @@ class View extends Component {
               position: ${i === 0 ? 'absolute' : 'static'};
               height: ${i === 0 ? '100%' : 'auto'};
               width: 100%;
-              {/* display: flex; */}
-              {/* align-items: center; */}
             }
             .fadeout {
               background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1));

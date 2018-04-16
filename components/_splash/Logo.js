@@ -27,23 +27,17 @@ export default class Logo extends Component {
   }
   render () {
     const { isFirstView, duration, width, height, small, mobileSideways } = this.props
-
-    // const uploadDir = 'https://s3.us-east-2.amazonaws.com/valyant/splash/'
-
     const defaultStyle = {
       opacity: 0,
-      // transform: 'translate3d(0,0,0)',
       transform: `translate3d(0,${width > 700 && !mobileSideways ? height > width ? 'calc(25vh)' : 'calc(20vh)' : 0},0)`,
       transition: `all ${1.5 * duration}ms ease-out ${0.5 * duration}ms`
     }
     const transitionStyles = {
       entering: {
         transform: `translate3d(0,${width > 700 && !mobileSideways ? height > width ? 'calc(25vh)' : 'calc(20vh)' : 0},0)`,
-        // transform: 'translate3d(0,0,0)',
         opacity: 0
       },
       entered: {
-        // transform: 'translate3d(0,0,0)',
         transform: `translate3d(0,${width > 700 && !mobileSideways ? height > width ? 'calc(15vh)' : 'calc(10vh)' : 0},0)`,
         opacity: 1
       },
