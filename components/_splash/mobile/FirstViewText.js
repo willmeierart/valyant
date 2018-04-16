@@ -63,7 +63,7 @@ class FirstViewText extends Component {
                 text-transform: uppercase;
                 font-size: ${width < 500 || isIE ? '2.5em' : '4em'};
                 margin:0;
-                margin-top: ${lg ? 0 : '3vh'};
+                margin-top: ${lg ? 0 : '1vh'};
               }
               .text-block h3, .text-block h1 {
                 z-index: 10;

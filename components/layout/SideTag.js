@@ -31,7 +31,7 @@ class SideTag extends Component {
                 left: -1vw;
                 top: ${width > 500 ? '35vh' : '20vh'};
                 {/* height: ${width > 500 ? '30vh' : '45vh'}; */}
-                height: ${currentHeight};
+                height: ${1.5 * currentHeight};
                 width: 5vw;
                 z-index: 30;
                 background-color: #4597BB;            

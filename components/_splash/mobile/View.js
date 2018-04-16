@@ -55,11 +55,12 @@ class View extends Component {
           <style jsx>{`
             .wrapper {
               position: relative;
-              height: ${i === 0 ? '120vh' : 'unset'};
+              height: ${i === 0 ? '75vh' : 'unset'};
               display: flex;
               flex-grow: 1;
               flex-direction: column;
               justify-content: space-around;
+              margin-top: ${i === 0 ? 0 : '100px'};
             }
             .img-wrapper {
               position: ${i === 0 ? 'absolute' : 'static'};
