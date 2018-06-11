@@ -39,9 +39,9 @@ const Footer = ({ isMobile, show, duration, socials, width, small, mobileSideway
             <div className='inner-wrapper' style={{ flexDirection: isMobileSize ? 'row' : 'column' }}>
               { show && <div className='logo-wrapper' style={{ display: 'flex', justifyContent: isMobileSize ? 'flex-end' : 'center', width: isMobileSize ? '50%' : '100%' }}><LogoFull w={w} h={h} /></div>}
               <div className='copy-wrapper' style={{ alignItems: isMobileSize ? 'flex-start' : 'center', width: isMobileSize ? '50%' : '100%' }}>
-                <div className='q'>In the media? Please feel free to reach out.</div>
-                <div className='email'><a href='mailto:mediainquiries@valyant.ai?subject=Hello!'>MEDIAINQUIRIES@VALYANT.AI</a></div>
-                <div className='copyright'>Copyright Valyant Ai 2018</div>
+                <div className='q'>Please feel free to reach out.</div>
+                <div className='email'><a href='mailto:mediainquiries@valyant.ai?subject=Hello!'>INFO@VALYANT.AI</a></div>
+                <div className='copyright'>Copyright Valyant AI 2018</div>
               </div>
               { socials && <div className='socials'>
                 <FaTwitter style={socialIconStyles} />

@@ -1,7 +1,12 @@
 const path = require('path')
 const glob = require('glob')
+const nextBuildId = require('next-build-id')
 
 module.exports = {
+  generateBuildId: async () => {
+    const fromGit = await nextBuildId({ dir: __dirname })
+    return fromGit.id
+  },
   webpack: (config, { dev }) => {
     config.module.rules.push(
       {
