@@ -73,15 +73,18 @@ class ScrollController extends Component {
         } else {
           onSetCurrentView(viewState[currentIndex - 1])
         }
+      } else {
+        onSetCurrentView(viewState[0])
       }
     }
     this.props.onCanScroll(false)
   }
 
   handleScroll (event) {
+    const { currentView, footerShown } = this.props
     event.preventDefault()
     const e = { ...event }
-    if (this.props.footerShown) {
+    if (footerShown || viewState.indexOf(currentView) === 0) {
       this.props.onCanScroll(true)
       clearTimeout(this.timeout)
       this.setState({ scrolling: false })
@@ -90,6 +93,7 @@ class ScrollController extends Component {
   }
 
   scrollAction (e) {
+    console.log(this.props.canScroll)
     if (this.props.canScroll) {
       this.changeView(e)
       this.props.onCanScroll(false)
