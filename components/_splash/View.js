@@ -21,7 +21,7 @@ class View extends Component {
     binder(this, ['doAnimationCheck'])
   }
   componentDidMount () {
-    console.log(this.props)
+    // console.log(this.props)
     this.doAnimationCheck()
   }
   componentDidUpdate (prevProps, prevState) {
